@@ -1,4 +1,5 @@
 import React from 'react';
+import useTheme from '../components/useTheme';
 
 function SidebarUser(props) {
   function getPlaceColor(place) {
