@@ -5,7 +5,10 @@ import Home from './Home';
 import Leaderboard from './Leaderboard';
 import Login from './Login';
 import MyProfile from './MyProfile';
+<<<<<<< HEAD
 import Groups from './Groups/Groups';
+=======
+>>>>>>> 27db5b4 (early admin panel work)
 
 function App() {
   const [user, setUser] = React.useState({
