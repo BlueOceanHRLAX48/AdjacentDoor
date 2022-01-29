@@ -1,4 +1,3 @@
-import React from 'react';
 import Post from './Post';
 
 function Feed(props) {
@@ -79,7 +78,7 @@ function Feed(props) {
             name={post.name}
             date={post.date}
             postBody={post.post_text}
-            report={post.reports}
+            report={post.report}
             likes={post.likes}
           />
         ))}
