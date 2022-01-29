@@ -1,17 +1,17 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        primary: '#B8B8FF',
-        secondary: '#9381FF',
+        primary: '#9381FF',
+        secondary: '#B8B8FF',
         ghostWhite: '#F8F8FF',
         antiqueWhite: '#FFEEDD',
-        silk: '#FFD8BE'
+        silk: '#FFD8BE',
       },
-    }
+    },
   },
   plugins: [],
-}
+};

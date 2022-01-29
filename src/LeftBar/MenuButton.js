@@ -1,7 +1,5 @@
-import React from 'react';
-
 function MenuButton(props) {
-  return <div>{props.name}</div>;
+  return <div className='font-semibold'>{props.name}</div>;
 }
 
 export default MenuButton;
