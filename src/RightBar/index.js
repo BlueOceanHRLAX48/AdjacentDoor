@@ -1,11 +1,5 @@
-import React from 'react';
-
 function RightBar() {
-  return (
-    <div className='border-l border-primary bg-ghostWhite w-[250px] h-screen'>
-      stuff on the right
-    </div>
-  );
+  return <div className='w-[250px] h-screen flex flex-col px-6 py-4 '></div>;
 }
 
 export default RightBar;
