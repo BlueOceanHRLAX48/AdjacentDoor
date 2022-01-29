@@ -1,6 +1,6 @@
 import React from 'react';
-import LeftBar from './LeftBar';
-import LeaderboardUser from './components/LeaderboardUser';
+import LeftBar from '../LeftBar';
+import LeaderboardUser from './LeaderboardUser';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 function Leaderboard() {
