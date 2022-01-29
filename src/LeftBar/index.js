@@ -14,9 +14,9 @@ function LeftBar() {
         ['Groups', '/groups', <MdGroups size='20' />],
         ['ratings', '/ratings', <MdGroups size='20' />],
         ['Others', '/others', <MdGroups size='20' />],
-      ].map(([title, url, icon]) => (
+      ].map(([title, url, icon], i) => (
         <Link to={url}>
-          <LeftBarButton icon={icon} text={title} />
+          <LeftBarButton icon={icon} text={title} key={i} />
         </Link>
       ))}
       <Link to='/my-profile'>
