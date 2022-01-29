@@ -14,8 +14,9 @@ function SidebarLeaderboard() {
   const leaderboardElements = sampleData
     .slice(0, 5)
     .map((user, i) => <SidebarUser user={user} place={i + 1} key={i} />);
+
   return (
-    <div className='flex flex-col justify-center ml-4 mt-4 py-2 rounded-lg border border-primary cursor-default'>
+    <div className='flex flex-col justify-center ml-4 mt-4 py-2 rounded-lg border cursor-default'>
       <div className='font-bold text-lg text-center py-2 decoration-secondary underline underline-offset-1'>
         Top Global Contibutors
       </div>
