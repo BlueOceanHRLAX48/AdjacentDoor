@@ -1,4 +1,5 @@
 import React from 'react';
+import useTheme from '../components/useTheme';
 
 function SidebarUser(props) {
   function getPlaceColor(place) {
@@ -11,7 +12,6 @@ function SidebarUser(props) {
     if (place === 3) {
       return '#CD7F32';
     }
-    return 'black';
   }
 
   return (

@@ -45,7 +45,7 @@ function Leaderboard() {
   return (
     <div className='flex h-screen'>
       <LeftBar />
-      <div className='flex grow overflow-y-scroll justify-center gap-8 p-10'>
+      <div className='flex grow overflow-y-scroll hide-scroll-bar justify-center gap-8 p-10'>
         <div className='w-1/2 h-fit flex flex-col bg-ghostWhite rounded border-secondary border'>
           <div className='text-center text-2xl font-bold decoration-wavy decoration-secondary underline underline-offset-2 py-5'>
             Global
