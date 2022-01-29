@@ -1,2 +1,5 @@
+const users = require('./users');
 
-module.export = {}
+module.exports = {
+  users: users,
+}
