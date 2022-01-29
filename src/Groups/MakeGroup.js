@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, TextField, Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from'@mui/material';
+import axios from 'axios';
 
 function MakeGroup (props) {
   const [open, setOpen] = useState(false);
@@ -7,12 +8,15 @@ function MakeGroup (props) {
   const handleClose = () => setOpen(false);
   const [slide, setSlide] = useState('p1');
   const [groupName, setGname] = useState('');
+  const [description, setDescription] = useState('');
   const [coordinates, setCoordinates] = useState([null, null]); // lng lat
+  const [city, setCity] = useState('');
   const [zip, setZip] = useState(null);
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
+  const [photo, setPhoto] = useState('');
 
-  const style = {
+  const modalStyle = {
     display: 'flex',
     position: 'absolute',
     top: `25%`,
@@ -30,7 +34,7 @@ function MakeGroup (props) {
       case 'p1':
         return <div>
           <Typography variant="h6" component="h2">Group Name</Typography>
-          <TextField type='text' onChange={(e) => {
+          <TextField id="getGroupName" type='text' onChange={(e) => {
             setGname(e.target.value);
           }}></TextField>
           <Typography>Choose a name for your group</Typography>
@@ -41,17 +45,26 @@ function MakeGroup (props) {
       case 'p2':
         return <div>
           <Typography variant="h6" component="h2">Description</Typography>
-          <TextField type='text' onChange={(e) => {
-            setGname(e.target.value);
+          <TextField id="getGroupDescription" type='text' onChange={(e) => {
+            setDescription(e.target.value);
           }}></TextField>
           <Typography>Please give us a brief description of your group</Typography>
           <Button onClick={() => {
+            navigator.geolocation.getCurrentPosition(position => {
+              setCoordinates([position.coords.longitude, position.coords.latitude]) //dummy data
+              axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`)
+              .then((results) => {
+                setCity(results.data.features[2].text);
+                setZip(results.data.features[1].text);
+              })
+            })
             setSlide('p3');
           }}>NEXT</Button>
         </div>;
       case 'p3':
         return <div>
           <Typography variant="h6" component="h2">Group Location</Typography>
+
           <Button onClick={() => {
             setSlide('p4');
           }}>NEXT</Button>
@@ -115,7 +128,7 @@ function MakeGroup (props) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={modalStyle}>
         {renderSlide(slide)}
       </Box>
     </Modal>
