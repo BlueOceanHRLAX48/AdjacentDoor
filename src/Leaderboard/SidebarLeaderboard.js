@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LeaderboardUser from './LeaderboardUser';
 import SidebarUser from './SidebarUser';
 
 function SidebarLeaderboard() {
@@ -16,8 +15,10 @@ function SidebarLeaderboard() {
     .slice(0, 5)
     .map((user, i) => <SidebarUser user={user} place={i + 1} key={i} />);
   return (
-    <div className='flex flex-col justify-center ml-4 mt-4 py-2 rounded-lg border border-primary'>
-      <div className='font-bold text-center py-2'>Top Global Contibutors</div>
+    <div className='flex flex-col justify-center ml-4 mt-4 py-2 rounded-lg border border-primary cursor-default'>
+      <div className='font-bold text-lg text-center py-2 decoration-secondary underline underline-offset-1'>
+        Top Global Contibutors
+      </div>
       {leaderboardElements}
       <div className='w-full flex justify-center py-4'>
         <Link to='/leaderboard'>
