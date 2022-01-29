@@ -1,9 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
-=======
-import LeaderboardUser from './LeaderboardUser';
->>>>>>> 6e5282f (Refactored leaderboard organization and implemented sidebar leaderboard to right bar)
 import SidebarUser from './SidebarUser';
 
 function SidebarLeaderboard() {
