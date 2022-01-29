@@ -1,0 +1,125 @@
+import React, { useState, useEffect } from 'react';
+import { Modal, Box, Button, TextField, Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from'@mui/material';
+
+function MakeGroup (props) {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [slide, setSlide] = useState('p1');
+  const [groupName, setGname] = useState('');
+  const [coordinates, setCoordinates] = useState([null, null]); // lng lat
+  const [zip, setZip] = useState(null);
+  const [privacy, setPrivacy] = useState('public');
+  const [local, setLocal] = useState('global');
+
+  const style = {
+    display: 'flex',
+    position: 'absolute',
+    top: `25%`,
+    left: `25%`,
+    transform: 'translate(-25%. -25%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid $000',
+    boxShadow: 24,
+    p: 4
+  }
+
+  const renderSlide = (slide) => {
+    switch (slide) {
+      case 'p1':
+        return <div>
+          <Typography variant="h6" component="h2">Group Name</Typography>
+          <TextField type='text' onChange={(e) => {
+            setGname(e.target.value);
+          }}></TextField>
+          <Typography>Choose a name for your group</Typography>
+          <Button onClick={() => {
+            setSlide('p2');
+          }}>NEXT</Button>
+        </div>;
+      case 'p2':
+        return <div>
+          <Typography variant="h6" component="h2">Description</Typography>
+          <TextField type='text' onChange={(e) => {
+            setGname(e.target.value);
+          }}></TextField>
+          <Typography>Please give us a brief description of your group</Typography>
+          <Button onClick={() => {
+            setSlide('p3');
+          }}>NEXT</Button>
+        </div>;
+      case 'p3':
+        return <div>
+          <Typography variant="h6" component="h2">Group Location</Typography>
+          <Button onClick={() => {
+            setSlide('p4');
+          }}>NEXT</Button>
+        </div>;
+      case 'p4':
+        return <div>
+          {/* <Typography variant="h6" component="h2">Privacy</Typography> */}
+          <FormControl>
+            <FormLabel id="local-or-global-radios">Settings</FormLabel>
+            <RadioGroup
+              aria-labelledby="local-or-global-radios"
+              defaultValue="global"
+              name="radio-butt"
+            >
+              <FormControlLabel value="global" control={ <Radio /> } label="Global" onClick={() => {
+                setLocal('global');
+              }}></FormControlLabel>
+              <FormControlLabel value="local" control={ <Radio /> } label="Local" onClick={() => {
+                setLocal('local');
+              }}></FormControlLabel>
+            </RadioGroup>
+            <FormLabel id="local-or-global-radios">Privacy</FormLabel>
+            <RadioGroup
+              aria-labelledby="privacy-radios"
+              defaultValue="public"
+              name="radio-butt"
+            >
+              <FormControlLabel value="public" control={ <Radio /> } label="Public" onClick={() => {
+                setPrivacy('public');
+              }}></FormControlLabel>
+              <FormControlLabel value="private" control={ <Radio /> } label="Private" onClick={() => {
+                setPrivacy('private');
+              }}></FormControlLabel>
+            </RadioGroup>
+          </FormControl>
+          <Button onClick={() => {
+            setSlide('p5');
+          }}>NEXT</Button>
+        </div>;
+      case 'p5':
+        return <div>
+          <Typography variant="h6" component="h2">Choose a Photo</Typography>
+          {/* PHOTO FUNCTIONALITY */}
+          <Button onClick={() => {
+              //MAKE THE GROUP
+          }}>CREATE</Button>
+        </div>
+      default:
+        return <div>ERROR</div>;
+    }
+  }
+
+  return <div className="">
+    <button onClick={handleOpen}>Create New Group</button>
+    <Modal
+      open={open}
+      onClose={() => {
+        handleClose();
+        setSlide('p1');
+      }}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        {renderSlide(slide)}
+      </Box>
+    </Modal>
+  </div>;
+}
+
+export default MakeGroup;
