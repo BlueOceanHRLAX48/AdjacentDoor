@@ -12,7 +12,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
   const handleMore = () => 'dropdown';
 
   return (
-    <div className='p-4 border my-3 border-slate-100 shadow-sm rounded-xl relative hover:bg-ghostWhite hover:rounded-xl dark:hover:bg-gray-900 dark:hover:border-secondary'>
+    <div className='p-4 border my-3 border-slate-100 shadow-sm rounded-xl transition-all duration-150 relative hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'>
       <div className='flex'>
         <Link to='/my-profile'>
           <Avatar

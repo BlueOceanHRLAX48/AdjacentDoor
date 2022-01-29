@@ -28,7 +28,7 @@ function LeftBar() {
 
 const LeftBarButton = ({ icon, text = 'text' }) => (
   <div
-    className={`flex py-4 px-4 hover:bg-ghostWhite hover:rounded-full cursor-pointer dark:hover:bg-gray-600`}
+    className={`flex py-4 px-4 hover:bg-ghostWhite hover:rounded-full cursor-pointer transition-all duration-150 dark:hover:bg-gray-600`}
   >
     <div className='relative flex items-center justify-start mr-4'>{icon}</div>
     <div className={`relative flex items-center justify-start text-base font-medium`}>{text}</div>
