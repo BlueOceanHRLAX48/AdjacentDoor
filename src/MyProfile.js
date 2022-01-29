@@ -1,11 +1,10 @@
-import React from 'react';
 import RightBar from './RightBar/index';
 import LeftBar from './LeftBar/index';
 import { Avatar } from '@mui/material';
 
 function MyProfile() {
   return (
-    <div className='w-screen flex'>
+    <div className='w-screen flex dark:bg-gray-900 dark:text-white'>
       <div className='hidden sm:flex'>
         <LeftBar />
       </div>

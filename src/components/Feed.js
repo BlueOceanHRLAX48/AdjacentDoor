@@ -60,7 +60,7 @@ function Feed(props) {
       <div className='feed h-screen overflow-y-scroll'>
         <div className='flex justify-center relative'>
           <input
-            className='text-sm mt-3 p-1 px-3 w-full h-10 rounded-xl border border-slate-100 shadow-sm focus:outline-none focus:ring-secondary focus:ring-2 focus:mx-1'
+            className='text-sm mt-3 p-1 px-3 w-full h-10 rounded-xl border border-slate-100 shadow-sm focus:outline-none focus:ring-secondary focus:ring-2 focus:mx-1 dark:bg-gray-900'
             placeholder='Write something...'
           ></input>
           {/* <button className='text-white font-medium text-xs px-4 py-2 rounded-full bg-primary absolute bottom-2 right-4'>

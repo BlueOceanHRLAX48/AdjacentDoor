@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Avatar } from '@mui/material';
 import { MdChatBubbleOutline, MdMoreHoriz, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { red } from '@mui/material/colors';
 
 function Post({ avatar, name, date, postBody, reports, likes }) {
   const [like, toggleLike] = useState(false);
@@ -11,7 +12,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
   const handleMore = () => 'dropdown';
 
   return (
-    <div className='p-4 border my-3 border-slate-100 shadow-sm rounded-xl relative hover:bg-ghostWhite hover:rounded-xl'>
+    <div className='p-4 border my-3 border-slate-100 shadow-sm rounded-xl relative hover:bg-ghostWhite hover:rounded-xl dark:hover:bg-gray-900 dark:hover:border-secondary'>
       <div className='flex'>
         <Link to='/my-profile'>
           <Avatar
@@ -30,7 +31,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
           <div className='flex items-center justify-between mt-2 mr-2'>
             {[
               ['comment', <MdChatBubbleOutline size='15' />, handleComment],
-              ['212', <MdFavoriteBorder size='15' />, handleLike],
+              ['212', <MdFavoriteBorder size='15' style={{ color: red[200] }} />, handleLike],
               ['share', <MdOutlineShare size='15' />, handleShare],
             ].map(([title, icon, handleClick], i) => (
               <PostButton icon={icon} text={title} onClick={handleClick} key={i} />
