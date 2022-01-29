@@ -9,16 +9,17 @@ function MyProfile() {
       <div className='hidden sm:flex'>
         <LeftBar />
       </div>
-      <div className='w-[600px] min-h-screen p-4'>
+      <div className='w-[600px] min-h-screen p-4 flex items-center justify-center'>
         <Avatar
           alt='Remy Sharp'
           src='/static/images/avatar/1.jpg'
-          sx={{ width: 150, height: 150 }}
-          className='mr-4'
+          sx={{ width: 100, height: 100 }}
+          className='mr-8'
         />
         <div className='text-base'>
           <div className='font-semibold'>Full Name</div>
-          <div className='text-sm font-light'>City, State</div>
+          <div className='font-light'>Email</div>
+          <div className='font-light'>Address</div>
         </div>
       </div>
       <div>
