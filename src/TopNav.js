@@ -5,7 +5,7 @@ function TopNav() {
   const [nextTheme, setTheme] = useTheme();
 
   return (
-    <div className=' flex mt-4 justify-around items-center'>
+    <div className=' flex mt-4 items-center '>
       <>
         <SearchBar />
       </>
