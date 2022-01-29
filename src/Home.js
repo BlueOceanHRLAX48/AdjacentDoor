@@ -1,6 +1,7 @@
 import Feed from './components/Feed';
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
+import TopNav from './TopNav';
 
 function Home() {
   return (
@@ -9,10 +10,17 @@ function Home() {
         <LeftBar />
       </div>
       <div>
-        <Feed />
-      </div>
-      <div>
-        <RightBar />
+        <div>
+          <TopNav />
+        </div>
+        <div className='flex'>
+          <div>
+            <Feed />
+          </div>
+          <div>
+            <RightBar />
+          </div>
+        </div>
       </div>
     </div>
   );
