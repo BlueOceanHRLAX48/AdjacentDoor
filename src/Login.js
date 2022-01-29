@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 
 function Login() {
   const [loginData, setLoginData] = useState(
@@ -107,7 +107,7 @@ function Login() {
             </Typography>
             <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
               <TextField
-                margin='dense'
+                margin='normal'
                 required
                 fullWidth
                 id='username'
@@ -117,7 +117,7 @@ function Login() {
                 autoFocus
               />
               <TextField
-                margin='dense'
+                margin='normal'
                 required
                 fullWidth
                 id='email'
@@ -169,31 +169,7 @@ function Login() {
                 onFailure={handleFailure}
                 cookiePolicy={'single_host_origin'}
               ></GoogleLogin>
-              <FacebookLogin
-                appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-                // autoLoad={true}
-                fields='name,email,picture'
-                onClick={componentClicked}
-                callback={handleLogin}
-                // render={renderProps => (
-                //   <button
-                //     onClick={renderProps.onClick}
-                //     style={{
-                //       backgroundColor: '#F8F8FF',
-                //       color: 'black', width: '100%',
-                //       fontFamily: 'Roboto',
-                //       fontWeight: '500',
-                //       fontSize: '0.875rem',
-                //       lineHeight: '1.75',
-                //       padding: '6px 16px',
-                //       borderRadius: '4px'
-                //     }}
-                //   >
-                //   LOGIN WITH FACEBOOK
-                //   </button>
-                // )}
-              ></FacebookLogin>
-              <Grid container>
+              <Grid container sx={{mt: 6}}>
                 <Grid item>
                   <Link href='/signup' variant='body2'>
                     {'Don\'t have an account? Sign Up'}
