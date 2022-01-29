@@ -120,6 +120,7 @@ function MakeGroup (props) {
           {/* PHOTO FUNCTIONALITY */}
           <Button onClick={() => {
               fakeAxiosPost();
+              setSlide('p1');
               handleClose();
           }}>CREATE</Button>
         </div>
