@@ -3,8 +3,13 @@ import { Avatar } from '@mui/material';
 import { MdChatBubbleOutline, MdMoreHoriz, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 
 function Post({ avatar, name, date, postBody, reports, likes }) {
+  const handleComment = () => 'q';
+  const handleLike = () => 'q';
+  const handleShare = () => 'q';
+  const handleMore = () => 'dropdown';
+
   return (
-    <div className='p-4 border my-3 border-slate-100 shadow-sm rounded-xl'>
+    <div className='p-3 border my-3 border-slate-100 shadow-sm rounded-xl relative'>
       <div className='flex'>
         <Avatar
           alt='Remy Sharp'
@@ -19,13 +24,18 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
         </div>
       </div>
 
-      <div className='flex items-center justify-between'>
-        <MdChatBubbleOutline size='15' />
-        <MdFavoriteBorder size='15' />
-        <MdOutlineShare size='15' />
+      <div className='flex items-center justify-between mt-2'>
+        <MdChatBubbleOutline className='cursor-pointer' size='15' onClick={handleComment} />
+        <MdFavoriteBorder className='cursor-pointer' size='15' onClick={handleLike} />
+        <MdOutlineShare className='cursor-pointer' size='15' onClick={handleShare} />
         {/* <div>{reports}</div>
         <div>{likes}</div> */}
       </div>
+      <MdMoreHoriz
+        className='absolute top-2 right-4 cursor-pointer'
+        size='20'
+        onClick={handleMore}
+      />
     </div>
   );
 }
