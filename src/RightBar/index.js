@@ -1,5 +1,3 @@
-import { purple } from '@mui/material/colors';
-import Switch from '@mui/material/Switch';
 import useTheme from '../components/useTheme';
 
 function RightBar() {

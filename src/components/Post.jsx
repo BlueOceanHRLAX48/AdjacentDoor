@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
 import { Avatar } from '@mui/material';
-import { MdChatBubbleOutline, MdMoreHoriz, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import { red } from '@mui/material/colors';
+import React, { useState } from 'react';
+import { MdChatBubbleOutline, MdFavoriteBorder, MdMoreHoriz, MdOutlineShare } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 function Post({ avatar, name, date, postBody, reports, likes }) {
   const [like, toggleLike] = useState(false);

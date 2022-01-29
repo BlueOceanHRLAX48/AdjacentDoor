@@ -1,6 +1,6 @@
+import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import UserInfo from './UserInfo';
-import { MdGroups, MdHome, MdHealthAndSafety } from 'react-icons/md';
 
 function LeftBar() {
   return (

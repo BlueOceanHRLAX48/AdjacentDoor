@@ -1,6 +1,6 @@
 import React from 'react';
-import SearchBar from './SearchBar';
 import Post from './Post';
+import SearchBar from './SearchBar';
 
 function Feed(props) {
   const posts = [

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function useTheme() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
