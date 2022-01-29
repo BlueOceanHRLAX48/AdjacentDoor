@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import AdminPanel from './AdminPanel';
 import Home from './Home';
 import Leaderboard from './Leaderboard';
 import Login from './Login';
@@ -68,6 +69,10 @@ function App() {
           }
         />
         <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route
+          path='/admin'
+          element={user.admin ? <AdminPanel /> : <Navigate to='/' />}
+        />
       </Routes>
     </BrowserRouter>
   );
