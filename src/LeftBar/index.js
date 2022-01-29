@@ -8,21 +8,17 @@ function LeftBar() {
       <Link to='/'>
         <div className='text-2xl  text-primary font-bold pb-4 px-4 '>Adjacent Door</div>
       </Link>
-      <Link to='/'>
-        <LeftBarButton icon={<MdHome size='20' />} text={'Home'} />
-      </Link>
-      <Link to='/safety'>
-        <LeftBarButton icon={<MdHealthAndSafety size='20' />} text={'Safety'} />
-      </Link>
-      <Link to='/groups'>
-        <LeftBarButton icon={<MdGroups size='20' />} text={'Groups'} />
-      </Link>
-      <Link to='/rating'>
-        <LeftBarButton icon={<MdGroups size='20' />} text={'Rating'} />
-      </Link>
-      <Link to='/any'>
-        <LeftBarButton icon={<MdGroups size='20' />} text={'FIFTH'} />
-      </Link>
+      {[
+        ['Home', '/', <MdHome size='20' />],
+        ['Safety', '/safety', <MdHealthAndSafety size='20' />],
+        ['Groups', '/groups', <MdGroups size='20' />],
+        ['ratings', '/ratings', <MdGroups size='20' />],
+        ['Others', '/others', <MdGroups size='20' />],
+      ].map(([title, url, icon]) => (
+        <Link to={url}>
+          <LeftBarButton icon={icon} text={title} />
+        </Link>
+      ))}
       <Link to='/my-profile'>
         <UserInfo />
       </Link>
@@ -32,8 +28,8 @@ function LeftBar() {
 
 const LeftBarButton = ({ icon, text = 'text' }) => (
   <div className={`flex py-4 px-4 hover:bg-ghostWhite hover:rounded-full cursor-pointer`}>
-    <div className='leftbar-icon'>{icon}</div>
-    <div className={`leftbar-menu`}>{text}</div>
+    <div className='relative flex items-center justify-start mr-4'>{icon}</div>
+    <div className={`relative flex items-center justify-start text-base font-medium`}>{text}</div>
   </div>
 );
 
