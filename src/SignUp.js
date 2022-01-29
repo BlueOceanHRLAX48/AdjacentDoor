@@ -65,13 +65,16 @@ function SignUp() {
           <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
             <Box
               sx={{
-                my: 8,
+                my: 4,
                 mx: 4,
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
+              <Typography component='h1' variant='h4' color='secondary' align='center' mb='6px'>
+              ADJACENT DOOR
+              </Typography>
               <Typography component='h1' variant='h5'>
                 Sign Up
               </Typography>
@@ -88,6 +91,8 @@ function SignUp() {
                   label='First Name'
                   name='firstName'
                   autoComplete='firstName'
+                  sx={{ width: 400, mx: 'auto', display: 'flex' }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -97,6 +102,8 @@ function SignUp() {
                   label='Last Name'
                   name='lastName'
                   autoComplete='lastName'
+                  sx={{ width: 400, mx: 'auto', display: 'flex' }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -107,6 +114,8 @@ function SignUp() {
                   label='Username'
                   name='username'
                   autoComplete='username'
+                  sx={{ width: 400, mx: 'auto', display: 'flex' }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -117,6 +126,8 @@ function SignUp() {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
+                  sx={{ width: 400, mx: 'auto', display: 'flex' }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -125,6 +136,8 @@ function SignUp() {
                   label='Address'
                   name='address'
                   autoComplete='address'
+                  sx={{ width: 400, mx: 'auto' }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -133,6 +146,8 @@ function SignUp() {
                   label='City'
                   name='city'
                   autoComplete='city'
+                  sx={{ width: 200, ml: 2 }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -141,6 +156,8 @@ function SignUp() {
                   label='State'
                   name='state'
                   autoComplete='state'
+                  sx={{ width: 100, ml: 2 }}
+                  size='small'
                   autoFocus
                 />
                 <TextField
@@ -149,6 +166,8 @@ function SignUp() {
                   label='Zipcode'
                   name='zipcode'
                   autoComplete='zipcode'
+                  style={{ width: 100 }}
+                  size='small'
                   autoFocus
                 />
                 <Button

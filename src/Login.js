@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 function Login() {
   const [loginData, setLoginData] = useState(
@@ -34,8 +35,12 @@ function Login() {
     console.error(result);
   };
 
-  const handleLogin = (googleData) => {
-    console.log(googleData);
+  const handleLogin = (data) => {
+    console.log(data);
+  };
+
+  const componentClicked = (data) => {
+    console.log(data);
   };
 
   // const handleLogin = async (googleData) => {
@@ -81,70 +86,60 @@ function Login() {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
-        <CssBaseline />
-        <Typography component='h1' variant='h4' color='secondary' align='center' mt='20px'>
+    <div className='w-screen flex'>
+      <ThemeProvider theme={theme}>
+        <Container component='main' maxWidth='xs'>
+          <CssBaseline />
+          <Typography component='h1' variant='h4' color='secondary' align='center' mt='20px'>
             ADJACENT DOOR
-        </Typography>
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          <RiLoginCircleFill />
-          <Typography component='h1' variant='h5'>
-            Login
           </Typography>
-          <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin='dense'
-              required
-              fullWidth
-              id='firstName'
-              label='First Name'
-              name='firstName'
-              autoComplete='firstName'
-              autoFocus
-            />
-            <TextField
-              margin='dense'
-              required
-              fullWidth
-              id='lastName'
-              label='Last Name'
-              name='lastName'
-              autoComplete='lastName'
-              autoFocus
-            />
-            <TextField
-              margin='dense'
-              required
-              fullWidth
-              id='email'
-              label='Email Address'
-              name='email'
-              autoComplete='email'
-              autoFocus
-            />
-            <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='Remember me'
-            />
-            <Button
-              type='submit'
-              fullWidth
-              color='primary'
-              font-color='primary'
-              variant='contained'
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Continue
-            </Button>
-            {/* <Button fullWidth> */}
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <RiLoginCircleFill />
+            <Typography component='h1' variant='h5'>
+              Login
+            </Typography>
+            <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin='dense'
+                required
+                fullWidth
+                id='username'
+                label='Username'
+                name='username'
+                autoComplete='username'
+                autoFocus
+              />
+              <TextField
+                margin='dense'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+                autoFocus
+              />
+              <FormControlLabel
+                control={<Checkbox value='remember' color='primary' />}
+                label='Remember me'
+              />
+              <Button
+                type='submit'
+                fullWidth
+                color='primary'
+                font-color='primary'
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Continue
+              </Button>
               <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 render={renderProps => (
@@ -174,18 +169,42 @@ function Login() {
                 onFailure={handleFailure}
                 cookiePolicy={'single_host_origin'}
               ></GoogleLogin>
-            {/* </Button> */}
-            <Grid container>
-              <Grid item>
-                <Link href='#' variant='body2'>
-                  {'Don\'t have an account? Sign Up'}
-                </Link>
+              <FacebookLogin
+                appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                // autoLoad={true}
+                fields='name,email,picture'
+                onClick={componentClicked}
+                callback={handleLogin}
+                // render={renderProps => (
+                //   <button
+                //     onClick={renderProps.onClick}
+                //     style={{
+                //       backgroundColor: '#F8F8FF',
+                //       color: 'black', width: '100%',
+                //       fontFamily: 'Roboto',
+                //       fontWeight: '500',
+                //       fontSize: '0.875rem',
+                //       lineHeight: '1.75',
+                //       padding: '6px 16px',
+                //       borderRadius: '4px'
+                //     }}
+                //   >
+                //   LOGIN WITH FACEBOOK
+                //   </button>
+                // )}
+              ></FacebookLogin>
+              <Grid container>
+                <Grid item>
+                  <Link href='/signup' variant='body2'>
+                    {'Don\'t have an account? Sign Up'}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
+    </div>
   );
 }
 
