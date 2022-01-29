@@ -21,8 +21,8 @@ function SidebarLeaderboard() {
       {leaderboardElements}
       <div className='w-full flex justify-center py-4'>
         <Link to='/leaderboard'>
-          <button className='hover:bg-primary rounded-full px-8 py-1 font-semibold ring-primary ring-1 transition-all duration-150 hover:text-white'>
-            VIEW FULL LIST
+          <button className='hover:bg-primary rounded-full px-4 py-1 font-semibold ring-primary ring-1 transition-all duration-150 hover:text-white'>
+            VIEW LEADERBOARD
           </button>
         </Link>
       </div>
