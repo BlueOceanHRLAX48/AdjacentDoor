@@ -1,6 +1,8 @@
 const express = require('express');
-const Router = express.Router();
+const router = express.Router();
 const db = require('../controller')
 
-Router.route('')
-  .get()
+router.route('/dummy')
+  .get(db.users.get)
+
+module.exports= router

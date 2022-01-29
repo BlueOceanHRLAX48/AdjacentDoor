@@ -2,15 +2,27 @@ const express = require('express');
 const cors = require('cors')
 const router = require('./router/route')
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.use('/', router);
+//localhost:3001/home
+app.use('/home', router);
+/**
+ *
+ * user -> everything user info in user_account + what groups they are apart of -> component that shows all their groups
+ * user selects a specific group -> get request on that group_id -> all the information from users_groups + all the users in that group
+ * {
+ * users....
+ * groups: {groupId: groupName, groupID: groupName} -> [...groupIds] or [...groupNames]
+ * }
+ *
+ *
+ */
 
 app.listen(port, () => {
   console.log('listening on ', port)
