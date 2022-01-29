@@ -1,4 +1,3 @@
-import { Avatar } from '@mui/material';
 import React from 'react';
 
 function SidebarUser(props) {
@@ -16,7 +15,7 @@ function SidebarUser(props) {
   }
 
   return (
-    <div className='flex w-full items-center px-4 py-2 gap-4 hover:bg-antiqueWhite transition-all duration-150'>
+    <div className='flex w-full items-center px-4 py-2 gap-4 hover:bg-ghostWhite transition-all duration-150'>
       <div
         className='w-[8%] font-bold text-xl'
         style={{ color: getPlaceColor(props.place) }}
@@ -25,7 +24,7 @@ function SidebarUser(props) {
       </div>
       <div>
         <div className='text-sm font-semibold'>{props.user.name}</div>
-        <div className='ml-auto text-xs text-gray-400'>
+        <div className='ml-auto text-xs text-neutral-500'>
           {props.user.location}
         </div>
       </div>
