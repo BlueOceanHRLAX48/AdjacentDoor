@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, TextField, Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from'@mui/material';
 import axios from 'axios';
+import LeftBar from '../LeftBar';
+import { Link } from 'react-router-dom';
 
 function MakeGroup (props) {
   const [open, setOpen] = useState(false);
@@ -10,11 +12,24 @@ function MakeGroup (props) {
   const [groupName, setGname] = useState('');
   const [description, setDescription] = useState('');
   const [coordinates, setCoordinates] = useState([null, null]); // lng lat
+  const [place, setPlace] = useState('');
   const [city, setCity] = useState('');
   const [zip, setZip] = useState(null);
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
   const [photo, setPhoto] = useState('');
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      setCoordinates([position.coords.longitude, position.coords.latitude])
+      axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`)
+      .then((results) => {
+        setPlace(results.data.features[1].place_name);
+        setCity(results.data.features[2].text);
+        setZip(results.data.features[1].text);
+      })
+    })
+  }, [city, zip])
 
   const modalStyle = {
     display: 'flex',
@@ -27,6 +42,10 @@ function MakeGroup (props) {
     border: '2px solid $000',
     boxShadow: 24,
     p: 4
+  }
+
+  const fakeAxiosPost = () => {
+    console.log('POSTING, ', groupName, description, coordinates, city, zip, privacy, local, photo);
   }
 
   const renderSlide = (slide) => {
@@ -50,28 +69,19 @@ function MakeGroup (props) {
           }}></TextField>
           <Typography>Please give us a brief description of your group</Typography>
           <Button onClick={() => {
-            navigator.geolocation.getCurrentPosition(position => {
-              setCoordinates([position.coords.longitude, position.coords.latitude]) //dummy data
-              axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`)
-              .then((results) => {
-                setCity(results.data.features[2].text);
-                setZip(results.data.features[1].text);
-              })
-            })
             setSlide('p3');
           }}>NEXT</Button>
         </div>;
       case 'p3':
         return <div>
           <Typography variant="h6" component="h2">Group Location</Typography>
-
+          <Typography>Your group will be based in {place}.</Typography>
           <Button onClick={() => {
             setSlide('p4');
           }}>NEXT</Button>
         </div>;
       case 'p4':
         return <div>
-          {/* <Typography variant="h6" component="h2">Privacy</Typography> */}
           <FormControl>
             <FormLabel id="local-or-global-radios">Settings</FormLabel>
             <RadioGroup
@@ -109,7 +119,8 @@ function MakeGroup (props) {
           <Typography variant="h6" component="h2">Choose a Photo</Typography>
           {/* PHOTO FUNCTIONALITY */}
           <Button onClick={() => {
-              //MAKE THE GROUP
+              fakeAxiosPost();
+              handleClose();
           }}>CREATE</Button>
         </div>
       default:
@@ -118,7 +129,8 @@ function MakeGroup (props) {
   }
 
   return <div className="">
-    <button onClick={handleOpen}>Create New Group</button>
+    <LeftBar />
+    <button style={modalStyle} onClick={handleOpen}>Create New Group</button> {/* Create New Group button placeholder */}
     <Modal
       open={open}
       onClose={() => {
