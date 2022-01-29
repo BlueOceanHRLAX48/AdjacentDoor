@@ -5,7 +5,7 @@ import TopNav from './TopNav';
 
 function Home() {
   return (
-    <div className='w-screen flex dark:bg-gray-900 dark:text-white'>
+    <div className='flex dark:bg-gray-900 dark:text-white'>
       <div className='hidden sm:flex'>
         <LeftBar />
       </div>
