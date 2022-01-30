@@ -3,7 +3,7 @@ import { Modal, Box, Button, TextField, Typography, Radio, RadioGroup, FormContr
 import axios from 'axios';
 import LeftBar from '../LeftBar';
 import { Link } from 'react-router-dom';
-import { validGroupNameInputs, validDescriptionInputs } from '../Regex';
+import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
 
 function MakeGroup (props) {
   const [open, setOpen] = useState(false);
@@ -18,11 +18,7 @@ function MakeGroup (props) {
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
   const [photo, setPhoto] = useState('');
-
-  // const [coordinates, setCoordinates] = useState([null, null]); // lng lat
-  // const [place, setPlace] = useState('');
-  // const [city, setCity] = useState('');
-  // const [zip, setZip] = useState(null);
+  const [localRadius, setRadius] = useState('');
 
   const [location, setLocation] = useState({
     place: '',
@@ -58,8 +54,12 @@ function MakeGroup (props) {
     p: 4
   }
 
+  const hideField = {
+    display: 'none'
+  }
+
   const fakeAxiosPost = () => {
-    console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo);
+    console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo, localRadius);
   }
 
   const resetInputs = () => {
@@ -126,6 +126,9 @@ function MakeGroup (props) {
               <FormControlLabel value="local" control={ <Radio /> } label="Local" onClick={() => {
                 setLocal('local');
               }}></FormControlLabel>
+              {local === 'local' ? <TextField type='text' value={localRadius || ''} onChange={(e) => {
+                setRadius(e.target.value);
+              }}></TextField> : ''}
             </RadioGroup>
             <FormLabel id="local-or-global-radios">Privacy</FormLabel>
             <RadioGroup
@@ -142,7 +145,11 @@ function MakeGroup (props) {
             </RadioGroup>
           </FormControl>
           <Button onClick={() => {
-            setSlide('p5');
+            if(validIntegerInputs.test(localRadius)){
+              setSlide('p5');
+            } else {
+              alert('Please provide a valid integer radius')
+            }
           }}>NEXT</Button>
         </div>;
       case 'p5':
@@ -160,7 +167,7 @@ function MakeGroup (props) {
     }
   }
 
-  return <div className="">
+  return <div className="makeGroupModal">
     <LeftBar />
     <button style={modalStyle} onClick={handleOpen}>Create New Group</button> {/* Create New Group button placeholder */}
     <Modal
