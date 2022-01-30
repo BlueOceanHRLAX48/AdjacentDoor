@@ -15,25 +15,35 @@ function MakeGroup (props) {
   const [slide, setSlide] = useState('p1');
   const [groupName, setGname] = useState('');
   const [description, setDescription] = useState('');
-  const [coordinates, setCoordinates] = useState([null, null]); // lng lat
-  const [place, setPlace] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState(null);
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
   const [photo, setPhoto] = useState('');
 
+  // const [coordinates, setCoordinates] = useState([null, null]); // lng lat
+  // const [place, setPlace] = useState('');
+  // const [city, setCity] = useState('');
+  // const [zip, setZip] = useState(null);
+
+  const [location, setLocation] = useState({
+    place: '',
+    city: '',
+    zip: '',
+    coordinates: [null, null]
+  })
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
-      setCoordinates([position.coords.longitude, position.coords.latitude])
       axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`)
       .then((results) => {
-        setPlace(results.data.features[1].place_name);
-        setCity(results.data.features[2].text);
-        setZip(results.data.features[1].text);
+        setLocation({
+          place: results.data.features[1].place_name,
+          city: results.data.features[2].text,
+          zip: results.data.features[1].text,
+          coordinates: [position.coords.longitude, position.coords.latitude]
+        });
       })
     })
-  }, [city, zip])
+  }, [location.city, location.zip])
 
   const modalStyle = {
     display: 'flex',
@@ -49,7 +59,7 @@ function MakeGroup (props) {
   }
 
   const fakeAxiosPost = () => {
-    console.log('POSTING, ', groupName, description, coordinates, city, zip, privacy, local, photo);
+    console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo);
   }
 
   const resetInputs = () => {
@@ -96,7 +106,7 @@ function MakeGroup (props) {
       case 'p3':
         return <div>
           <Typography variant="h6" component="h2">Group Location</Typography>
-          <Typography>Your group will be based in {place}.</Typography>
+          <Typography>Your group will be based in {location.place}.</Typography>
           <Button onClick={() => {
             setSlide('p4');
           }}>NEXT</Button>
