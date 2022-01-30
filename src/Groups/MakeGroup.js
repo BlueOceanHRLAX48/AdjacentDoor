@@ -3,11 +3,15 @@ import { Modal, Box, Button, TextField, Typography, Radio, RadioGroup, FormContr
 import axios from 'axios';
 import LeftBar from '../LeftBar';
 import { Link } from 'react-router-dom';
+import { validGroupNameInputs, validDescriptionInputs } from '../Regex';
 
 function MakeGroup (props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    resetInputs();
+  };
   const [slide, setSlide] = useState('p1');
   const [groupName, setGname] = useState('');
   const [description, setDescription] = useState('');
@@ -48,28 +52,45 @@ function MakeGroup (props) {
     console.log('POSTING, ', groupName, description, coordinates, city, zip, privacy, local, photo);
   }
 
+  const resetInputs = () => {
+    setGname('')
+    setDescription('')
+    setPrivacy('public')
+    setLocal('global')
+    setPhoto('')
+  }
+
   const renderSlide = (slide) => {
     switch (slide) {
       case 'p1':
         return <div>
           <Typography variant="h6" component="h2">Group Name</Typography>
-          <TextField id="getGroupName" type='text' onChange={(e) => {
+          <TextField id="getGroupName" type='text' value={groupName || ''} onChange={(e) => {
             setGname(e.target.value);
           }}></TextField>
           <Typography>Choose a name for your group</Typography>
           <Button onClick={() => {
-            setSlide('p2');
+            if(validGroupNameInputs.test(groupName.trim())){
+              setGname(groupName.trim());
+              setSlide('p2');
+            } else {
+              alert('Please enter a valid group name.')
+            }
           }}>NEXT</Button>
         </div>;
       case 'p2':
         return <div>
           <Typography variant="h6" component="h2">Description</Typography>
-          <TextField id="getGroupDescription" type='text' onChange={(e) => {
+          <TextField id="getGroupDescription" type='text' value={description || ''} onChange={(e) => {
             setDescription(e.target.value);
           }}></TextField>
           <Typography>Please give us a brief description of your group</Typography>
           <Button onClick={() => {
-            setSlide('p3');
+            if(validDescriptionInputs.test(description)){
+              setSlide('p3');
+            } else {
+              alert('Please remove non-alphanumeric characters from your description')
+            }
           }}>NEXT</Button>
         </div>;
       case 'p3':
