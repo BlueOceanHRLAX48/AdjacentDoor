@@ -5,8 +5,27 @@ const getAllPosts = (req, res) => {
   const { group_id } = req.query;
   pool
     .query(queries.getAllPosts, [group_id])
-    .then((results) => res.json(results.rows))
-    .catch((err) => console.error(err))
+    .then((results) => {
+      const data = {
+        group_id: group_id,
+        posts: results.rows
+      }
+      res.status(200).json(data)})
+    .catch((err) => res.status(500).send(err))
+}
+
+const getAllPostsUsers = (req, res) => {
+  const { user_group_id } = req.query;
+  pool
+    .query(queries.getAllPostsUsers, [user_group_id])
+    .then((results) => {
+      const data = {
+        group_id: user_group_id,
+        posts: results.rows
+      }
+      res.status(200).json(data)
+    })
+    .catch((err) => res.status(500).send(err))
 }
 
 const addPost = (req, res) => {
@@ -28,5 +47,6 @@ const addPost = (req, res) => {
 }
 module.exports = {
   getAllPosts,
-  addPost
+  addPost,
+  getAllPostsUsers
 }

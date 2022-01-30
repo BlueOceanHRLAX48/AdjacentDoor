@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
   admin_id int NOT NULL REFERENCES user_account(user_id),
-  user_id int NOT NULL REFERENCES user_account(user_id),
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
