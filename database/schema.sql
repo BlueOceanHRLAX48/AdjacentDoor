@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  coordinates text NOT NULL,
+  latitude float NOT NULL,
+  longitude float NOT NULL,
   photo text NOT NULL,
   "safety" int NOT NULL DEFAULT 0,
   friendliness int NOT NULL DEFAULT 0
@@ -42,7 +43,8 @@ CREATE TABLE IF NOT EXISTS user_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  coordinates text NOT NULL,
+  latitude float NOT NULL,
+  longitude float NOT NULL,
   privacy boolean DEFAULT false,
   photo text NOT NULL,
   "safety" int NOT NULL DEFAULT 0,
@@ -61,7 +63,8 @@ CREATE TABLE posts(
 	report INT DEFAULT 0,
 	tag TEXT,
 	privacy boolean DEFAULT false,
-  coordinates TEXT
+  latitude float NOT NULL,
+  longitude float NOT NULL
 );
 
 DROP TABLE IF EXISTS post_imgs CASCADE;
@@ -80,7 +83,8 @@ CREATE TABLE IF NOT EXISTS replies(
   report int NOT NULL DEFAULT 0,
   "like" int NOT NULL DEFAULT 0,
   "time" TIMESTAMP DEFAULT now(),
-  coordinates TEXT
+  latitude float NOT NULL,
+  longitude float NOT NULL
 );
 
 
