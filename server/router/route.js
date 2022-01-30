@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../controller')
+const controller = require('../controller/index.js');
 
-router.route('/dummy')
-  .get(db.users.get)
 
-module.exports= router
+router.route('/posts')
+  .get(controller.posts.getAllPosts)
+  .post(controller.posts.addPost)
+
+module.exports= router;
