@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 // add and retrieve posts for default groups
-app.use('/groups', router);
+app.use('/posts', router);
 
 // add and retrieve posts for user groups
 // app.use('/usergroups', router);

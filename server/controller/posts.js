@@ -10,25 +10,23 @@ const getAllPosts = (req, res) => {
 }
 
 const addPost = (req, res) => {
-
+  const {group_id, user_group_id, user_id, body, tag, latitude, longitude, photos } = req.body;
+  const privacy = req.body.privacy || false;
+  const values = [group_id, user_group_id, user_id, body, tag, privacy, latitude, longitude];
+  pool
+    .query(queries.addPost, values)
+    .then((results) => {
+      const post_id = results.rows[0].post_id;
+      photos.forEach((url) => {
+        pool
+          .query(queries.addPostImage, [post_id, url])
+          .then(() => console.log('succuess add image'))
+      })
+      res.status(201).send('success make a post')
+    })
+    .catch((err) => res.status(500).send(err))
 }
 module.exports = {
   getAllPosts,
   addPost
-  // getAllPosts: function(req, res) {
-  //   pool
-  //     .query('select * from posts;')
-  //     .then((result) => res.json(result.rows))
-  //     .catch((err) => console.log(err))
-  // },
-  // addPost: function(req, res) {
-  //   //const { group_id, user_group_id } = req.query;
-  //   // const group_id = req.query.group_id || NULL;
-  //   // const user_group_id = req.query.user_group_id || NULL;
-  //   // return console.log(req);
-  //   //res.send('test');
-  //   // pool
-  //   //   .query(queries.addPost, values.post)
-  //   //   .then()
-  // }
 }

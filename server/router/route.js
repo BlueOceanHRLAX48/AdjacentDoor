@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controller/index.js');
 
 
-router.route('/posts')
+router.route('/defaultgroup')
   .get(controller.posts.getAllPosts)
   .post(controller.posts.addPost)
 
