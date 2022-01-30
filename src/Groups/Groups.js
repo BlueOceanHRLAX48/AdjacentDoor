@@ -3,7 +3,7 @@ import MakeGroup from './MakeGroup';
 
 function Groups (props) {
 
-  return <div className="PLACEHOLDER">
+  return <div className="seeGroups">
     <MakeGroup />
   </div>;
 }

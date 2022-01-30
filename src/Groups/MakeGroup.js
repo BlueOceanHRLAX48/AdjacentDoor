@@ -169,7 +169,7 @@ function MakeGroup (props) {
 
   return <div className="makeGroupModal">
     <LeftBar />
-    <button style={modalStyle} onClick={handleOpen}>Create New Group</button> {/* Create New Group button placeholder */}
+    <Button style={modalStyle} variant="outlined" onClick={handleOpen}>Create</Button>
     <Modal
       open={open}
       onClose={() => {
