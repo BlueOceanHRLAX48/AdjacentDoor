@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
-import UserInfo from './LeftBar/UserInfo';
+import { Avatar } from '@mui/material';
 
 function TopNav() {
   const [nextTheme, setTheme] = useTheme();
@@ -17,7 +17,11 @@ function TopNav() {
         </button>
         <Link to='/my-profile'>
           <div className='ml-4'>
-            <UserInfo />
+            <Avatar
+              alt='Remy Sharp'
+              src='/static/images/avatar/1.jpg'
+              sx={{ width: 35, height: 35 }}
+            />
           </div>
         </Link>
       </div>
