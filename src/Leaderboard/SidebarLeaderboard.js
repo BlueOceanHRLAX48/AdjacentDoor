@@ -4,11 +4,36 @@ import SidebarUser from './SidebarUser';
 
 function SidebarLeaderboard() {
   const sampleData = [
-    { name: 'John Smith', contribution: 45, location: 'Los Angeles, CA' },
-    { name: 'Mike Lemon', contribution: 22, location: 'San Diego, CA' },
-    { name: 'Elton Lemon', contribution: 169, location: 'Seattle, WA' },
-    { name: 'Quinton Maki', contribution: 200, location: 'Las Vegas, NV' },
-    { name: 'Ben Bernardy', contribution: 11, location: 'San Francisco, CA' },
+    {
+      name: 'John Smith',
+      contribution: 45,
+      location: 'Los Angeles, CA',
+      privacy: false,
+    },
+    {
+      name: 'Mike Lemon',
+      contribution: 22,
+      location: 'San Diego, CA',
+      privacy: true,
+    },
+    {
+      name: 'Elton Lemon',
+      contribution: 169,
+      location: 'Seattle, WA',
+      privacy: true,
+    },
+    {
+      name: 'Quinton Maki',
+      contribution: 200,
+      location: 'Las Vegas, NV',
+      privacy: false,
+    },
+    {
+      name: 'Ben Bernardy',
+      contribution: 11,
+      location: 'San Francisco, CA',
+      privacy: false,
+    },
   ];
 
   const leaderboardElements = sampleData
