@@ -5,7 +5,7 @@ const getAllPosts = `SELECT p.post_id,
                 coalesce(json_agg(i) FILTER (WHERE i.post_id IS NOT NULL), '[]') AS photos
                FROM posts p
                LEFT JOIN post_imgs i ON p.post_id = i.post_id
-               WHERE group_id = $1
+               WHERE group_id = $1 AND deleted = false
                GROUP BY p.post_id
                ORDER BY p.time DESC;`;
 
@@ -23,7 +23,7 @@ const getAllPostsUsers = `SELECT p.post_id,
                         coalesce(json_agg(i) FILTER (WHERE i.post_id IS NOT NULL), '[]') AS photos
                         FROM posts p
                         LEFT JOIN post_imgs i ON p.post_id = i.post_id
-                        WHERE user_group_id = $1
+                        WHERE user_group_id = $1 AND deleted = false
                         GROUP BY p.post_id
                         ORDER BY p.time DESC;`;
 
@@ -32,11 +32,15 @@ const likePost = `UPDATE posts SET "like" = "like" + 1
 
 const reportPost = `UPDATE posts SET report = report + 1
                     WHERE post_id = $1;`;
+
+const deletePost = `UPDATE posts SET deleted = true
+                    WHERE post_id = $1;`;
 module.exports = {
   getAllPosts,
   addPost,
   addPostImage,
   getAllPostsUsers,
   likePost,
-  reportPost
+  reportPost,
+  deletePost
 };

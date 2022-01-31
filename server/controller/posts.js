@@ -28,41 +28,64 @@ const getAllPostsUsers = (req, res) => {
     .catch((err) => res.status(500).send(err))
 }
 
-const addPost = (req, res) => {
-  const {group_id, user_group_id, user_id, body, tag, latitude, longitude, photos } = req.body;
-  const privacy = req.body.privacy || false;
-  const values = [group_id, user_group_id, user_id, body, tag, privacy, latitude, longitude];
-  pool
-    .query(queries.addPost, values)
-    .then((results) => {
-      const post_id = results.rows[0].post_id;
-      photos.forEach((url) => {
-        pool
-          .query(queries.addPostImage, [post_id, url])
-          .then(() => console.log('succuess add image'))
-      })
-      res.status(201).send('success make a post')
-    })
-    .catch((err) => res.status(500).send(err))
-}
-const likePost = (req, res) => {
-  const { post_id } = req.params;
-  pool
-    .query(queries.likePost,[post_id])
-    .then(() => res.sendStatus(204))
-    .catch((err) => res.status(500).send(err))
-}
-const reportPost = (req, res) => {
-  const { post_id } = req.params;
-  pool
-    .query(queries.reportPost,[post_id])
-    .then(() => res.sendStatus(204))
-    .catch((err) => res.status(500).send(err))
-}
+// const addPost = (req, res) => {
+//   const {group_id, user_group_id, user_id, body, tag, latitude, longitude, photos } = req.body;
+//   const privacy = req.body.privacy || false;
+//   const values = [group_id, user_group_id, user_id, body, tag, privacy, latitude, longitude];
+//   pool
+//     .query(queries.addPost, values)
+//     .then((results) => {
+//       const post_id = results.rows[0].post_id;
+//       photos.forEach((url) => {
+//         pool
+//           .query(queries.addPostImage, [post_id, url])
+//           .then(() => console.log('succuess add image'))
+//       })
+//       res.status(201).send('success make a post')
+//     })
+//     .catch((err) => res.status(500).send(err))
+// }
+
 module.exports = {
   getAllPosts,
-  addPost,
+  addPost: (req, res) => {
+    const {group_id, user_group_id, user_id, body, tag, latitude, longitude, photos } = req.body;
+    const privacy = req.body.privacy || false;
+    const values = [group_id, user_group_id, user_id, body, tag, privacy, latitude, longitude];
+    pool
+      .query(queries.addPost, values)
+      .then((results) => {
+        const post_id = results.rows[0].post_id;
+        if(photos) {
+          photos.forEach((url) => {
+            pool
+              .query(queries.addPostImage, [post_id, url])
+          })
+        }
+        res.status(201).send('success make a post')
+      })
+      .catch((err) => res.status(500).send(err))
+  },
   getAllPostsUsers,
-  likePost,
-  reportPost
+  likePost: (req, res) => {
+    const { post_id } = req.params;
+    pool
+      .query(queries.likePost,[post_id])
+      .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err))
+  },
+  reportPost: (req, res) => {
+    const { post_id } = req.params;
+    pool
+      .query(queries.reportPost,[post_id])
+      .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err))
+  },
+  deletePost: (req, res) => {
+    const { post_id } = req.params;
+    pool
+      .query(queries.deletePost,[post_id])
+      .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err))
+  }
 }

@@ -18,6 +18,9 @@ router.route('/posts/like/:post_id')
 router.route('/posts/report/:post_id')
   .put(controller.posts.reportPost)
 
+router.route('/posts/delete/:post_id')
+  .delete(controller.posts.deletePost)
+
 router.route('/groups/default')
   .get(controller.groups.getDefaultGroup)
   .post(controller.groups.createDefaultGroup)
