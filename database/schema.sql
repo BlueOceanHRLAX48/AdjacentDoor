@@ -54,6 +54,7 @@ CREATE TABLE user_group_list(
   id SERIAL NOT NULL PRIMARY KEY,
   network_id text NOT NULL,
   user_group_id int NOT NULL,
+  accepted boolean NOT NULL DEFAULT false,
   FOREIGN KEY (network_id)
   REFERENCES user_account(network_id)
   ON DELETE CASCADE,
@@ -75,7 +76,8 @@ CREATE TABLE posts(
 	tag TEXT,
 	privacy boolean DEFAULT false,
   latitude float NOT NULL,
-  longitude float NOT NULL
+  longitude float NOT NULL,
+  deleted boolean DEFAULT false
 );
 
 DROP TABLE IF EXISTS post_imgs CASCADE;
