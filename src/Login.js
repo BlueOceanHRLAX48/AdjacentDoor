@@ -23,7 +23,8 @@ function Login() {
   //     : null
   // );
 
-  const [fillIn, setFillIn] = useState(true);
+  const [notice, setNotice] = useState(false);
+  const [fillIn, setFillIn] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,8 +35,10 @@ function Login() {
     };
     console.log(submitData);
     if (!submitData.username || !submitData.email) {
+      setNotice(true);
       setFillIn(false);
     } else {
+      setNotice(false);
       setFillIn(true);
     }
   };
@@ -118,7 +121,7 @@ function Login() {
                 control={<Checkbox value='remember' color='primary' />}
                 label='Remember me'
               />
-              {!fillIn && <div style={{
+              {(!fillIn && notice) && <div style={{
                 display: 'flex',
                 justifyContent: 'center',
                 color: 'red',

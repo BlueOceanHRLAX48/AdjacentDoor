@@ -12,7 +12,8 @@ import { IoIosWarning } from 'react-icons/io';
 import theme from './components/muiTheme';
 
 function SignUp() {
-  const [fillIn, setFillIn] = useState(true);
+  const [notice, setNotice] = useState(false);
+  const [fillIn, setFillIn] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,8 +25,10 @@ function SignUp() {
       email: data.get('email'),
     };
     if (!submitData.firstName || !submitData.lastName || !submitData.username || !submitData.email) {
+      setNotice(true);
       setFillIn(false);
     } else {
+      setNotice(false);
       setFillIn(true);
     }
   };
@@ -109,7 +112,7 @@ function SignUp() {
                   name='email'
                   autoComplete='email'
                 />
-                {!fillIn && <div style={{
+                {(!fillIn && notice) && <div style={{
                   display: 'flex',
                   justifyContent: 'center',
                   color: 'red',
