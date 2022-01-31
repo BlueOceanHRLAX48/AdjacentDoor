@@ -4,8 +4,12 @@ CREATE DATABASE IF NOT EXISTS blueocean;
 DROP TABLE IF EXISTS user_account CASCADE;
 CREATE TABLE IF NOT EXISTS user_account(
   user_id SERIAL NOT NULL PRIMARY KEY,
-  "name" text NOT NULL,
+  firstName text NOT NULL,
+  lastName text NOT NULL,
+  username text NOT NULL DEFAULT null,
   email text NOT NULL,
+  network_id text NOT NULL UNIQUE,
+  "admin" BOOLEAN DEFAULT false,
   "address" text NOT NULL,
   city text NOT NULL,
   "state" text NOT NULL,
@@ -20,7 +24,9 @@ DROP TABLE IF EXISTS default_groups CASCADE;
 CREATE TABLE IF NOT EXISTS default_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
-  "location" text not NULL,
+  city text NOT NULL,
+  "state" text NOT NULL,
+  zip text not NULL,
   photo text NOT NULL,
   "safety" int NOT NULL DEFAULT 0,
   friendliness int NOT NULL DEFAULT 0
@@ -31,12 +37,29 @@ CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
   admin_id int NOT NULL REFERENCES user_account(user_id),
-  user_id int NOT NULL REFERENCES user_account(user_id),
-  "location" text not NULL,
+  "address" text NOT NULL,
+  city text NOT NULL,
+  "state" text NOT NULL,
+  zip text not NULL,
+  latitude FLOAT NOT NULL,
+  longitude FLOAT NOT NULL,
   privacy boolean DEFAULT false,
   photo text NOT NULL,
   "safety" int NOT NULL DEFAULT 0,
   friendliness int NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS user_group_list CASCADE;
+CREATE TABLE user_group_list(
+  id SERIAL NOT NULL PRIMARY KEY,
+  network_id text NOT NULL,
+  user_group_id int NOT NULL,
+  FOREIGN KEY (network_id)
+  REFERENCES user_account(network_id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (user_group_id)
+  REFERENCES user_groups(id)
+  ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS posts CASCADE;
@@ -46,6 +69,8 @@ CREATE TABLE posts(
   user_group_id INT DEFAULT 0 REFERENCES user_groups(id),
 	user_id INT NOT NULL REFERENCES user_account(user_id),
 	body TEXT NOT NULL,
+  latitude FLOAT NOT NULL,
+  longitude FLOAT NOT NULL,
 	"time" TIMESTAMP DEFAULT now(),
 	"like" INT DEFAULT 0,
 	report INT DEFAULT 0,
@@ -68,11 +93,33 @@ CREATE TABLE IF NOT EXISTS replies(
   reply text NOT NULL,
   report int NOT NULL DEFAULT 0,
   "like" int NOT NULL DEFAULT 0,
-  "time" TIMESTAMP DEFAULT now()
+  "time" TIMESTAMP DEFAULT now(),
+  latitude FLOAT NOT NULL,
+  longitude FLOAT NOT NULL,
 );
 
 
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('user_account', 'user_id')), (SELECT (MAX("user_id") + 1) FROM "user_account"), FALSE);
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('posts', 'post_id')), (SELECT (MAX("post_id") + 1) FROM "posts"), FALSE);
 
-INSERT INTO user_account(name, email, address, city, state, zip, profile_img, privacy, contribution, default_groupID) VALUES ('ernest', '12345@gmail.com', '1234 street st', 'city', 'state', '5678', '1234.com', DEFAULT, DEFAULT, 5);
+INSERT INTO user_account(firstName, lastName, username, email, network_id,address, city, state, zip, profile_img, privacy, contribution, default_groupID)
+VALUES ('ernest','zhang','ez', '12345@gmail.com', '1124asfas','1234 street st', 'city', 'state', '5678', '1234.com', DEFAULT, DEFAULT, 1);
+
+INSERT INTO user_account(firstName, lastName, username,  email, network_id, address, city, state, zip, profile_img, privacy, contribution, default_groupID)
+VALUES ('ernst','zheng', 'ez123','23456@gmail.com', '12l5kjasf','2345 street st', 'city1', 'state1', '1234', '1sf.com', DEFAULT, DEFAULT, 3);
+
+INSERT INTO user_account(firstName, lastName, username,  email, network_id, address, city, state, zip, profile_img, privacy, contribution, default_groupID)
+VALUES ('arnest','zhung', 'ez456','afas@gmail.com', '09afaspoi','3456 street st', 'city2', 'state2', '7890', 'asd.com', DEFAULT, DEFAULT, 1);
+
+INSERT INTO user_groups(name, admin_id, address, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
+VALUES ('the group', 1, '1234 street st', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
+
+INSERT INTO user_groups(name, admin_id, address, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
+VALUES ('the second group', 1, '1234 street st', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
+
+INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
+VALUES ('the place', 'city', 'state', '5678', 'photo.com', DEFAULT, DEFAULT);
+
+INSERT INTO user_group_list(network_id, user_group_id) VALUES ('1124asfas', 1), ('12l5kjasf', 1), ('09afaspoi', 1);
+
+INSERT INTO user_group_list(network_id, user_group_id) VALUES ('1124asfas', 2), ('09afaspoi', 2);
