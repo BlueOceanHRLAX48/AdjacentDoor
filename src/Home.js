@@ -10,14 +10,14 @@ function Home() {
         <LeftBar />
       </div>
       <div>
-        <div>
+        <div className='hidden sm:flex'>
           <TopNav />
         </div>
-        <div className='flex'>
+        <div>
           <div>
             <Feed />
           </div>
-          <div>
+          <div className='hidden sm:flex'>
             <RightBar />
           </div>
         </div>

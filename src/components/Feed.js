@@ -93,9 +93,9 @@ function Feed() {
   };
 
   return (
-    <div className='w-[600px] min-h-screen p-4'>
+    <div className='w-full sm:w-[600px] min-h-screen p-4'>
       <div className='hide-scroll-bar h-screen overflow-y-scroll'>
-        <div>
+        <div className='hidden sm:flex'>
           <form className='flex justify-center relative'>
             <textarea
               className='text-sm p-1 px-3 w-full h-10 rounded-xl border border-slate-100 shadow-sm focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'

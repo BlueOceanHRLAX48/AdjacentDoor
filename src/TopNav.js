@@ -5,15 +5,15 @@ function TopNav() {
   const [nextTheme, setTheme] = useTheme();
 
   return (
-    <div className=' flex mt-4 items-center '>
-      <>
+    <div className='inline-flex mt-4 items-center '>
+      <div>
         <SearchBar />
-      </>
-      <>
+      </div>
+      <div className=''>
         <button className='text-sm ml-4' onClick={() => setTheme(nextTheme)}>
           darkmode
         </button>
-      </>
+      </div>
     </div>
   );
 }
