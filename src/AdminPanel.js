@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import LeftBar from './LeftBar';
+import RightBar from './RightBar';
 
 function AdminPanel(props) {
   const [flaggedGroups, setFlaggedGroups] = React.useState([
@@ -32,17 +35,33 @@ function AdminPanel(props) {
     },
   ]);
 
-  const groupElements = flaggedGroups.map((group) => <Group group={group} />);
+  React.useEffect(() => {
+    getGroups();
+  }, []);
+
+  function getGroups() {
+    // axios call to get flagged groups
+    // res => setFlaggedGroups(res)
+  }
+
+  const groupElements = flaggedGroups
+    .sort((a, b) => b.reports - a.reports)
+    .map((group, i) => <Group group={group} key={i} refresh={getGroups} />);
 
   return (
-    <div className='h-screen'>
-      <div className='text-4xl font-bold text-center py-2'>
-        AdjacentDoor Admin Panel
+    <div className='flex h-screen'>
+      <LeftBar />
+      <div className='flex flex-col grow'>
+        <div className='text-4xl font-bold text-center pt-3 pb-2'>
+          Admin Panel
+        </div>
+
+        <div className='w-full border rounded p-4'>
+          <div className='text-center'>Groups Pending Review</div>
+          <div className='p-2'>{groupElements}</div>
+        </div>
       </div>
-      <div className='w-1/2 border rounded p-4'>
-        <div className='text-center'>Groups Pending Review</div>
-        <div className='p-2'>{groupElements}</div>
-      </div>
+      <RightBar />
     </div>
   );
 }
@@ -52,17 +71,45 @@ export default AdminPanel;
 function Group(props) {
   const [expand, setExpand] = React.useState(false);
 
+  function handleForgive() {
+    console.log(props.group);
+  }
+
+  function handleDelete() {
+    console.log(props.group);
+  }
+
   return (
     <>
       <div
         className='w-full flex items-center border-b p-2 rounded hover:bg-ghostWhite transition-all duration-150'
         onClick={() => setExpand((x) => !x)}
       >
-        {props.group.name}
-        <div className='ml-auto text-sm'>created by {props.group.creator}</div>
+        <div className='font-bold'>{props.group.name}</div>
+        <div className='ml-auto text-sm'>{props.group.reports} reports</div>
       </div>
       {expand && (
-        <div className='px-2 pb-2'>Members: {props.group.members}</div>
+        <div className='p-2 flex'>
+          <Link
+            to={`/g/${props.group.id}`}
+            className='w-fit px-2 ring-1 ring-primary rounded hover:bg-ghostWhite'
+          >
+            Visit Group Page
+          </Link>
+          <div className='pl-2'>{props.group.members} members</div>
+          <button
+            className='ml-auto border border-red-400 px-2 rounded hover:bg-red-300'
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+          <button
+            className='ml-2 px-2 border border-green-300 rounded hover:bg-green-200'
+            onClick={handleForgive}
+          >
+            Forgive
+          </button>
+        </div>
       )}
     </>
   );
