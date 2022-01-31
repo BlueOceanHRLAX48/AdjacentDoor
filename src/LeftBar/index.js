@@ -4,7 +4,7 @@ import UserInfo from './UserInfo';
 
 function LeftBar() {
   return (
-    <div className='flex flex-col w-[250px] h-screen px-6 py-4'>
+    <div className='flex flex-col w-[250px] px-6 py-4'>
       <Link to='/'>
         <div className='text-2xl  text-primary font-bold pb-4 px-4 '>Adjacent Door</div>
       </Link>

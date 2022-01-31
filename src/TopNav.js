@@ -5,7 +5,7 @@ function TopNav() {
   const [nextTheme, setTheme] = useTheme();
 
   return (
-    <div className='inline-flex mt-4 items-center '>
+    <div className='inline-flex mt-4 mb-4 items-center '>
       <div>
         <SearchBar />
       </div>
