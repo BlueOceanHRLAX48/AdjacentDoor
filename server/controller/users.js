@@ -1,4 +1,4 @@
-const pool = require('../../database/index.js');
+const pool = require('../../database');
 
 module.exports = {
   getUser: (req, res) => {
@@ -33,7 +33,7 @@ module.exports = {
 
         res.json(userInfo)
       })
-      .catch((err)=> res.status(500).send(err))
+      .catch((err)=> res.status(500).send('Could not find user'))
   },
 
   createUser: async (req, res) => {
@@ -52,13 +52,7 @@ module.exports = {
       profile_img
     } = req.body
 
-    let groupParams = [
-      city,
-      city,
-      state,
-      zip,
-    ]
-
+    let groupParams = [ city, city, state, zip]
 
     let findDefault =
     `select id from default_groups
@@ -73,34 +67,48 @@ module.exports = {
       photo,
       safety,
       friendliness
-      ) values($1)`
+      ) values($1, $2, $3, $4, null, default, default)
+      returning id`
 
     let groupRes = await pool.query(findDefault, [zip])
 
     let groupId;
 
     if (!groupRes.rows.length) {
-      pool.query(newDefault, [zip])
-        .then(result => groupId = result.rows[0].id)
+      let newGroupRes = await pool.query(newDefault, groupParams)
+      groupId = newGroupRes.rows[0].id
     } else {
       groupId = groupRes.rows[0].id
     }
 
-
-    console.log(groupId)
-
+    let userParams = [
+      firstName,
+      lastName,
+      username,
+      email,
+      network_id,
+      admin,
+      address,
+      city,
+      state,
+      zip,
+      privacy,
+      profile_img,
+      groupId
+    ]
 
     let createStr =
-    `insert into user_account values(
+    `insert into user_account(
       firstName, lastName, username,
       email, network_id, admin, address,
       city, state, zip, privacy, profile_img,
-      default_groupID
-    )`
+      default_groupID)
+      values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      `
 
-    // pool.query(createStr)
-    //  .then((res) => res.status(201).send('account created'))
-    //  .catch(err => res.status(500).send('could not create account'))
+    pool.query(createStr, userParams)
+     .then((result) => res.status(201).send('Your account has been created'))
+     .catch(err => console.log(err))
   },
 
   updatePhoto: (req, res) => {
@@ -111,12 +119,20 @@ module.exports = {
       where network_id = $2;
     `
     pool.query(photoStr, [photo, id])
-      .then(res => res.status(201).send('updated photo'))
-      .catch(err => res.status(500).send('could not update photo'))
+      .then(result => res.status(201).send('Profile photo updated'))
+      .catch(err => res.status(500).send('Could not update photo'))
   },
 
   updateLocation: (req, res) => {
+    let { id } = req.params
+    let locationParams = [req.body.address,  req.body.city,  req.body.state,  req.body.zip, id ]
 
+    let locationStr =
+    `update user_account set address = $1, city = $2, state = $3, zip= $4 where network_id = $5`
+
+    pool.query(locationStr, locationParams)
+      .then(result => res.status(201).send('Your location has been updated'))
+      .catch(err => res.status(500).send('Could not update your location'))
   },
 
   updateContribution: (req, res) => {
@@ -126,8 +142,8 @@ module.exports = {
       where network_id = $1;
     `
     pool.query(scoreStr , [id])
-      .then(res => res.status(201).send('updated score'))
-      .catch(err => res.status(500).send('did not update score'))
+      .then(result => res.status(201).send('Score has been updated'))
+      .catch(err => res.status(500).send('Could not update score'))
   },
 
   deleteUser: (req, res) => {
@@ -136,8 +152,8 @@ module.exports = {
     `delete user_account where network_id = $1;`
 
     pool.query(deleteStr, [id])
-      .then(res => res.status(201).send('deleted acount'))
-      .catch(err => res.status(500).send('error deleting account'))
+      .then(result => res.status(201).send('Your account has been deleted'))
+      .catch(err => res.status(500).send('Error deleting account'))
   },
 
   updateNickname: (req, res) => {
@@ -149,7 +165,18 @@ module.exports = {
       where network_id = $2;
     `
     pool.query(nicknameStr , [id, nickname ])
-      .then(res => res.status(201).send('nickname updated'))
-      .catch(err => res.status(500).send('error updating nickname'))
+      .then(result => res.status(201).send('Nickname has been updated'))
+      .catch(err => res.status(500).send('Error updating nickname'))
+  },
+
+  updatePrivacy: (req, res) => {
+    let { id } = req.params
+
+    let privacyStr =
+    `update user_account set privacy = not privacy where network_id = $1`
+
+    pool.query(privacyStr, [id])
+      .then(result=> res.status(201).send('Your privacy setting has been changed'))
+      .catch(err => res.status(500).send('Could not update privacy'))
   }
 }

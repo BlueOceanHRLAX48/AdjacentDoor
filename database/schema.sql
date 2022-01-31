@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text not NULL,
-  photo text NOT NULL,
+  photo text,
   "safety" int NOT NULL DEFAULT 0,
   friendliness int NOT NULL DEFAULT 0
 );
@@ -86,16 +86,17 @@ CREATE TABLE IF NOT EXISTS post_imgs(
 );
 
 DROP TABLE IF EXISTS replies CASCADE;
-CREATE TABLE IF NOT EXISTS replies(
+CREATE TABLE replies(
   id serial NOT NULL,
   user_id int NOT NULL REFERENCES user_account(user_id),
+  username text NOT NULL,
   post_id int NOT NULL REFERENCES posts(post_id),
   reply text NOT NULL,
   report int NOT NULL DEFAULT 0,
   "like" int NOT NULL DEFAULT 0,
   "time" TIMESTAMP DEFAULT now(),
   latitude FLOAT NOT NULL,
-  longitude FLOAT NOT NULL,
+  longitude FLOAT NOT NULL
 );
 
 
