@@ -9,10 +9,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import GoogleLogin from 'react-google-login';
 // import FacebookLogin from 'react-facebook-login';
+import theme from './components/muiTheme';
 
 function Login() {
   const [loginData, setLoginData] = useState(
@@ -63,27 +64,6 @@ function Login() {
   //   localStorage.removeItem('loginData');
   //   setLoginData(null);
   // };
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#B8B8FF',
-        contrastText: "#fff"
-      },
-      secondary: {
-        main: '#9381FF',
-      },
-      ghostWhite: {
-        main: '#F8F8FF',
-      },
-      antiqueWhite: {
-        main: '#FFEEDD',
-      },
-      silk: {
-        main: '#FFD8BE',
-      }
-    },
-  });
 
   return (
     <div className='w-screen flex'>

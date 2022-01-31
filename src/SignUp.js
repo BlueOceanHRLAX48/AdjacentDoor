@@ -7,7 +7,8 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './components/muiTheme';
 
 function SignUp() {
   const handleSubmit = (event) => {
@@ -20,27 +21,6 @@ function SignUp() {
       email: data.get('email'),
     });
   };
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#B8B8FF',
-        contrastText: '#fff',
-      },
-      secondary: {
-        main: '#9381FF',
-      },
-      ghostWhite: {
-        main: '#F8F8FF',
-      },
-      antiqueWhite: {
-        main: '#FFEEDD',
-      },
-      silk: {
-        main: '#FFD8BE',
-      },
-    },
-  });
 
   return (
     <div className='w-screen flex'>
@@ -87,21 +67,21 @@ function SignUp() {
               >
                 <TextField
                   margin='dense'
+                  required
                   fullWidth
                   id='firstName'
                   label='First Name'
                   name='firstName'
                   autoComplete='firstName'
-                  autoFocus
                 />
                 <TextField
                   margin='dense'
+                  required
                   fullWidth
                   id='lastName'
                   label='Last Name'
                   name='lastName'
                   autoComplete='lastName'
-                  autoFocus
                 />
                 <TextField
                   margin='dense'
@@ -111,7 +91,6 @@ function SignUp() {
                   label='Username'
                   name='username'
                   autoComplete='username'
-                  autoFocus
                 />
                 <TextField
                   margin='dense'
@@ -121,7 +100,6 @@ function SignUp() {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
-                  autoFocus
                 />
                 <Button
                   type='submit'
