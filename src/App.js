@@ -5,7 +5,6 @@ import Login from './Login';
 import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
 import SignUp from './SignUp';
-import SignUpLocation from './SignUpLocation';
 
 function App() {
   const [user, setUser] = useState({

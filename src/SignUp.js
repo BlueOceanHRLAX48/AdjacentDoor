@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -8,18 +8,26 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
+import { IoIosWarning } from 'react-icons/io';
 import theme from './components/muiTheme';
 
 function SignUp() {
+  const [fillIn, setFillIn] = useState(true);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const submitData = {
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       username: data.get('username'),
       email: data.get('email'),
-    });
+    };
+    if (!submitData.firstName || !submitData.lastName || !submitData.username || !submitData.email) {
+      setFillIn(false);
+    } else {
+      setFillIn(true);
+    }
   };
 
   return (
@@ -101,12 +109,18 @@ function SignUp() {
                   name='email'
                   autoComplete='email'
                 />
+                {!fillIn && <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  color: 'red',
+                  padding: '5px'
+                }}><IoIosWarning size='20px'/>Please fill out all the required fields</div> }
                 <Button
                   type='submit'
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
-                  href='/signup/location'
+                  href= {fillIn && '/'}
                 >
                   Sign Up
                 </Button>

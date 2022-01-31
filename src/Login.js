@@ -11,25 +11,33 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
+import { IoIosWarning } from 'react-icons/io';
 import GoogleLogin from 'react-google-login';
 // import FacebookLogin from 'react-facebook-login';
 import theme from './components/muiTheme';
 
 function Login() {
-  const [loginData, setLoginData] = useState(
-    localStorage.getItem('loginData')
-      ? JSON.parse(localStorage.getItem('loginData'))
-      : null
-  );
+  // const [loginData, setLoginData] = useState(
+  //   localStorage.getItem('loginData')
+  //     ? JSON.parse(localStorage.getItem('loginData'))
+  //     : null
+  // );
+
+  const [fillIn, setFillIn] = useState(true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
+    const submitData = {
+      username: data.get('username'),
       email: data.get('email')
-    });
+    };
+    console.log(submitData);
+    if (!submitData.username || !submitData.email) {
+      setFillIn(false);
+    } else {
+      setFillIn(true);
+    }
   };
 
   const handleFailure = (result) => {
@@ -110,6 +118,12 @@ function Login() {
                 control={<Checkbox value='remember' color='primary' />}
                 label='Remember me'
               />
+              {!fillIn && <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                color: 'red',
+                padding: '5px'
+              }}><IoIosWarning size='20px'/>Please fill out all the required fields</div> }
               <Button
                 type='submit'
                 fullWidth
@@ -117,6 +131,7 @@ function Login() {
                 font-color='primary'
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
+                href= {fillIn && '/'}
               >
                 Continue
               </Button>
