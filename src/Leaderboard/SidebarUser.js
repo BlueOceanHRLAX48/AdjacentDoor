@@ -23,7 +23,9 @@ function SidebarUser(props) {
         {props.place}
       </div>
       <div>
-        <div className='text-sm font-semibold'>{props.user.name}</div>
+        <div className='text-sm font-semibold'>
+          {props.user.privacy ? 'Private Neighbor' : props.user.name}
+        </div>
         <div className='ml-auto text-xs text-neutral-500'>
           {props.user.location}
         </div>

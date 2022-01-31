@@ -71,7 +71,9 @@ function App() {
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route
           path='/admin'
-          element={user.admin ? <AdminPanel /> : <Navigate to='/' />}
+          element={
+            user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />
+          }
         />
       </Routes>
     </BrowserRouter>
