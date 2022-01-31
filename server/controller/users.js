@@ -6,7 +6,7 @@ module.exports = {
 
     let userStr =
     `select
-    user_id, firstName, lastName,
+    user_id, firstName, lastName, username,
     network_id, email, admin, address, city, state,
     zip, privacy, profile_img, contribution,
     (select json_build_object('id', id, 'name', name)
