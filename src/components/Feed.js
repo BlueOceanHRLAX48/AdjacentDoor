@@ -4,7 +4,8 @@ import Post from './Post';
 function Feed(props) {
   const posts = [
     {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar:
+        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       post_text:
@@ -15,7 +16,8 @@ function Feed(props) {
       longitude: '-73.989308',
     },
     {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar:
+        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       post_text:
@@ -26,7 +28,8 @@ function Feed(props) {
       longitude: '-73.989308',
     },
     {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar:
+        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       post_text:
@@ -37,7 +40,8 @@ function Feed(props) {
       longitude: '-73.989308',
     },
     {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar:
+        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       post_text:
@@ -48,7 +52,8 @@ function Feed(props) {
       longitude: '-73.989308',
     },
     {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar:
+        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       post_text:
@@ -61,8 +66,8 @@ function Feed(props) {
   ];
 
   return (
-    <div className='w-[600px] min-h-screen p-4'>
-      <div className='hide-scroll-bar h-screen overflow-y-scroll'>
+    <div className='w-[600px] p-4'>
+      <div className='hide-scroll-bar overflow-y-scroll'>
         <div className='flex justify-center relative'>
           <input
             className='text-sm p-1 px-3 w-full h-10 rounded-xl border border-slate-100 shadow-sm focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'

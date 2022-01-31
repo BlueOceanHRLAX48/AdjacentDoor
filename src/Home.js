@@ -9,7 +9,7 @@ function Home() {
       <div className='hidden sm:flex'>
         <LeftBar />
       </div>
-      <div>
+      <div className='h-screen overflow-y-scroll hide-scroll-bar'>
         <div>
           <TopNav />
         </div>
@@ -17,11 +17,9 @@ function Home() {
           <div>
             <Feed />
           </div>
-          <div>
-            <RightBar />
-          </div>
         </div>
       </div>
+      <RightBar />
     </div>
   );
 }
