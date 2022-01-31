@@ -45,8 +45,24 @@ const addPost = (req, res) => {
     })
     .catch((err) => res.status(500).send(err))
 }
+const likePost = (req, res) => {
+  const { post_id } = req.params;
+  pool
+    .query(queries.likePost,[post_id])
+    .then(() => res.sendStatus(204))
+    .catch((err) => res.status(500).send(err))
+}
+const reportPost = (req, res) => {
+  const { post_id } = req.params;
+  pool
+    .query(queries.reportPost,[post_id])
+    .then(() => res.sendStatus(204))
+    .catch((err) => res.status(500).send(err))
+}
 module.exports = {
   getAllPosts,
   addPost,
-  getAllPostsUsers
+  getAllPostsUsers,
+  likePost,
+  reportPost
 }

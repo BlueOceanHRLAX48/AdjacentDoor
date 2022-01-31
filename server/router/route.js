@@ -12,6 +12,12 @@ router.route('/posts/usergroup')
   .get(controller.posts.getAllPostsUsers)
   .post(controller.posts.addPost)
 
+router.route('/posts/like/:post_id')
+  .put(controller.posts.likePost)
+
+router.route('/posts/report/:post_id')
+  .put(controller.posts.reportPost)
+
 router.route('/groups/default')
   .get(controller.groups.getDefaultGroup)
   .post(controller.groups.createDefaultGroup)
@@ -19,5 +25,6 @@ router.route('/groups/default')
 router.route('/groups/user')
   .get(controller.groups.getUserGroup)
   .post(controller.groups.createUserGroup)
+
 
 module.exports= router;
