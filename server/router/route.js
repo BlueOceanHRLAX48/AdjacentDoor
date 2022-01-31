@@ -3,29 +3,29 @@ const router = express.Router();
 const controller = require('../controller')
 
 //routes relating to user account
-router.route('/:id')
+router.route('/user/:id')
   .get(controller.users.getUser)
 
-router.route('/signup')
+router.route('/user/signup')
   .post(controller.users.createUser)
 
-router.route('/:id/contribution')
+router.route('/user/:id/contribution')
   .put(controller.users.updateContribution)
 
-router.route('/:id/contribution')
+router.route('/user/:id/photo')
   .put(controller.users.updatePhoto)
 
-router.route('/:id/updateLocation')
+router.route('/user/:id/updateLocation')
   .put(controller.users.updateLocation)
 
-router.route('/:id/updateNickname')
+router.route('/user/:id/updateNickname')
   .put(controller.users.updateNickname)
 
-router.route('/:id/updatePrivacy')
-.put(controller.users.updatePrivacy)
+router.route('/user/:id/updatePrivacy')
+  .put(controller.users.updatePrivacy)
 
-router.route('/:id/deleteUser')
-.delete(controller.users.deleteUser)
+router.route('/user/:id/deleteUser')
+  .delete(controller.users.deleteUser)
 
 // add and retrieve posts for default groups
 router.route('/posts/defaultgroup')
@@ -46,11 +46,11 @@ router.route('/groups/user')
   .post(controller.groups.createUserGroup)
 
 //routes relating to replies of a post
-router.route('/:post_id/replies')
+router.route('posts/:post_id/replies')
   .get(controller.replies.getReplies)
   .post(controller.replies.postReply)
 
-router.route('/:reply_id')
+router.route('reply/:reply_id')
   .put(controller.replies.likeReply)
   .put(controller.replies.reportReply)
   .delete(controller.replies.deleteReply)

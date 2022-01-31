@@ -27,8 +27,6 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  latitude float NOT NULL,
-  longitude float NOT NULL,
   photo text NOT NULL,
   "safety" int NOT NULL DEFAULT 0,
   friendliness int NOT NULL DEFAULT 0
@@ -116,7 +114,7 @@ INSERT INTO user_account(firstName, lastName, username,  email, network_id, addr
 VALUES ('ernst','zheng', 'ez123','23456@gmail.com', '12l5kjasf','2345 street st', 'city1', 'state1', '1234', '1sf.com', DEFAULT, DEFAULT, 3);
 
 INSERT INTO user_account(firstName, lastName, username,  email, network_id, address, city, state, zip, profile_img, privacy, contribution, default_groupID)
-VALUES ('arnest','zhung', 'ez456','afas@gmail.com', '09afaspoi','3456 street st', 'city2', 'state2', '7890', 'asd.com', DEFAULT, DEFAULT, 1);
+VALUES ('arnest','zhung', 'ez456','afas@gmail.com', '09afaspoi','3456 street st', 'city2', 'state2', '7890', 'asd.com', DEFAULT, DEFAULT, 2);
 
 INSERT INTO user_groups(name, admin_id, address, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
 VALUES ('the group', 1, '1234 street st', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);

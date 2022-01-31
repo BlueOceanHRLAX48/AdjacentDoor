@@ -12,9 +12,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 //localhost:3001/home
-app.use('/users', router);
-app.use('/groups/', router);
-app.use('/posts', router);
+app.use('/', router);
+
 
 //app2.use()
 
