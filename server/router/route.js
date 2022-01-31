@@ -1,40 +1,62 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../controller')
+const controller = require('../controller')
 
 //routes relating to user account
 router.route('/:id')
-  .get(db.users.getUser)
+  .get(controller.users.getUser)
 
 router.route('/signup')
-  .post(db.users.createUser)
+  .post(controller.users.createUser)
 
 router.route('/:id/contribution')
-  .put(db.users.updateContribution)
+  .put(controller.users.updateContribution)
 
 router.route('/:id/contribution')
-  .put(db.users.updatePhoto)
+  .put(controller.users.updatePhoto)
 
 router.route('/:id/updateLocation')
-  .put(db.users.updateLocation)
+  .put(controller.users.updateLocation)
 
 router.route('/:id/updateNickname')
-  .put(db.users.updateNickname)
+  .put(controller.users.updateNickname)
 
 router.route('/:id/updatePrivacy')
-  .put(db.users.updatePrivacy)
+.put(controller.users.updatePrivacy)
 
 router.route('/:id/deleteUser')
-  .delete(db.users.deleteUser)
+.delete(controller.users.deleteUser)
+
+// add and retrieve posts for default groups
+router.route('/posts/defaultgroup')
+  .get(controller.posts.getAllPosts)
+  .post(controller.posts.addPost)
+
+  // add and retrieve posts for user groups
+router.route('/posts/usergroup')
+  .get(controller.posts.getAllPostsUsers)
+  .post(controller.posts.addPost)
+
+router.route('/groups/default')
+  .get(controller.groups.getDefaultGroup)
+  .post(controller.groups.createDefaultGroup)
+
+router.route('/groups/user')
+  .get(controller.groups.getUserGroup)
+  .post(controller.groups.createUserGroup)
 
 //routes relating to replies of a post
 router.route('/:post_id/replies')
-  .get(db.replies.getReplies)
-  .post(db.replies.postReply)
+  .get(controller.replies.getReplies)
+  .post(controller.replies.postReply)
 
 router.route('/:reply_id')
-  .put(db.replies.likeReply)
-  .put(db.replies.reportReply)
-  .delete(db.replies.deleteReply)
+  .put(controller.replies.likeReply)
+  .put(controller.replies.reportReply)
+  .delete(controller.replies.deleteReply)
 
 module.exports= router
+
+
+
+

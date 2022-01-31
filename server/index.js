@@ -30,6 +30,7 @@ app.use('/posts', router);
  *
  */
 
+
 app.listen(port, () => {
   console.log('listening on ', port)
 })
