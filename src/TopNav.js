@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
-import { Link } from 'react-router-dom';
 import UserInfo from './LeftBar/UserInfo';
 
 function TopNav() {

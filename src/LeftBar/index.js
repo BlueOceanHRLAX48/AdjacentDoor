@@ -1,10 +1,9 @@
 import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import UserInfo from './UserInfo';
 
 function LeftBar() {
   return (
-    <div className='flex h-screen flex-col sm:w-[250px] px-6 py-4'>
+    <div className='flex sm:h-screen flex-col w-screen sm:w-[250px] px-6 py-4'>
       <Link to='/'>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </Link>

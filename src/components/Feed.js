@@ -1,6 +1,6 @@
-import Post from './Post';
-import { useState, useRef } from 'react';
 import moment from 'moment';
+import { useRef, useState } from 'react';
+import Post from './Post';
 
 function Feed() {
   // const [postContent, setPostContent] = useState({
@@ -91,17 +91,17 @@ function Feed() {
   };
 
   return (
-    <div className='w-full sm:w-[600px] px-4 mb-20'>
+    <div className='w-full sm:w-[600px] px-4 mb-12 sm:mb-20'>
       <div className='hidden sm:block'>
-        <form className='flex justify-center relative'>
+        <form className='relative flex justify-center'>
           <textarea
-            className='text-sm p-1 px-3 w-full h-10 rounded-xl border border-slate-100 shadow-sm focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'
+            className='w-full h-10 p-1 px-3 text-sm border shadow-sm rounded-xl border-slate-100 focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'
             placeholder='Write something...'
             ref={postInput}
           ></textarea>
           <button
             onClick={handleSubmit}
-            className='text-white font-medium text-xs px-2 rounded-full bg-primary absolute bottom-2 right-4'
+            className='absolute px-2 text-xs font-medium text-white rounded-full bg-primary bottom-2 right-4'
           >
             submit
           </button>

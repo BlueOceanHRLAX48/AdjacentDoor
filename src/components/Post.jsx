@@ -12,7 +12,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
   const handleMore = () => 'dropdown';
 
   return (
-    <div className='flex-auto p-4 border my-3 border-slate-100 shadow-sm rounded-xl transition-all duration-150 relative hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'>
+    <div className='relative flex-auto p-4 my-3 transition-all duration-150 border shadow-sm border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'>
       <div className='flex'>
         <Link to='/my-profile'>
           <Avatar
@@ -41,7 +41,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
       </div>
 
       <MdMoreHoriz
-        className='absolute top-4 right-6 cursor-pointer'
+        className='absolute cursor-pointer top-4 right-6'
         size='20'
         onClick={handleMore}
       />
