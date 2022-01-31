@@ -1,5 +1,7 @@
 import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
+import { Link } from 'react-router-dom';
+import UserInfo from './LeftBar/UserInfo';
 
 function TopNav() {
   const [nextTheme, setTheme] = useTheme();
@@ -9,10 +11,15 @@ function TopNav() {
       <div>
         <SearchBar />
       </div>
-      <div className=''>
+      <div className='flex'>
         <button className='text-sm ml-4' onClick={() => setTheme(nextTheme)}>
           darkmode
         </button>
+        <Link to='/my-profile'>
+          <div>
+            <UserInfo />
+          </div>
+        </Link>
       </div>
     </div>
   );

@@ -4,24 +4,33 @@ import UserInfo from './UserInfo';
 
 function LeftBar() {
   return (
-    <div className='flex flex-col w-[250px] px-6 py-4'>
+    <div className='flex h-screen flex-col sm:w-[250px] px-6 py-4'>
       <Link to='/'>
-        <div className='text-2xl  text-primary font-bold pb-4 px-4 '>Adjacent Door</div>
+        <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </Link>
-      {[
-        ['Home', '/', <MdHome size='20' />],
-        ['Safety', '/safety', <MdHealthAndSafety size='20' />],
-        ['Groups', '/groups', <MdGroups size='20' />],
-        ['ratings', '/ratings', <MdGroups size='20' />],
-        ['Others', '/others', <MdGroups size='20' />],
-      ].map(([title, url, icon], i) => (
-        <Link to={url}>
-          <LeftBarButton icon={icon} text={title} key={i} />
-        </Link>
-      ))}
-      <Link to='/my-profile'>
-        <UserInfo />
-      </Link>
+      {/* //boolean for admin
+      //group for filter value of the string includes blah blah blah */}
+      <div className='overflow-y-scroll hide-scroll-bar'>
+        {[
+          ['Home', '/', <MdHome size='20' />],
+          ['Safety', '/safety', <MdHealthAndSafety size='20' />],
+          ['Groups', '/groups', <MdGroups size='20' />],
+          ['ratings', '/ratings', <MdGroups size='20' />],
+          ['Others', '/others', <MdGroups size='20' />],
+          ['ratings', '/ratings', <MdGroups size='20' />],
+          ['Others', '/others', <MdGroups size='20' />],
+          ['ratings', '/ratings', <MdGroups size='20' />],
+          ['Others', '/others', <MdGroups size='20' />],
+          ['ratings', '/ratings', <MdGroups size='20' />],
+          ['Others', '/others', <MdGroups size='20' />],
+          ['ratings', '/ratings', <MdGroups size='20' />],
+          ['Others', '/others', <MdGroups size='20' />],
+        ].map(([title, url, icon], i) => (
+          <Link to={url}>
+            <LeftBarButton icon={icon} text={title} key={i} />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
