@@ -9,9 +9,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
 import { ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
-import { IoIosWarning } from 'react-icons/io';
 import { FcGoogle } from 'react-icons/fc';
 import GoogleLogin from 'react-google-login';
 import theme from './components/muiTheme';
@@ -84,14 +84,9 @@ function Login() {
           <Typography component='h1' variant='h4' color='secondary' align='center' mt='20px'>
             ADJACENT DOOR
           </Typography>
-          <Box
-            sx={{
-              marginTop: 5,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
-            }}
-          >
+          <Box className='flex items-center mt-5'
+              sx={{ flexDirection: 'column' }}
+            >
             <RiLoginCircleFill />
             <Typography component='h1' variant='h5'>
               Login
@@ -121,12 +116,9 @@ function Login() {
                 control={<Checkbox value='remember' color='primary' />}
                 label='Remember me'
               />
-              {(!fillIn && notice) && <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                color: 'red',
-                padding: '5px'
-              }}><IoIosWarning size='20px'/>Please fill out all the required fields</div> }
+              {(!fillIn && notice) && <Alert className='flex items-center mt-5'
+                severity='error'>Please fill out all the required fields
+              </Alert> }
               <Button
                 type='submit'
                 fullWidth
@@ -158,7 +150,8 @@ function Login() {
                       borderRadius: '4px'
                     }}
                   >
-                  <FcGoogle size='25px' style={{ marginRight: 100, marginLeft: -7 }}/><span style={{ marginRight: 100 }}>Log in With Google</span>
+                  <FcGoogle size='25px' style={{ marginRight: 100, marginLeft: -7 }}/>
+                    <span style={{ marginRight: 100 }}>Log in With Google</span>
                   </button>
                 )}
                 onSuccess={handleLogin}

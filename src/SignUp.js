@@ -7,13 +7,15 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 import { ThemeProvider } from '@mui/material/styles';
-import { IoIosWarning } from 'react-icons/io';
 import theme from './components/muiTheme';
 
 function SignUp() {
   const [notice, setNotice] = useState(false);
   const [fillIn, setFillIn] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [noticeValidEmail, setNoticeValidEmail] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,11 +26,14 @@ function SignUp() {
       username: data.get('username'),
       email: data.get('email'),
     };
-    if (!submitData.firstName || !submitData.lastName || !submitData.username || !submitData.email) {
+    if (!submitData.email.includes('@')) {
+      setNoticeValidEmail(true);
+    } else if (!submitData.firstName || !submitData.lastName || !submitData.username || !submitData.email) {
       setNotice(true);
       setFillIn(false);
     } else {
       setNotice(false);
+      setValidated(true);
       setFillIn(true);
     }
   };
@@ -55,14 +60,8 @@ function SignUp() {
             }}
           />
           <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            <Box
-              sx={{
-                my: 10,
-                mx: 10,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}
+            <Box className='flex items-center my-10 mx-10'
+              sx={{ flexDirection: 'column' }}
             >
               <Typography component='h1' variant='h4' color='secondary' align='center' mb='6px'>
               ADJACENT DOOR
@@ -74,7 +73,7 @@ function SignUp() {
                 component='form'
                 noValidate
                 onSubmit={handleSubmit}
-                sx={{ mt: 1 }}
+                className='mt-1'
               >
                 <TextField
                   margin='dense'
@@ -112,12 +111,12 @@ function SignUp() {
                   name='email'
                   autoComplete='email'
                 />
-                {(!fillIn && notice) && <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  color: 'red',
-                  padding: '5px'
-                }}><IoIosWarning size='20px'/>Please fill out all the required fields</div> }
+                {(!validated && noticeValidEmail) && <Alert className='flex items-center mt-5'
+                  severity='error'>Please enter valid email address
+                </Alert> }
+                {(!fillIn && notice) && <Alert className='flex items-center mt-5'
+                  severity='error'>Please fill out all the required fields
+                </Alert> }
                 <Button
                   type='submit'
                   fullWidth
