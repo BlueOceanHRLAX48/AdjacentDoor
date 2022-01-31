@@ -12,7 +12,7 @@ function LeftBar(props) {
       </Link>
       {[
         ['Home', '/', <MdHome size='20' />],
-        ['Safety', '/safety', <MdHealthAndSafety size='20' />],
+        ['Admin', '/admin', <MdHealthAndSafety size='20' />],
         ['Groups', '/groups', <MdGroups size='20' />],
         ['ratings', '/ratings', <MdGroups size='20' />],
         ['Others', '/others', <MdGroups size='20' />],
