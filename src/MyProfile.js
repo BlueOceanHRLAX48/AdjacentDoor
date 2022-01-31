@@ -4,7 +4,7 @@ import { Avatar } from '@mui/material';
 
 function MyProfile() {
   return (
-    <div className='w-screen flex dark:bg-gray-900 dark:text-white'>
+    <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
       <div className='hidden sm:flex'>
         <LeftBar />
       </div>

@@ -7,16 +7,16 @@ function TopNav() {
   const [nextTheme, setTheme] = useTheme();
 
   return (
-    <div className='inline-flex mt-4 mb-4 items-center '>
+    <div className='flex items-center justify-between w-full mt-4 mb-4 '>
       <div>
         <SearchBar />
       </div>
-      <div className='flex'>
-        <button className='text-sm ml-4' onClick={() => setTheme(nextTheme)}>
+      <div className='flex justify-end'>
+        <button className='text-sm' onClick={() => setTheme(nextTheme)}>
           darkmode
         </button>
         <Link to='/my-profile'>
-          <div>
+          <div className='ml-4'>
             <UserInfo />
           </div>
         </Link>
