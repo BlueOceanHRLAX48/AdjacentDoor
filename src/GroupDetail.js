@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import MakePost from './components/MakePost';
 import PostFeed from './components/PostFeed';
 import LeftBar from './LeftBar';
-<<<<<<< HEAD
 import RightBar from './RightBar';
 import TopNav from './TopNav';
 
@@ -105,16 +104,6 @@ function GroupDetail(props) {
           </div>
           <RightBar />
         </div>
-=======
-
-function GroupDetail(props) {
-  return (
-    <div className='flex h-screen'>
-      <LeftBar />
-      <div className=''>
-        <MakePost />
-        <PostFeed />
->>>>>>> fbfa85f (Large progress on group detail page)
       </div>
     </div>
   );
