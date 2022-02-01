@@ -40,6 +40,7 @@ function Login() {
     } else {
       setNotice(false);
       setFillIn(true);
+      document.location.href = '/';
     }
   };
 
@@ -48,7 +49,14 @@ function Login() {
   };
 
   const handleLogin = (data) => {
-    console.log(data);
+    const userInfo = {
+      firstName: data.Du.VX,
+      lastName: data.Du.iW,
+      profile_img: data.Du.eN,
+      email: data.Du.tv
+    };
+    console.log(userInfo);
+    document.location.href = '/';
   };
 
   const componentClicked = (data) => {
@@ -126,7 +134,6 @@ function Login() {
                 font-color='primary'
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
-                href= {fillIn && '/'}
               >
                 Continue
               </Button>
@@ -165,6 +172,7 @@ function Login() {
                 data-button-type='login_with'
                 data-layout='default'
                 data-auto-logout-link='false' data-use-continue-as='false'
+                data-redirecturi='/'
                 style={{padding: '10px 0'}}
               ></div>
               <Grid container sx={{mt: 3}}>

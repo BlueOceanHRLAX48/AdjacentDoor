@@ -24,7 +24,7 @@ function SignUp() {
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       username: data.get('username'),
-      email: data.get('email'),
+      email: data.get('email')
     };
     if (!submitData.email.includes('@')) {
       setNoticeValidEmail(true);
