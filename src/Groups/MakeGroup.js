@@ -12,7 +12,6 @@ import {
   FormLabel,
 } from '@mui/material';
 import axios from 'axios';
-import LeftBar from '../LeftBar';
 import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
 
 function MakeGroup(props) {
