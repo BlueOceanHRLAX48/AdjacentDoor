@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import React from 'react';
+>>>>>>> 03eb3107f891e0fc27e4b04cf890839ea2935142
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AdminPanel from './AdminPanel';
 import Home from './Home';
