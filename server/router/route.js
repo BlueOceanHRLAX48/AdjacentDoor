@@ -63,6 +63,9 @@ router.route('/groups/user/:group_id/left')
 router.route('/groups/default/:group_id')
   .get(controller.groups.getDefaultGroup)
 
+router.route('/groups/lists')
+  .get(controller.groups.getGroupsByLocation)
+
 //routes relating to replies of a post
 router.route('posts/:post_id/replies')
   .get(controller.replies.getReplies)

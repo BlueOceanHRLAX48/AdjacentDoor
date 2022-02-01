@@ -84,5 +84,20 @@ module.exports = {
       .query(query, [group_id])
       .then((results) => res.status(200).send(results.rows))
       .catch((err) => res.status(500).send(err))
+  },
+  getGroupsByLocation: (req, res) => {
+    const { longitude, latitude, r } = req.query;
+    const lat_min = parseInt(latitude) - parseInt(r);
+    const lat_max = parseInt(latitude) + parseInt(r);
+    const long_min = parseInt(longitude) - parseInt(r);
+    const long_max = parseInt(longitude) + parseInt(r);
+    const values = [lat_min, lat_max, long_min, long_max];
+    const query = `SELECT g.id, g.name, g.privacy, g.photo, g.safety, g.friendliness
+    FROM user_groups g
+    WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4);`;
+    pool
+      .query(query, values)
+      .then((results) => res.status(200).json(results.rows))
+      .catch((err) => res.status(500).send(err))
   }
 }
