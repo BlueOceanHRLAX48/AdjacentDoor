@@ -12,7 +12,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
   const handleMore = () => 'dropdown';
 
   return (
-    <div className='relative flex-auto p-4 my-3 transition-all duration-150 border shadow-sm border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'>
+    <div className='relative p-4 my-3 transition-all duration-150 border shadow-sm border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'>
       <div className='flex'>
         <Link to='/my-profile'>
           <Avatar
@@ -28,7 +28,7 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
           </Link>
           <div className='text-xs font-light text-slate-500'>{date}</div>
           <div className='mt-2'>{postBody}</div>
-          <div className='flex items-center justify-between mt-2 mr-2'>
+          <div className='flex items-center justify-between w-full mt-2 mr-2'>
             {[
               ['comment', <MdChatBubbleOutline size='15' />, handleComment],
               ['212', <MdFavoriteBorder size='15' style={{ color: red[200] }} />, handleLike],

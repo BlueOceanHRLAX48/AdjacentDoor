@@ -1,78 +1,9 @@
 import moment from 'moment';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Post from './Post';
 
-function Feed({ search, setSearch }) {
-  // const [postContent, setPostContent] = useState({
-  //   avatar: '',
-  //   name: '',
-  //   date: '',
-  //   post_text: '',
-  //   report: null,
-  //   likes: null,
-  //   latitude: '',
-  //   longitude: '',
-  // });
-
+function Feed({ search, setSearch, posts, setPosts }) {
   const postInput = useRef(null);
-
-  const [posts, setPosts] = useState([
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-  ]);
 
   const handleSubmit = (e) => {
     let postContent = {

@@ -1,10 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Footer from './components/Footer';
+import Groups from './Groups/Groups';
 import Home from './Home';
 import Login from './Login';
 import MyProfile from './MyProfile';
-import Groups from './Groups/Groups';
-import Footer from './components/Footer';
-import { useState } from 'react';
 
 function App() {
   return (
