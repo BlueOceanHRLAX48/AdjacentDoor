@@ -92,12 +92,30 @@ module.exports = {
     const long_min = parseInt(longitude) - parseInt(r);
     const long_max = parseInt(longitude) + parseInt(r);
     const values = [lat_min, lat_max, long_min, long_max];
-    const query = `SELECT g.id, g.name, g.privacy, g.photo, g.safety, g.friendliness
+    const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo, g.safety, g.friendliness
     FROM user_groups g
     WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4);`;
     pool
       .query(query, values)
       .then((results) => res.status(200).json(results.rows))
+      .catch((err) => res.status(500).send(err))
+  },
+  changeImage: (req, res) => {
+    const { group_id } = req.params;
+    const { photo } = req.body;
+    const query = `UPDATE user_groups SET photo = $1 WHERE id = $2;`;
+    pool
+      .query(query, [photo, group_id])
+      .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err))
+  },
+  changePrivacy: (req, res) => {
+    const { group_id } = req.params;
+    const { privacy } = req.body;
+    const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
+    pool
+      .query(query, [privacy, group_id])
+      .then(() => res.sendStatus(204))
       .catch((err) => res.status(500).send(err))
   }
 }
