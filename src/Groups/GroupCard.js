@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Card, CardActions, CardContent, CardMedia, CardActionArea, Typography } from '@mui/material';
 import JoinButton from './JoinButton';
 import { Link } from 'react-router-dom';

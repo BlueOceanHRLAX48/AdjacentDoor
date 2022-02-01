@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const JoinButton = (props) => {
@@ -13,7 +13,7 @@ const JoinButton = (props) => {
   const fakeAxiosPost =() => {
     //let database know user joined this group
     //get back joined group object {id:<num>, name:<name>, joinStatus:<joined>}
-    return {id: 1234567, name: 'fakeAxiosGroup', joinStatus: 'joined'}
+    return {id: props.group.Id, name: props.group.Name, joinStatus: 'joined'}
   }
 
   const statusButton = (currentType, privacy) => {
@@ -101,7 +101,6 @@ const JoinButton = (props) => {
           }}>Join</Button>
         </div>)
     }
-
   }
 
   return statusButton(props.joinStatus)
