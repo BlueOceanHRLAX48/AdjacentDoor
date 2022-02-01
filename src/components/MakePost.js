@@ -1,18 +1,31 @@
 import React from 'react';
 import { MdClose, MdAdd } from 'react-icons/md';
 import { TextareaAutosize, Tooltip } from '@mui/material';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function MakePost(props) {
   const [body, setBody] = React.useState('');
   const [type, setType] = React.useState('');
   const [files, setFiles] = React.useState();
 
+  const groupId = useParams().groupId;
+
   function handleClear() {
     setBody('');
     setType('');
   }
 
-  console.log(files);
+  function handleSubmit() {
+    console.log(`/api/whatever/${groupId}`, {
+      body: body.trim(),
+      type,
+      files,
+    });
+    setBody('');
+    setType('');
+    props.refresh();
+  }
 
   return (
     <div className='w-[600px] px-4 pt-6'>
@@ -22,7 +35,7 @@ function MakePost(props) {
             <span>
               <button
                 onClick={handleClear}
-                disabled={!body || !type}
+                disabled={!body && !type}
                 className='disabled:opacity-50'
               >
                 <MdClose size={25} className='text-secondary' />
@@ -30,7 +43,7 @@ function MakePost(props) {
             </span>
           </Tooltip>
           <select
-            className='ml-4 text-primary font-semibold outline-none'
+            className='ml-4 text-primary font-semibold text-xl mb-2 outline-none'
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
@@ -42,6 +55,7 @@ function MakePost(props) {
           <button
             className='ml-auto disabled:opacity-50 bg-primary font-semibold rounded px-4 py-2'
             disabled={!body || !type}
+            onClick={handleSubmit}
           >
             Post
           </button>
@@ -51,6 +65,7 @@ function MakePost(props) {
           placeholder='Share something with the group...'
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          maxRows={10}
         />
         <input
           type='file'
@@ -67,7 +82,7 @@ function MakePost(props) {
             <MdAdd size={25} />
             {files?.length ? 'Change' : 'Add'} Photos
           </label>
-          <div className='pl-4 text-secondary'>
+          <div className='pl-4 text-secondary cursor-default'>
             {files?.length
               ? `${files?.length} Image${
                   files?.length === 1 ? '' : 's'
