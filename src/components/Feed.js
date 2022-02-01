@@ -1,22 +1,33 @@
 import moment from 'moment';
 import { useRef } from 'react';
 import Post from './Post';
+import axios from 'axios';
 
 function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
   const postInput = useRef(null);
 
   const handleSubmit = (e) => {
     let postContent = {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: moment().format('LL'),
-      post_text: postInput.current.value,
+      photos: [],
+      body: postInput.current.value,
+      privacy: false,
       report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
+      like: 0,
+      userInfo: {
+        username: 'ez',
+        profile_img: '1234.com',
+      },
+      coordinates: {
+        latitude: 123,
+        longitude: -456.5,
+      },
+      tag: 'Sell',
+      id: 1,
+      time: moment().format('LL'),
     };
-    setFilteredPosts([postContent, ...filteredPosts]);
+
+    axios.post(`http://localhost:3001/posts/defaultgroup?group_id=1`, postContent);
+    // setFilteredPosts([postContent, ...filteredPosts]);
     postInput.current.value = '';
     e.preventDefault();
   };
@@ -42,8 +53,6 @@ function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPo
         <Post
           key={i}
           photos={post.photos}
-          name={post.name}
-          date={post.date}
           body={post.body}
           privacy={post.privacy}
           report={post.report}

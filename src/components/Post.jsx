@@ -4,20 +4,7 @@ import React, { useState } from 'react';
 import { MdChatBubbleOutline, MdFavoriteBorder, MdMoreHoriz, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-function Post({
-  photos,
-  name,
-  date,
-  body,
-  privacy,
-  report,
-  like,
-  userInfo,
-  coordinates,
-  tag,
-  id,
-  time,
-}) {
+function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag, id, time }) {
   const [likeCount, toggleLikeCount] = useState(false);
   const handleComment = () => 'q';
   const handleLike = () => toggleLikeCount(!like);
