@@ -9,33 +9,47 @@ import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
 import SignUp from './SignUp';
 import GroupDetail from './GroupDetail';
+import axios from 'axios';
 
 function App() {
   const [user, setUser] = useState({
-    userID: 1,
-    firstName: 'Demo',
-    lastName: 'BlueOcean',
-    username: 'demoblueocean',
-    email: 'demo@blueocean.com',
-    address: '123 Demo Street, Santa Monica, CA, 90210',
-    city: 'Santa Monica',
-    state: 'CA',
-    zip: '90210',
+    user_id: 1,
+    firstname: 'ernest',
+    lastname: 'zhang',
+    username: 'ez',
+    network_id: '1124asfas',
+    email: '12345@gmail.com',
+    admin: false,
+    address: '1234 street st',
+    city: 'city',
+    state: 'state',
+    zip: '5678',
     privacy: false,
-    profileImage:
-      'https://templates.joomla-monster.com/joomla30/jm-news-portal/components/com_djclassifieds/assets/images/default_profile.png',
-    network_id: 'asnd19823y19231231akjsd',
-    contribution: 10,
-    defaultGroupId: 90210,
-    userGroupIds: [
-      { id: 1, name: 'Group Name', joinStatus: 'joined' },
-      { id: 2, name: 'Another Group', joinStatus: 'pending' },
+    profile_img: '1234.com',
+    contribution: 0,
+    default_group: {
+      id: 1,
+      name: 'the place',
+    },
+    user_group: [
+      {
+        id: 1,
+        name: 'the group',
+      },
+      {
+        id: 2,
+        name: 'the second group',
+      },
     ],
-    admin: true,
   });
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
+    axios.get(`http://localhost:3001/user/${user.network_id}`).then((res) => {
+      setUser(res.data);
+      console.log(res.data);
+    });
+
     navigator.geolocation.getCurrentPosition((res) =>
       setCurrentLocation({
         latitude: res.coords.latitude,

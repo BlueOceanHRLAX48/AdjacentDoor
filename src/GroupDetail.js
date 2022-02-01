@@ -82,7 +82,6 @@ function GroupDetail(props) {
   const filteredPosts = samplePosts.filter((post) =>
     post.type.toLowerCase().includes(filter.toLowerCase())
   );
-  console.log(filteredPosts);
 
   function getData() {
     //axios request for data using groupId
