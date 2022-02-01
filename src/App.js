@@ -6,6 +6,7 @@ import Leaderboard from './Leaderboard';
 import Login from './Login';
 import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
+import GroupDetail from './GroupDetail';
 
 function App() {
   const [user, setUser] = useState({
@@ -84,6 +85,7 @@ function App() {
             />
           }
         />
+        <Route path='/g/:groupId' element={<GroupDetail />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route
           path='/admin'
