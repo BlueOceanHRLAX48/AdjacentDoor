@@ -59,7 +59,6 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/groups' element={<Groups user={user} currentLocation={currentLocation} setUser={setUser}/>} />
-        <Route path='/groups' element={<Groups />} />
       </Routes>
     </BrowserRouter>
   );
