@@ -4,7 +4,7 @@ import AdminEditUsers from './AdminEditUsers';
 
 function RightBar() {
   return (
-    <div className='w-[250px] pt-11'>
+    <div className='flex flex-col min-w-[250px] grow'>
       {window.location.pathname === '/admin' ? (
         <AdminEditUsers />
       ) : (
