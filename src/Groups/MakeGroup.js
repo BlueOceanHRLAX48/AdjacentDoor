@@ -121,7 +121,7 @@ function MakeGroup (props) {
               <FormControlLabel value="local" control={ <Radio /> } label="Local" onClick={() => {
                 setLocal('local');
               }}></FormControlLabel>
-              {local === 'local' ? <TextField type='text' placeholder="preferred mile radius" value={localRadius || ''} onChange={(e) => {
+              {local === 'local' ? <TextField type='number' placeholder="preferred mile radius" value={localRadius || ''} onChange={(e) => {
                 setRadius(e.target.value);
               }}></TextField> : ''}
             </RadioGroup>
