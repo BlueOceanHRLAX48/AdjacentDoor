@@ -4,6 +4,7 @@ import Home from './Home';
 import Login from './Login';
 import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
+import SignUp from './SignUp';
 
 function App() {
   const [user, setUser] = useState({
@@ -55,8 +56,10 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/groups' element={<Groups user={user} currentLocation={currentLocation} setUser={setUser}/>} />
+        <Route path='/groups' element={<Groups />} />
       </Routes>
     </BrowserRouter>
   );
