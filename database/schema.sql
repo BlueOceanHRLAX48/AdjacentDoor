@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS user_groups CASCADE;
 CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
-  admin_id int NOT NULL REFERENCES user_account(user_id),
+  admin_id text NOT NULL,
   "address" text NOT NULL,
   city text NOT NULL,
   "state" text NOT NULL,

@@ -46,10 +46,19 @@ router.route('/posts/report/:post_id')
 router.route('/posts/delete/:post_id')
   .delete(controller.posts.deletePost)
 
-
+// route for user group
 router.route('/groups/user')
   .get(controller.groups.getUserGroup)
   .post(controller.groups.createUserGroup)
+
+router.route('/groups/user/:group_id/join')
+  .post(controller.groups.joinGroup)
+
+router.route('/groups/user/:group_id/accept')
+  .put(controller.groups.acceptJoinRequest)
+
+router.route('/groups/user/:group_id/left')
+  .delete(controller.groups.leftUserGroup)
 
 //routes relating to replies of a post
 router.route('posts/:post_id/replies')
