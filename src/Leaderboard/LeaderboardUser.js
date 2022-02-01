@@ -16,7 +16,7 @@ function LeaderboardUser(props) {
   }
 
   return (
-    <div className='flex w-full items-center px-4 py-2 gap-4 hover:bg-antiqueWhite transition-all duration-150'>
+    <div className='flex w-full items-center px-4 py-2 gap-4 hover:bg-ghostWhite transition-all duration-150'>
       <div className='flex w-[3%] font-bold'>{props.place}</div>
       <Avatar
         sx={{
