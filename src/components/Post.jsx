@@ -4,10 +4,23 @@ import React, { useState } from 'react';
 import { MdChatBubbleOutline, MdFavoriteBorder, MdMoreHoriz, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-function Post({ avatar, name, date, postBody, reports, likes }) {
-  const [like, toggleLike] = useState(false);
+function Post({
+  photos,
+  name,
+  date,
+  body,
+  privacy,
+  report,
+  like,
+  userInfo,
+  coordinates,
+  tag,
+  id,
+  time,
+}) {
+  const [likeCount, toggleLikeCount] = useState(false);
   const handleComment = () => 'q';
-  const handleLike = () => toggleLike(!like);
+  const handleLike = () => toggleLikeCount(!like);
   const handleShare = () => 'q';
   const handleMore = () => 'dropdown';
 
@@ -16,22 +29,20 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
       <div className='flex'>
         <Link to='/my-profile'>
           <Avatar
-            alt='Remy Sharp'
-            src='/static/images/avatar/1.jpg'
+            alt='avatar'
+            src={userInfo?.profile_img || '/static/images/avatar/1.jpg'}
             sx={{ width: 40, height: 40 }}
-            className='mr-6 ring-2 ring-offset-2 ring-primary'
+            className='mt-1 ml-1 mr-6 ring-2 ring-offset-2 ring-primary'
           />
         </Link>
-        <div>
-          <Link to='/my-profile'>
-            <div className='font-medium'>{name}</div>
-          </Link>
-          <div className='text-xs font-light text-slate-500'>{date}</div>
-          <div className='mt-2'>{postBody}</div>
-          <div className='flex items-center justify-between w-full mt-2 mr-2'>
+        <div className='w-full'>
+          <div className='font-medium w-min'>{userInfo?.username}</div>
+          <div className='text-xs font-light text-slate-500'>{time}</div>
+          <div className='mt-2'>{body}</div>
+          <div className='flex items-center justify-between mt-2 mr-2'>
             {[
               ['comment', <MdChatBubbleOutline size='15' />, handleComment],
-              ['212', <MdFavoriteBorder size='15' style={{ color: red[200] }} />, handleLike],
+              [like, <MdFavoriteBorder size='15' style={{ color: red[200] }} />, handleLike],
               ['share', <MdOutlineShare size='15' />, handleShare],
             ].map(([title, icon, handleClick], i) => (
               <PostButton icon={icon} text={title} onClick={handleClick} key={i} />
@@ -52,8 +63,8 @@ function Post({ avatar, name, date, postBody, reports, likes }) {
 export default Post;
 
 const PostButton = ({ icon, text = 'text' }) => (
-  <div className={`flex cursor-pointer`}>
-    <div className='relative flex items-center justify-start mr-4'>{icon}</div>
-    <div className={`relative flex items-center justify-start`}>{text}</div>
+  <div className={`flex items-center cursor-pointer`}>
+    <div className='mr-4 '>{icon}</div>
+    <div>{text}</div>
   </div>
 );

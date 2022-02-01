@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Feed from './components/Feed';
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
+import axios from 'axios';
 
 function Home() {
   const [search, setSearch] = useState('');
@@ -63,6 +64,12 @@ function Home() {
       longitude: '-73.989308',
     },
   ]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/posts/defaultgroup?group_id=1`).then(({ data }) => {
+      setPosts(data.posts);
+    });
+  }, []);
 
   const [filteredPosts, setFilteredPosts] = useState([]);
 

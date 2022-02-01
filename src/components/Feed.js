@@ -41,12 +41,18 @@ function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPo
       {filteredPosts.map((post, i) => (
         <Post
           key={i}
-          avatar={post.avatar}
+          photos={post.photos}
           name={post.name}
           date={post.date}
-          postBody={post.post_text}
+          body={post.body}
+          privacy={post.privacy}
           report={post.report}
-          likes={post.likes}
+          like={post.like}
+          userInfo={post.user_info}
+          coordinates={post.coordinates}
+          tag={post.tag}
+          id={post.post_id}
+          time={post.time}
         />
       ))}
     </div>
