@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import LeftBar from '../LeftBar';
-import { Link } from 'react-router-dom';
 import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
 
 function MakeGroup(props) {
@@ -66,10 +65,6 @@ function MakeGroup(props) {
     border: '2px solid $000',
     boxShadow: 24,
     p: 4,
-  };
-
-  const hideField = {
-    display: 'none',
   };
 
   const fakeAxiosPost = () => {
@@ -198,7 +193,8 @@ function MakeGroup(props) {
                 ></FormControlLabel>
                 {local === 'local' ? (
                   <TextField
-                    type='text'
+                    type='number'
+                    placeholder='preferred mile radius'
                     value={localRadius || ''}
                     onChange={(e) => {
                       setRadius(e.target.value);
@@ -266,11 +262,9 @@ function MakeGroup(props) {
 
   return (
     <div className='makeGroupModal'>
-      <LeftBar />
-      <button style={modalStyle} onClick={handleOpen}>
-        Create New Group
-      </button>{' '}
-      {/* Create New Group button placeholder */}
+      <Button variant='outlined' onClick={handleOpen}>
+        Create
+      </Button>
       <Modal
         open={open}
         onClose={() => {
