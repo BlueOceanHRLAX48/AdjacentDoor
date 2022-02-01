@@ -6,6 +6,7 @@ import Leaderboard from './Leaderboard';
 import Login from './Login';
 import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
+import GroupDetail from './GroupDetail';
 
 function App() {
   const [currentLocation, setCurrentLocation] = React.useState({});
@@ -57,6 +58,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/groups' element={<Groups />} />
+        <Route path='/g/:groupId' element={<GroupDetail />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route
           path='/admin'
