@@ -2,7 +2,7 @@ import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import UserInfo from './UserInfo';
 
-function LeftBar() {
+function LeftBar(props) {
   return (
     <div className='flex flex-col w-[250px] h-screen px-6 py-4'>
       <Link to='/'>
@@ -21,6 +21,10 @@ function LeftBar() {
           <LeftBarButton icon={icon} text={title} key={i} />
         </Link>
       ))}
+      <button onClick={() => props.setFilter('')}>All</button>
+      <button onClick={() => props.setFilter('general')}>General</button>
+      <button onClick={() => props.setFilter('safety')}>Safety</button>
+      <button onClick={() => props.setFilter('forsale')}>For Sale</button>
       <Link to='/my-profile'>
         <UserInfo />
       </Link>
