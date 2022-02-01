@@ -11,7 +11,7 @@ function LeftBar() {
     fontWeight: isActive ? 'bold' : '',
   });
   return (
-    <div className='flex sm:h-screen flex-col w-screen sm:w-[250px] px-6 py-4'>
+    <div className='sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/'>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </NavLink>
