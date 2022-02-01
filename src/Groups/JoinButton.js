@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const JoinButton = (props) => {
+  const [buttonType, setType] = useState('');
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -10,10 +11,14 @@ const JoinButton = (props) => {
     setOpen(false);
   }
 
+  useEffect(() => {
+    setType(props.joinStatus)
+  })
+
   const fakeAxiosPost =() => {
     //let database know user joined this group
     //get back joined group object {id:<num>, name:<name>, joinStatus:<joined>}
-    return {id: props.group.Id, name: props.group.Name, joinStatus: 'joined'}
+    return {id: props.group.Id, name: props.group.Name, accepted: true}
   }
 
   const statusButton = (currentType, privacy) => {

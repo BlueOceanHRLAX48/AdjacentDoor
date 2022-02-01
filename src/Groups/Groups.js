@@ -4,6 +4,7 @@ import GroupCard from './GroupCard';
 import TopNav from '../TopNav';
 import LeftBar from '../LeftBar';
 import RightBar from '../RightBar';
+import axios from 'axios';
 
 function Groups(props) {
   const [groups, setGroups] = useState([]);
@@ -79,8 +80,18 @@ function Groups(props) {
   };
 
   useEffect(() => {
-    let returnedResult = fakeAxiosGetGroups();
-    setGroups(returnedResult.groups);
+    // let returnedResult = fakeAxiosGetGroups()
+    axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
+      longitude: props.currentLocation.longitude,
+      latitude: props.currentLocation.latitude,
+      r: 500000
+    })
+    .then((result) => {
+      console.log(result)
+    })
+    .catch(err => console.log(err));
+
+    // setGroups(returnedResult.groups);
   }, [props.currentLocation.longitude, props.currentLocation.latitude]);
 
   return (
@@ -96,22 +107,29 @@ function Groups(props) {
           <div>
             <MakeGroup />
           </div>
-          <div id='seeGroups'>
+          <div id="seeGroups">
             {groups.map((card, index) => {
               let joinStatus = 'notJoined';
-              let groupIndex = userGroupIds.findIndex((element) => element.id === card.Id);
-              if (groupIndex !== -1) {
-                joinStatus = userGroupIds[groupIndex].joinStatus;
+              let groupIndex = userGroupIds.findIndex(element => element.id === card.Id);
+              let isAdmin = false;
+              if(groupIndex !== -1) {
+                if(userGroupIds[groupIndex].accepted){
+                  if(card.Admin_id)
+                  joinStatus = 'joined';
+
+                } else {
+                  joinStatus = 'pending';
+                }
+                return (
+                  <GroupCard
+                    key={index}
+                    group={card}
+                    joinStatus={joinStatus}
+                    setUser={props.setUser}
+                    userGroupIds={userGroupIds}
+                  />
+                );
               }
-              return (
-                <GroupCard
-                  key={index}
-                  group={card}
-                  joinStatus={joinStatus}
-                  setUser={props.setUser}
-                  userGroupIds={userGroupIds}
-                />
-              );
             })}
           </div>
           <div>

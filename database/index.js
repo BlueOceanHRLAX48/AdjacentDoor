@@ -15,4 +15,5 @@ pool
   .then(() => console.log('connected to database'))
   .catch((err) => console.error(err));
 
+
 module.exports = pool;
