@@ -58,6 +58,7 @@ function Login() {
       .then((response) => {
         const currentAddress = response.data.features[0].place_name;
         setAddress(currentAddress);
+        console.log(address);
       })
       .catch((err) => {
         console.error(err);
@@ -87,6 +88,11 @@ function Login() {
   };
 
   const handleLogin = (data) => {
+    const userAddress = address.split(',');
+    const street = userAddress[0];
+    const city = userAddress[1].substring(1, userAddress[1].length);
+    const state = userAddress[2].substring(1, userAddress[2].length - 6);
+    const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
     const userInfo = {
       firstName: data.Du.VX,
       lastName: data.Du.iW,
@@ -94,7 +100,10 @@ function Login() {
       profile_img: data.Du.eN,
       email: data.Du.tv,
       network_id: data.Du.FW,
-      address: address
+      address: street,
+      city: city,
+      state: state,
+      zipcode: zipcode
     };
     console.log(userInfo);
     // axios.post('/user/signup', userInfo)
