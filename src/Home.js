@@ -6,7 +6,7 @@ import TopNav from './TopNav';
 function Home({ leftClass }) {
   return (
     <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
-      <div className={leftClass ? 'sm:flex' : 'hidden sm:flex'}>
+      <div id='left-bar' className='hidden sm:flex'>
         <LeftBar />
       </div>
       <div>

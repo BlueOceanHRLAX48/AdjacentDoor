@@ -7,21 +7,16 @@ import Footer from './components/Footer';
 import { useState } from 'react';
 
 function App() {
-  const [leftClass, setLeftClass] = useState(false);
-
-  const showMenu = () => {
-    setLeftClass(!leftClass);
-  };
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home leftClass={leftClass} />} />
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route path='/groups' element={<Groups />} />
       </Routes>
       <div>
-        <Footer showMenu={showMenu} />
+        <Footer />
       </div>
     </BrowserRouter>
   );
