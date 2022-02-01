@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardActions, CardContent, CardMedia, CardActionArea, Typography } from '@mui/material';
 import JoinButton from './JoinButton';
+import { Link } from 'react-router-dom';
 
 const GroupCard = (props) => {
 
   return (<Card sx={{maxWidth: 400}}>
-    <CardActionArea>
+    <CardActionArea component={Link} to={`/g/${props.group.Id}`}>
       <CardMedia
         component="img"
         height="140"
