@@ -3,13 +3,13 @@ import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
 import { Avatar } from '@mui/material';
 
-function TopNav() {
+function TopNav({ search, setSearch }) {
   const [nextTheme, setTheme] = useTheme();
 
   return (
     <div className='flex items-center justify-between w-full mt-4 mb-4 '>
       <div>
-        <SearchBar />
+        <SearchBar search={search} setSearch={setSearch} />
       </div>
       <div className='flex justify-end'>
         <button className='text-sm' onClick={() => setTheme(nextTheme)}>

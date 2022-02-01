@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useRef, useState } from 'react';
 import Post from './Post';
 
-function Feed() {
+function Feed({ search, setSearch }) {
   // const [postContent, setPostContent] = useState({
   //   avatar: '',
   //   name: '',
