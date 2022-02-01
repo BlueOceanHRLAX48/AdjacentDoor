@@ -67,13 +67,17 @@ router.route('/groups/lists')
   .get(controller.groups.getGroupsByLocation)
 
 //routes relating to replies of a post
-router.route('posts/:post_id/replies')
+router.route('/posts/:post_id/replies')
   .get(controller.replies.getReplies)
   .post(controller.replies.postReply)
 
-router.route('reply/:reply_id')
+router.route('/reply/:reply_id/like')
   .put(controller.replies.likeReply)
+
+router.route('/reply/:reply_id/report')
   .put(controller.replies.reportReply)
+
+router.route('/reply/:reply_id/delete')
   .delete(controller.replies.deleteReply)
 
 module.exports= router

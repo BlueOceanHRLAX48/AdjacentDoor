@@ -149,7 +149,7 @@ module.exports = {
   deleteUser: (req, res) => {
     let { id } = req.params
     let deleteStr =
-    `delete user_account where network_id = $1;`
+    `delete from user_account where network_id = $1;`
 
     pool.query(deleteStr, [id])
       .then(result => res.status(201).send('Your account has been deleted'))
