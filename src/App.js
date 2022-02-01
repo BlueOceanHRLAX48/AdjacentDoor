@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AdminPanel from './AdminPanel';
 import Home from './Home';
@@ -33,42 +34,6 @@ function App() {
     admin: true,
   });
   const [currentLocation, setCurrentLocation] = React.useState({});
-
-  React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition((res) =>
-      setCurrentLocation({
-        latitude: res.coords.latitude,
-        longitude: res.coords.longitude,
-      })
-    );
-  }, []);
-
-  setInterval(() => {
-    navigator.geolocation.getCurrentPosition((res) =>
-      setCurrentLocation({
-        latitude: res.coords.latitude,
-        longitude: res.coords.longitude,
-      })
-    );
-  }, 300000);
-
-  React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition((res) =>
-      setCurrentLocation({
-        latitude: res.coords.latitude,
-        longitude: res.coords.longitude,
-      })
-    );
-  }, []);
-
-  setInterval(() => {
-    navigator.geolocation.getCurrentPosition((res) =>
-      setCurrentLocation({
-        latitude: res.coords.latitude,
-        longitude: res.coords.longitude,
-      })
-    );
-  }, 300000);
 
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) =>
