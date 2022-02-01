@@ -12,43 +12,52 @@ import GroupDetail from './GroupDetail';
 import axios from 'axios';
 
 function App() {
-  const [user, setUser] = useState({
-    user_id: 1,
-    firstname: 'ernest',
-    lastname: 'zhang',
-    username: 'ez',
-    network_id: '1124asfas',
-    email: '12345@gmail.com',
-    admin: false,
-    address: '1234 street st',
-    city: 'city',
-    state: 'state',
-    zip: '5678',
-    privacy: false,
-    profile_img: '1234.com',
-    contribution: 0,
-    default_group: {
-      id: 1,
-      name: 'the place',
-    },
-    user_group: [
-      {
-        id: 1,
-        name: 'the group',
-      },
-      {
-        id: 2,
-        name: 'the second group',
-      },
-    ],
-  });
+  const [user, setUser] = useState(
+    () =>
+      JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {
+        user_id: 1,
+        firstname: 'ernest',
+        lastname: 'zhang',
+        username: 'ez',
+        network_id: '1124asfas',
+        email: '12345@gmail.com',
+        admin: false,
+        address: '1234 street st',
+        city: 'city',
+        state: 'state',
+        zip: '5678',
+        privacy: false,
+        profile_img: '1234.com',
+        contribution: 0,
+        default_group: {
+          id: 1,
+          name: 'the place',
+        },
+        user_group: [
+          {
+            id: 1,
+            name: 'the group',
+          },
+          {
+            id: 2,
+            name: 'the second group',
+          },
+        ],
+      }
+  );
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
-    axios.get(`http://localhost:3001/user/${user.network_id}`).then((res) => {
-      setUser(res.data);
-      console.log(res.data);
-    });
+    axios
+      .get(`http://localhost:3001/user/${user.network_id}`)
+      .then((res) => {
+        setUser(res.data);
+        localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.error("User doesn't exist");
+        setUser({});
+      });
 
     navigator.geolocation.getCurrentPosition((res) =>
       setCurrentLocation({
@@ -56,7 +65,7 @@ function App() {
         longitude: res.coords.longitude,
       })
     );
-  }, []);
+  }, [user.network_id]);
 
   setInterval(() => {
     navigator.geolocation.getCurrentPosition((res) =>
