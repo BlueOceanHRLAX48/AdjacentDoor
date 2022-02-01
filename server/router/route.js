@@ -78,6 +78,12 @@ router.route('/groups/user/:group_id/accept')
 router.route('/groups/user/:group_id/left')
   .delete(controller.groups.leftUserGroup)
 
+router.route('/groups/user/:group_id/photo')
+  .put(controller.groups.changeImage)
+
+router.route('/groups/user/:group_id/privacy')
+  .put(controller.groups.changePrivacy)
+
 router.route('/groups/default/:group_id')
   .get(controller.groups.getDefaultGroup)
 
