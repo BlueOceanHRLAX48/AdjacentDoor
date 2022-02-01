@@ -76,5 +76,13 @@ module.exports = {
       .query(query, [network_id, group_id])
       .then(() => res.sendStatus(202))
       .catch((err) => res.status(500).send(err))
+  },
+  getDefaultGroup: (req, res) => {
+    const { group_id } = req.params;
+    const query = `SELECT * FROM default_groups WHERE id = $1`;
+    pool
+      .query(query, [group_id])
+      .then((results) => res.status(200).send(results.rows))
+      .catch((err) => res.status(500).send(err))
   }
 }
