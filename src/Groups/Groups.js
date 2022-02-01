@@ -7,6 +7,7 @@ import RightBar from '../RightBar';
 
 function Groups (props) {
   const [groups, setGroups] = useState([]);
+  const {userGroupIds} = props.user;
 
   const fakeAxiosGetGroups = () => { //maybe this data is passed down already from the App page
     return ({
@@ -87,13 +88,10 @@ function Groups (props) {
     })
   }
 
-  useEffect(() => { //can remove if groups are passed down from apps
+  useEffect(() => {
     let returnedResult = fakeAxiosGetGroups()
     setGroups(returnedResult.groups);
   }, [props.currentLocation.longitude, props.currentLocation.latitude])
-
-  const {userGroupIds} = props.user;
-
 
   return <div className='w-screen flex dark:bg-gray-900 dark:text-white'>
     <div className='hidden sm:flex'>
@@ -114,7 +112,7 @@ function Groups (props) {
             if(groupIndex !== -1) {
               joinStatus = userGroupIds[groupIndex].joinStatus;
             }
-            return <GroupCard key={index} group={card} joinStatus={joinStatus} />
+            return <GroupCard key={index} group={card} joinStatus={joinStatus} setUser={props.setUser} userGroupIds={userGroupIds} />
           })}
         </div>
         <div>

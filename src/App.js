@@ -56,7 +56,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/my-profile' element={<MyProfile />} />
-        <Route path='/groups' element={<Groups user={user} currentLocation={currentLocation} />} />
+        <Route path='/groups' element={<Groups user={user} currentLocation={currentLocation} setUser={setUser}/>} />
       </Routes>
     </BrowserRouter>
   );
