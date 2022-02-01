@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS user_groups(
 DROP TABLE IF EXISTS user_group_list CASCADE;
 CREATE TABLE user_group_list(
   id SERIAL NOT NULL PRIMARY KEY,
-  network_id text NOT NULL,
+  user_id int NOT NULL REFERENCES user_account(user_id),
+  network_id text,
   user_group_id int NOT NULL,
   accepted boolean NOT NULL DEFAULT false,
   FOREIGN KEY (network_id)
@@ -127,7 +128,16 @@ VALUES ('the second group', 1, '1234 street st', 'city', 'state', '5678', 123, -
 INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
 VALUES ('the place', 'city', 'state', '5678', 'photo.com', DEFAULT, DEFAULT);
 
-INSERT INTO user_group_list(network_id, user_group_id) VALUES ('1124asfas', 1), ('12l5kjasf', 1), ('09afaspoi', 1);
+INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 1, true), (2, '12l5kjasf', 1,true), (3, '09afaspoi', 1, true);
 
-INSERT INTO user_group_list(network_id, user_group_id) VALUES ('1124asfas', 2), ('09afaspoi', 2);
+INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 2,true), (3, '09afaspoi', 2, true);
+
+INSERT INTO posts(group_id, user_group_id, user_id, body, time, report, tag, privacy, latitude, longitude)
+VALUES(1, null, 1, 'asfasfasf', default, default,  'Sell', default, 123, -456.5);
+
+INSERT INTO replies(user_id, username, post_id, reply, report,  time, latitude, longitude)
+VALUES(2, 'username', 1, 'hihi', default, default,  567, 123.5);
+
+INSERT INTO replies(user_id,  username, post_id, reply, report,  time, latitude, longitude)
+VALUES(3, 'gggggg', 1, 'byebye', default, default,  456, 89.5);
 
