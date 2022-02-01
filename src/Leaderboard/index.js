@@ -46,13 +46,13 @@ function Leaderboard() {
     <div className='flex h-screen'>
       <LeftBar />
       <div className='flex grow overflow-y-scroll hide-scroll-bar justify-center gap-8 p-10'>
-        <div className='w-1/2 h-fit flex flex-col bg-ghostWhite rounded border-secondary border'>
-          <div className='text-center text-2xl font-bold decoration-wavy decoration-secondary underline underline-offset-2 py-5'>
+        <div className='w-1/2 h-fit flex flex-col rounded border'>
+          <div className='font-bold text-2xl text-center py-2 decoration-secondary underline underline-offset-1'>
             Global
           </div>
           {globalUsers}
         </div>
-        <div className='w-1/2 h-fit flex flex-col bg-ghostWhite rounded border-secondary border'>
+        <div className='w-1/2 h-fit flex flex-col rounded border'>
           <div className='text-center text-2xl font-bold decoration-wavy decoration-secondary underline underline-offset-2 pb-2'>
             <FormControl variant='standard' sx={{ m: 1, minWidth: 300 }}>
               <InputLabel id='groupSelect'>Group</InputLabel>

@@ -8,6 +8,7 @@ import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
 
 function App() {
+  const [currentLocation, setCurrentLocation] = React.useState({});
   const [user, setUser] = React.useState({
     userID: 1,
     firstName: 'Demo',
@@ -30,6 +31,24 @@ function App() {
     ],
     admin: true,
   });
+
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition((res) =>
+      setCurrentLocation({
+        latitude: res.coords.latitude,
+        longitude: res.coords.longitude,
+      })
+    );
+  }, []);
+
+  setInterval(() => {
+    navigator.geolocation.getCurrentPosition((res) =>
+      setCurrentLocation({
+        latitude: res.coords.latitude,
+        longitude: res.coords.longitude,
+      })
+    );
+  }, 300000);
 
   return (
     <BrowserRouter>
