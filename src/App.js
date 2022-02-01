@@ -51,6 +51,24 @@ function App() {
     );
   }, 300000);
 
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition((res) =>
+      setCurrentLocation({
+        latitude: res.coords.latitude,
+        longitude: res.coords.longitude,
+      })
+    );
+  }, []);
+
+  setInterval(() => {
+    navigator.geolocation.getCurrentPosition((res) =>
+      setCurrentLocation({
+        latitude: res.coords.latitude,
+        longitude: res.coords.longitude,
+      })
+    );
+  }, 300000);
+
   return (
     <BrowserRouter>
       <Routes>
