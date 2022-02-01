@@ -3,7 +3,6 @@ const pool = require('../../database');
 module.exports = {
   getUser: (req, res) => {
     let { id } = req.params
-
     let userStr =
     `select
     user_id, firstName, lastName, username,
@@ -19,7 +18,7 @@ module.exports = {
     from user_groups
     join user_group_list on user_group_list.user_group_id = user_groups.id
     left join user_account on user_group_list.network_id = user_account.network_id
-    where user_account.network_id = $1
+    where user_account.network_id = $1;
     ;`
 
     let promiseQuery = [pool.query(userStr, [id]), pool.query(userGroup, [id])]
@@ -33,7 +32,7 @@ module.exports = {
 
         res.json(userInfo)
       })
-      .catch((err)=> res.status(500).send('Could not find user'))
+    .catch((err)=> res.status(500).send('Could not find user'))
   },
 
   createUser: async (req, res) => {
@@ -111,8 +110,143 @@ module.exports = {
      .catch(err => console.log(err))
   },
 
+  globalUserScore: (req, res) => {
+    let { count } = req.query
+
+    let globalStr =
+    `select
+    user_id, firstName, lastName, username,
+    network_id, email, admin, address, city, state,
+    zip, privacy, profile_img, contribution,
+    (select json_build_object('id', id, 'name', name)
+    from default_groups
+    where default_groups.id = user_account.default_groupID) as default_group
+    from user_account ORDER BY contribution DESC LIMIT $1;`
+
+    pool.query(globalStr, [count])
+      .then(result=> res.json(result.rows))
+      .catch(err => res.status(500).send('Could not get all global scores'))
+  },
+
+  localUserScore: (req, res) => {
+    let { count } = req.query
+    let { zip } = req.params
+
+    let globalStr =
+    `select
+    user_id, firstName, lastName, username,
+    network_id, email, admin, address, city, state,
+    zip, privacy, profile_img, contribution,
+    (select json_build_object('id', id, 'name', name)
+    from default_groups
+    where default_groups.id = user_account.default_groupID) as default_group
+    from user_account where zip = $1 ORDER BY contribution DESC LIMIT $2;`
+
+    pool.query(globalStr, [zip, count])
+      .then(result=> res.json(result.rows))
+      .catch(err => res.status(500).send('Could not get all local scores'))
+  },
+
+  getLeaderBoardByUserGroup: async (req, res) => {
+    let { count } = req.query
+    console.log(count)
+    let { user_group_id } = req.params
+
+    let getUsers =
+    `select array_agg(network_id) as id from user_group_list where user_group_id = $1 and accepted = true;`
+
+    let userList = await pool.query(getUsers, [user_group_id])
+
+    let array = userList.rows[0].id
+    let promiseQ = []
+
+    let getScores =
+    `select
+    user_id, firstName, lastName, username,
+    network_id, email, admin, address, city, state,
+    zip, privacy, profile_img, contribution,
+    (select json_build_object('id', id, 'name', name)
+    from default_groups
+    where default_groups.id = user_account.default_groupID) as default_group
+    from user_account where network_id = $1 ORDER BY contribution DESC LIMIT $2`
+
+    if (!array.length) {
+      res.status(500).send('Could not find users in this group')
+    } else {
+      array.forEach(id => promiseQ.push(pool.query(getScores, [id, count])))
+    }
+
+    Promise.all(promiseQ)
+      .then(result => {
+        let userArray = result[0].rows
+        if (result.length > 1) {
+          for (var i=1; i < result.length ; i++) {
+            userArray.push(result[i].rows[0])
+          }
+        }
+        res.json(userArray)
+      })
+      .catch(err => res.status(500).send('Error getting a user score'))
+  },
+
+
+  getAllUsersBasedOnLocation: (req, res) => {
+    let { zip } = req.params
+
+    let getAll =
+    `select
+    user_id, firstName, lastName, username,
+    network_id, email, admin, address, city, state,
+    zip, privacy, profile_img, contribution
+    from user_account where zip = $1;`
+
+    pool.query(getAll, [zip])
+      .then(result => res.json(result.rows))
+      .catch(err => res.status(500).send('Could not get all users'))
+  },
+
+  getAllUsersBasedOnGroup: async (req, res) => {
+    let { user_group_id } = req.params
+
+    let getUserId =
+    `select array_agg(network_id) as id from user_group_list where user_group_id = $1 and accepted = true;`
+
+    let userList = await pool.query(getUserId, [user_group_id])
+
+    let array = userList.rows[0].id
+    let promiseQ = []
+
+    let getUsers =
+    `select
+    user_id, firstName, lastName, username,
+    network_id, email, admin, address, city, state,
+    zip, privacy, profile_img, contribution,
+    (select json_build_object('id', id, 'name', name)
+    from default_groups
+    where default_groups.id = user_account.default_groupID) as default_group
+    from user_account where network_id = $1`
+
+    if (!array.length) {
+      res.status(500).send('Could not find users in this group')
+    } else {
+      array.forEach(id => promiseQ.push(pool.query(getUsers, [id])))
+    }
+
+    Promise.all(promiseQ)
+      .then(result => {
+        let userArray = result[0].rows
+        if (result.length > 1) {
+          for (var i=1; i < result.length ; i++) {
+            userArray.push(result[i].rows[0])
+          }
+        }
+        res.json(userArray)
+      })
+      .catch(err => res.status(500).send('Error getting all users'))
+  },
+
   updatePhoto: (req, res) => {
-    let photo = req.params.photo
+    let photo = req.body.photo
     let id = req.params.network_id
     let photoStr = `
       update user_account set profile_img = $1
@@ -135,10 +269,21 @@ module.exports = {
       .catch(err => res.status(500).send('Could not update your location'))
   },
 
-  updateContribution: (req, res) => {
+  incrementContribution: (req, res) => {
     let { id } = req.params
     let scoreStr =
     `update user_account set contribution = contribution + 1
+      where network_id = $1;
+    `
+    pool.query(scoreStr , [id])
+      .then(result => res.status(201).send('Score has been updated'))
+      .catch(err => res.status(500).send('Could not update score'))
+  },
+
+  decrementContribution: (req, res) => {
+    let { id } = req.params
+    let scoreStr =
+    `update user_account set contribution = contribution - 1
       where network_id = $1;
     `
     pool.query(scoreStr , [id])
@@ -156,15 +301,15 @@ module.exports = {
       .catch(err => res.status(500).send('Error deleting account'))
   },
 
-  updateNickname: (req, res) => {
+  displayName: (req, res) => {
     let { id } = req.params
-    let { nickname } = req.params
+    let { username } = req.body
 
     let nicknameStr =
     `update user_account set nickname = $1
       where network_id = $2;
     `
-    pool.query(nicknameStr , [id, nickname ])
+    pool.query(nicknameStr , [id, username ])
       .then(result => res.status(201).send('Nickname has been updated'))
       .catch(err => res.status(500).send('Error updating nickname'))
   },

@@ -9,8 +9,26 @@ router.route('/user/:id')
 router.route('/user/signup')
   .post(controller.users.createUser)
 
-router.route('/user/:id/contribution')
-  .put(controller.users.updateContribution)
+router.route('/leaderboard')
+  .get(controller.users.globalUserScore)
+
+router.route('/leaderboard/:zip')
+  .get(controller.users.localUserScore)
+
+router.route('/leaderboard/user_group/:user_group_id')
+  .get(controller.users.getLeaderBoardByUserGroup)
+
+router.route('/:zip/users')
+  .get(controller.users.getAllUsersBasedOnLocation)
+
+router.route('/user_group/users/:user_group_id')
+  .get(controller.users.getAllUsersBasedOnGroup)
+
+router.route('/user/:id/contribution/add')
+  .put(controller.users.incrementContribution)
+
+router.route('/user/:id/contribution/subtract')
+  .put(controller.users.decrementContribution)
 
 router.route('/user/:id/photo')
   .put(controller.users.updatePhoto)
@@ -18,10 +36,10 @@ router.route('/user/:id/photo')
 router.route('/user/:id/updateLocation')
   .put(controller.users.updateLocation)
 
-router.route('/user/:id/updateNickname')
-  .put(controller.users.updateNickname)
+router.route('/user/:id/displayName')
+  .put(controller.users.displayName)
 
-router.route('/user/:id/updatePrivacy')
+router.route('/user/:id/privacy')
   .put(controller.users.updatePrivacy)
 
 router.route('/user/:id/deleteUser')

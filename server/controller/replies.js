@@ -46,7 +46,7 @@ module.exports = {
 
     pool.query(updateLike, [reply_id])
       .then(result => res.status(201).send('Comment Liked'))
-      .catch(err => res.status(500).send('Could not like commend'))
+      .catch(err => res.status(500).send('Could not like comment'))
   },
 
   reportReply: (req, res) => {
@@ -68,6 +68,6 @@ module.exports = {
 
     pool.query(deleteStr, [reply_id])
       .then(result => res.status(201).send('Comment deleted'))
-      .catch(err => console.log(err))
+      .catch(err => res.status(500).send('Could not delete comment'))
   }
 }
