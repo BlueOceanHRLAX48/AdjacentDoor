@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -35,6 +35,7 @@ function SignUp() {
       setNotice(false);
       setValidated(true);
       setFillIn(true);
+      document.location.href = '/';
     }
   };
 
@@ -122,7 +123,6 @@ function SignUp() {
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
-                  href= {fillIn && '/'}
                 >
                   Sign Up
                 </Button>

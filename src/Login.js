@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -23,8 +23,21 @@ function Login() {
   //     : null
   // );
 
+  const [isMobile, setIsMobile] = useState(false);
   const [notice, setNotice] = useState(false);
   const [fillIn, setFillIn] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  })
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+        setIsMobile(true)
+    } else {
+        setIsMobile(false)
+    }
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,18 +62,16 @@ function Login() {
   };
 
   const handleLogin = (data) => {
+    console.log(data);
     const userInfo = {
       firstName: data.Du.VX,
       lastName: data.Du.iW,
+      username: data.Du.tf,
       profile_img: data.Du.eN,
       email: data.Du.tv
     };
     console.log(userInfo);
-    document.location.href = '/';
-  };
-
-  const componentClicked = (data) => {
-    console.log(data);
+    // document.location.href = '/';
   };
 
   // const handleLogin = async (googleData) => {
@@ -153,7 +164,7 @@ function Login() {
                       fontWeight: '900',
                       fontSize: '1.1rem',
                       lineHeight: '1.75',
-                      padding: '6px 16px',
+                      padding: '6px 14px',
                       borderRadius: '4px'
                     }}
                   >
