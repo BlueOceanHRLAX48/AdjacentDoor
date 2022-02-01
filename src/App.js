@@ -38,14 +38,17 @@ function App() {
           {
             id: 1,
             name: 'the group',
+            accepted: true
           },
           {
             id: 2,
             name: 'the second group',
+            accepted: false
           },
         ],
       }
   );
+
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
