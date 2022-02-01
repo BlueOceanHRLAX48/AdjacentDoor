@@ -14,7 +14,7 @@ module.exports = {
     from user_account where network_id = $1;`
 
     let userGroup =
-    `select user_groups.id, user_groups.name
+    `select user_groups.id, user_groups.name, user_group_list.accepted
     from user_groups
     join user_group_list on user_group_list.user_group_id = user_groups.id
     left join user_account on user_group_list.network_id = user_account.network_id
@@ -257,16 +257,50 @@ module.exports = {
       .catch(err => res.status(500).send('Could not update photo'))
   },
 
-  updateLocation: (req, res) => {
+  updateLocation: async (req, res) => {
     let { id } = req.params
     let locationParams = [req.body.address,  req.body.city,  req.body.state,  req.body.zip, id ]
 
     let locationStr =
-    `update user_account set address = $1, city = $2, state = $3, zip= $4 where network_id = $5`
+    `update user_account set address = $1, city = $2, state = $3, zip= $4 where network_id = $5;`
 
-    pool.query(locationStr, locationParams)
-      .then(result => res.status(201).send('Your location has been updated'))
-      .catch(err => res.status(500).send('Could not update your location'))
+    await pool.query(locationStr, locationParams)
+    // .then(result => res.status(201).send('Your location has been updated'))
+    //   .catch(err => res.status(500).send('Could not update your location'))
+
+    let findDefault =
+    `select id from default_groups
+    where zip = $1;`
+
+    let newDefault =
+    `insert into default_groups(
+      name,
+      city,
+      state,
+      zip,
+      photo,
+      safety,
+      friendliness
+      ) values($1, $2, $3, $4, '1245.com' , default, default)
+      returning id;`
+
+    let groupRes = await pool.query(findDefault, [req.body.zip])
+
+    let groupId;
+
+    if (!groupRes.rows.length) {
+      let newGroupRes = await pool.query(newDefault, [req.body.city, req.body.city, req.body.state, req.body.zip])
+      groupId = newGroupRes.rows[0].id
+    } else {
+      groupId = groupRes.rows[0].id
+    }
+
+    let changeDefaultGroup =
+    `update user_account set default_groupID = $1 where network_id = $2;`
+
+    pool.query(changeDefaultGroup, [groupId, id])
+      .then(result => res.status(201).send('Your Default Group has been changed'))
+      .catch(err => res.status(500).send('Could not update your Default Group'))
   },
 
   incrementContribution: (req, res) => {

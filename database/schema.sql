@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  photo text NOT NULL,
+  photo text,
   "safety" int NOT NULL DEFAULT 0,
   friendliness int NOT NULL DEFAULT 0
 );
