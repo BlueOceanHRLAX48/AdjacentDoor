@@ -12,8 +12,8 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import { IoIosWarning } from 'react-icons/io';
+import { FcGoogle } from 'react-icons/fc';
 import GoogleLogin from 'react-google-login';
-// import FacebookLogin from 'react-facebook-login';
 import theme from './components/muiTheme';
 
 function Login() {
@@ -83,7 +83,7 @@ function Login() {
           </Typography>
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 5,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center'
@@ -135,36 +135,43 @@ function Login() {
               >
                 Continue
               </Button>
+              <div className="text-center pt-3">Or</div>
+              <br />
               <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 render={renderProps => (
                   <button
                     onClick={renderProps.onClick}
                     style={{
-                      backgroundColor: '#F8F8FF',
-                      color: 'black', width: '100%',
+                      backgroundColor: '#FFEEDD',
+                      color: '#B8B8FF', width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
                       fontFamily: 'Roboto',
-                      fontWeight: '500',
-                      fontSize: '0.875rem',
+                      fontWeight: '900',
+                      fontSize: '1.1rem',
                       lineHeight: '1.75',
                       padding: '6px 16px',
                       borderRadius: '4px'
                     }}
                   >
-                  LOGIN WITH
-                  <span style={{color: '#FF0000'}}> G</span>
-                  <span style={{color: '#66CC66'}}>O</span>
-                  <span style={{color: '#FF9966'}}>O</span>
-                  <span style={{color: '#480ca8'}}>G</span>
-                  <span style={{color: '#FF0066'}}>L</span>
-                  <span style={{color: '#e76f51'}}>E</span>
+                  <FcGoogle size='25px' style={{ marginRight: 100, marginLeft: -7 }}/><span style={{ marginRight: 100 }}>Log in With Google</span>
                   </button>
                 )}
                 onSuccess={handleLogin}
                 onFailure={handleFailure}
                 cookiePolicy={'single_host_origin'}
               ></GoogleLogin>
-              <Grid container sx={{mt: 6}}>
+              <div
+                className='fb-login-button'
+                data-width='500'
+                data-size='large'
+                data-button-type='login_with'
+                data-layout='default'
+                data-auto-logout-link='false' data-use-continue-as='false'
+                style={{padding: '10px 0'}}
+              ></div>
+              <Grid container sx={{mt: 3}}>
                 <Grid item>
                   <Link href='/signup' variant='body2'>
                     {'Don\'t have an account? Sign Up'}
