@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, TextField, Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from'@mui/material';
 import axios from 'axios';
 import LeftBar from '../LeftBar';
-import { Link } from 'react-router-dom';
 import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
 
 function MakeGroup (props) {
@@ -52,10 +51,6 @@ function MakeGroup (props) {
     border: '2px solid $000',
     boxShadow: 24,
     p: 4
-  }
-
-  const hideField = {
-    display: 'none'
   }
 
   const fakeAxiosPost = () => {
@@ -126,7 +121,7 @@ function MakeGroup (props) {
               <FormControlLabel value="local" control={ <Radio /> } label="Local" onClick={() => {
                 setLocal('local');
               }}></FormControlLabel>
-              {local === 'local' ? <TextField type='text' value={localRadius || ''} onChange={(e) => {
+              {local === 'local' ? <TextField type='text' placeholder="preferred mile radius" value={localRadius || ''} onChange={(e) => {
                 setRadius(e.target.value);
               }}></TextField> : ''}
             </RadioGroup>
@@ -168,8 +163,7 @@ function MakeGroup (props) {
   }
 
   return <div className="makeGroupModal">
-    <LeftBar />
-    <Button style={modalStyle} variant="outlined" onClick={handleOpen}>Create</Button>
+    <Button variant="outlined" onClick={handleOpen}>Create</Button>
     <Modal
       open={open}
       onClose={() => {
