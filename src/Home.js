@@ -64,6 +64,8 @@ function Home() {
     },
   ]);
 
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
   return (
     <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
       <div id='left-bar' className='hidden sm:flex'>
@@ -71,11 +73,25 @@ function Home() {
       </div>
       <div>
         <div className='hidden sm:flex'>
-          <TopNav search={search} setSearch={setSearch} posts={posts} setPosts={setPosts} />
+          <TopNav
+            search={search}
+            setSearch={setSearch}
+            posts={posts}
+            setPosts={setPosts}
+            filteredPosts={filteredPosts}
+            setFilteredPosts={setFilteredPosts}
+          />
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
-            <Feed search={search} setSearch={setSearch} posts={posts} setPosts={setPosts} />
+            <Feed
+              search={search}
+              setSearch={setSearch}
+              posts={posts}
+              setPosts={setPosts}
+              filteredPosts={filteredPosts}
+              setFilteredPosts={setFilteredPosts}
+            />
           </div>
           <div className='hidden sm:flex'>
             <RightBar />

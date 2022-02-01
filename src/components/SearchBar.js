@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react';
 
-function SearchBar({ search, setSearch, posts, setPosts }) {
+function SearchBar({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
   const [searchInput, setSearchInput] = useState('');
 
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
   };
 
-  // let content = searchInput.current.value;
   useEffect(() => {
-    if (searchInput && searchInput.length) {
-      let filteredPosts =
+    if (searchInput.length) {
+      let filtered =
         posts &&
         posts.filter((post) => post['post_text'].toUpperCase().includes(searchInput.toUpperCase()));
-      setPosts(filteredPosts);
+      setFilteredPosts(filtered);
     } else {
-      setPosts(posts);
+      setFilteredPosts(posts);
     }
-  }, [searchInput]);
+  });
 
   return (
     <>

@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useRef } from 'react';
 import Post from './Post';
 
-function Feed({ search, setSearch, posts, setPosts }) {
+function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
   const postInput = useRef(null);
 
   const handleSubmit = (e) => {
@@ -16,7 +16,7 @@ function Feed({ search, setSearch, posts, setPosts }) {
       latitude: '40.741895',
       longitude: '-73.989308',
     };
-    setPosts([postContent, ...posts]);
+    setFilteredPosts([postContent, ...filteredPosts]);
     postInput.current.value = '';
     e.preventDefault();
   };
@@ -38,7 +38,7 @@ function Feed({ search, setSearch, posts, setPosts }) {
           </button>
         </form>
       </div>
-      {posts.map((post, i) => (
+      {filteredPosts.map((post, i) => (
         <Post
           key={i}
           avatar={post.avatar}
