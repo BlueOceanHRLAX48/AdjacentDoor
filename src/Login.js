@@ -18,60 +18,51 @@ import theme from './components/muiTheme';
 import axios from 'axios';
 
 function Login() {
-  // const [loginData, setLoginData] = useState(
-  //   localStorage.getItem('loginData')
-  //     ? JSON.parse(localStorage.getItem('loginData'))
-  //     : null
-  // );
-
   const [isMobile, setIsMobile] = useState(false);
   const [notice, setNotice] = useState(false);
   const [fillIn, setFillIn] = useState(false);
-  const [longitude, setLongitude] = useState('');
-  const [latitude, setLatitude] = useState('');
   const [address, setAddress] = useState('');
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     getLocation();
-  })
+  });
 
   const handleResize = () => {
     if (window.innerWidth < 720) {
-        setIsMobile(true)
+      setIsMobile(true);
     } else {
-        setIsMobile(false)
+      setIsMobile(false);
     }
-  }
+  };
 
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getCoordinates);
     } else {
-      console.log('Geolocation is not supported by this brower.')
+      console.log('Geolocation is not supported by this brower.');
     }
-  }
+  };
 
   const getCoordinates = (position) => {
     const longitude = position.coords.longitude;
     const latitude = position.coords.latitude;
-    setLongitude(longitude);
-    setLatitude(latitude);
     reverseGeocodeCoordinates(longitude, latitude);
-  }
+  };
 
   const reverseGeocodeCoordinates = (longitude, latitude) => {
     let token = process.env.REACT_APP_MAPBOX_APP_TOKEN;
     const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${token}`;
-    axios.get(url)
-      .then(response => {
-        console.log(response.data.features[0].place_name);
-        setAddress(response.data.features[0].place_name);
+    axios
+      .get(url)
+      .then((response) => {
+        const currentAddress = response.data.features[0].place_name;
+        setAddress(currentAddress);
       })
-      .catch(err => {
-        console.error(err)
-      })
-  }
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -87,7 +78,7 @@ function Login() {
     } else {
       setNotice(false);
       setFillIn(true);
-      // document.location.href = '/';
+      document.location.href = '/';
     }
   };
 
@@ -101,49 +92,49 @@ function Login() {
       lastName: data.Du.iW,
       username: data.Du.tf,
       profile_img: data.Du.eN,
-      email: data.Du.tv
+      email: data.Du.tv,
+      network_id: data.Du.FW,
+      address: address
     };
     console.log(userInfo);
+    // axios.post('/user/signup', userInfo)
+    //   .then(response => {
+    //     console.log('New user signed up');
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   })
     // document.location.href = '/';
   };
-
-  // const handleLogin = async (googleData) => {
-  //   const res = await fetch('/api/google-login', {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //       token: googleData.tokenId,
-  //     }),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
-
-  //   const data = await res.json();
-  //   setLoginData(data);
-  //   localStorage.setItem('loginData', JSON.stringify(data));
-  // };
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem('loginData');
-  //   setLoginData(null);
-  // };
 
   return (
     <div className='w-screen flex'>
       <ThemeProvider theme={theme}>
         <Container component='main' maxWidth='xs'>
           <CssBaseline />
-          <Typography component='h1' variant='h4' color='secondary' align='center' mt='20px'>
+          <Typography
+            component='h1'
+            variant='h4'
+            color='secondary'
+            align='center'
+            mt='20px'
+          >
             ADJACENT DOOR
           </Typography>
-          <Box className='flex items-center mt-5'
-              sx={{ flexDirection: 'column' }}
-            >
+          <Box
+            className='flex items-center mt-5'
+            sx={{ flexDirection: 'column' }}
+          >
             <RiLoginCircleFill />
             <Typography component='h1' variant='h5'>
               Login
             </Typography>
-            <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Box
+              component='form'
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin='normal'
                 required
@@ -151,7 +142,6 @@ function Login() {
                 id='username'
                 label='Username'
                 name='username'
-                autoComplete='username'
                 autoFocus
               />
               <TextField
@@ -168,9 +158,11 @@ function Login() {
                 control={<Checkbox value='remember' color='primary' />}
                 label='Remember me'
               />
-              {(!fillIn && notice) && <Alert className='flex items-center mt-5'
-                severity='error'>Please fill out all the required fields
-              </Alert> }
+              {!fillIn && notice && (
+                <Alert className='flex items-center mt-5' severity='error'>
+                  Please fill out all the required fields
+                </Alert>
+              )}
               <Button
                 type='submit'
                 fullWidth
@@ -181,16 +173,17 @@ function Login() {
               >
                 Continue
               </Button>
-              <div className="text-center pt-3">Or</div>
+              <div className='text-center pt-3'>Or</div>
               <br />
               <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                render={renderProps => (
+                render={(renderProps) => (
                   <button
                     onClick={renderProps.onClick}
                     style={{
                       backgroundColor: '#FFEEDD',
-                      color: '#B8B8FF', width: '100%',
+                      color: '#B8B8FF',
+                      width: '100%',
                       display: 'flex',
                       justifyContent: 'center',
                       fontFamily: 'Roboto',
@@ -198,10 +191,13 @@ function Login() {
                       fontSize: '1.1rem',
                       lineHeight: '1.75',
                       padding: '6px 14px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
                     }}
                   >
-                  <FcGoogle size='25px' style={{ marginRight: 100, marginLeft: -7 }}/>
+                    <FcGoogle
+                      size='25px'
+                      style={{ marginRight: 100, marginLeft: -7 }}
+                    />
                     <span style={{ marginRight: 100 }}>Log in With Google</span>
                   </button>
                 )}
@@ -215,14 +211,15 @@ function Login() {
                 data-size='large'
                 data-button-type='login_with'
                 data-layout='default'
-                data-auto-logout-link='false' data-use-continue-as='false'
+                data-auto-logout-link='false'
+                data-use-continue-as='false'
                 data-redirecturi='/'
-                style={{padding: '10px 0'}}
+                style={{ padding: '10px 0' }}
               ></div>
-              <Grid container sx={{mt: 3}}>
+              <Grid container sx={{ mt: 3 }}>
                 <Grid item>
                   <Link href='/signup' variant='body2'>
-                    {'Don\'t have an account? Sign Up'}
+                    {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,12 +10,56 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/muiTheme';
+import axios from 'axios';
 
 function SignUp() {
   const [notice, setNotice] = useState(false);
   const [fillIn, setFillIn] = useState(false);
   const [validated, setValidated] = useState(false);
   const [noticeValidEmail, setNoticeValidEmail] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    getLocation();
+  })
+
+  const handleResize = () => {
+    if (window.innerWidth < 720) {
+        setIsMobile(true)
+    } else {
+        setIsMobile(false)
+    }
+  }
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getCoordinates);
+    } else {
+      console.log('Geolocation is not supported by this brower.')
+    }
+  }
+
+  const getCoordinates = (position) => {
+    const longitude = position.coords.longitude;
+    const latitude = position.coords.latitude;
+    reverseGeocodeCoordinates(longitude, latitude);
+  }
+
+  const reverseGeocodeCoordinates = (longitude, latitude) => {
+    let token = process.env.REACT_APP_MAPBOX_APP_TOKEN;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${token}`;
+    axios.get(url)
+      .then(response => {
+        const currentAddress = response.data.features[0].place_name;
+        console.log(currentAddress);
+        setAddress(currentAddress);
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,7 +68,8 @@ function SignUp() {
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       username: data.get('username'),
-      email: data.get('email')
+      email: data.get('email'),
+      address: address
     };
     if (!submitData.email.includes('@')) {
       setNoticeValidEmail(true);
@@ -35,6 +80,14 @@ function SignUp() {
       setNotice(false);
       setValidated(true);
       setFillIn(true);
+
+      axios.post('/user/signup', submitData)
+      .then(response => {
+        console.log('New user signed up');
+      })
+      .catch(err => {
+        console.error(err);
+      })
       document.location.href = '/';
     }
   };
@@ -101,7 +154,6 @@ function SignUp() {
                   id='username'
                   label='Username'
                   name='username'
-                  autoComplete='username'
                 />
                 <TextField
                   margin='dense'
