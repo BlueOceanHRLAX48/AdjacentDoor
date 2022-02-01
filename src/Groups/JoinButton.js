@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const JoinButton = (props) => {
@@ -20,6 +20,7 @@ const JoinButton = (props) => {
     //let database know user joined this group
     //get back joined group object {id:<num>, name:<name>, joinStatus:<joined>}
     return {id: props.group.id, name: props.group.name, accepted: true}
+  }
 
   const statusButton = (privacy) => {
     let user_group = props.user_group;
