@@ -37,7 +37,11 @@ function LeftBar({ setFilter, filter, user }) {
           </button>
         ))}
 
-        <div className='mt-4 mb-2 ml-4 text-sm'>All Groups</div>
+        <div className='mt-4 mb-2 ml-4 text-sm'>Discover Groups</div>
+
+        <NavLink to={`/groups`} style={handleActive} key={uuidv4()}>
+          <LeftBarButton text='All Groups' icon={<MdGroups size='20' />} />
+        </NavLink>
 
         {user?.user_group?.map(({ id, name }) => (
           <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>

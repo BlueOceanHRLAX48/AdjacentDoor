@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import Feed from './components/Feed';
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
+<<<<<<< HEAD
 import axios from 'axios';
 import MakePost from './components/MakePost';
+=======
+>>>>>>> 39d2b0b (add all groups button)
 
 function Home({ user, setUser, currentLocation }) {
   const [posts, setPosts] = useState([]);

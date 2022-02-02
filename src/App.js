@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AdminPanel from './AdminPanel';
 import Footer from './components/Footer';
+import MakePost from './components/MakePost';
 import GroupDetail from './GroupDetail';
 import Groups from './Groups/Groups';
 import Home from './Home';
@@ -10,7 +11,6 @@ import Leaderboard from './Leaderboard';
 import Login from './Login';
 import MyProfile from './MyProfile';
 import SignUp from './SignUp';
-import MakePost from './components/MakePost';
 
 function App() {
   const [user, setUser] = useState(
