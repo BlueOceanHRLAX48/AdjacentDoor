@@ -39,6 +39,9 @@ function Groups(props) {
         <div className='flex-col'>
           <div>
             <MakeGroup currentLocation={props.currentLocation} user={props.user} />
+            <div>
+              Groups near you
+            </div>
             <div id="seeGroups">
               {groups.map((card, index) => {
                 let joinStatus = '';
