@@ -21,17 +21,12 @@ function SignUp() {
   const [address, setAddress] = useState('');
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
     getLocation();
   })
 
   const handleResize = () => {
-    if (window.innerWidth < 720) {
-        setIsMobile(true)
-    } else {
-        setIsMobile(false)
-    }
-  }
+    setIsMobile(!isMobile);
+  };
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -96,8 +91,44 @@ function SignUp() {
     }
   };
 
+  const style = () => {
+    let fontStyle = {};
+    if (isMobile) {
+      fontStyle = {
+        variant1: 'h2',
+        variant2: 'h3',
+        fontSize: 40,
+        linkSize: 33,
+        pt: '10%',
+        pd: '1%'
+      };
+    } else {
+      fontStyle = {
+        variant1: 'h2',
+        variant2: 'h4',
+        fontSize: 20,
+        linkSize: 20,
+        pt: '10%',
+        pb: '5%'
+      };
+    }
+    return fontStyle;
+  }
+
   return (
     <div className='w-screen flex'>
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={handleResize}
+        style={{
+          height: style().logoSize,
+          fontSize: style().linkSize,
+          marginLeft: '90%',
+          marginTop: '1%',
+          position: 'absolute'
+        }}
+      >{isMobile ? 'Desktop' : 'Mobile'}</Button>
       <ThemeProvider theme={theme}>
         <Grid container component='main' sx={{ height: '100vh' }}>
           <CssBaseline />
@@ -121,10 +152,18 @@ function SignUp() {
             <Box className='flex items-center my-10 mx-10'
               sx={{ flexDirection: 'column' }}
             >
-              <Typography component='h1' variant='h2' color='secondary' align='center' mb='6px' mt='20%'>
+              <Typography
+                component='h1'
+                variant={ style().variant1 }
+                color='secondary'
+                fontFamily='Dancing Script'
+                align='center'
+                pt={style().pt}
+                pb={style().pb}
+              >
               ADJACENT DOOR
               </Typography>
-              <Typography component='h1' variant='h3' sx={{ mt: 5, mb: 5 }}>
+              <Typography component='h1' variant={ style().variant2 } sx={{ mt: 5, mb: 5 }}>
                 Sign Up
               </Typography>
               <Box
@@ -141,8 +180,8 @@ function SignUp() {
                   label='First Name'
                   name='firstName'
                   autoComplete='firstName'
-                  inputProps={{style: {fontSize: 30}}}
-                  InputLabelProps={{style: {fontSize: 30}}}
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 <TextField
                   margin='dense'
@@ -152,8 +191,8 @@ function SignUp() {
                   label='Last Name'
                   name='lastName'
                   autoComplete='lastName'
-                  inputProps={{style: {fontSize: 30}}}
-                  InputLabelProps={{style: {fontSize: 30}}}
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 <TextField
                   margin='dense'
@@ -162,8 +201,8 @@ function SignUp() {
                   id='username'
                   label='Username'
                   name='username'
-                  inputProps={{style: {fontSize: 30}}}
-                  InputLabelProps={{style: {fontSize: 30}}}
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 <TextField
                   margin='dense'
@@ -173,17 +212,17 @@ function SignUp() {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
-                  inputProps={{style: {fontSize: 30}}}
-                  InputLabelProps={{style: {fontSize: 30}}}
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 {(!validated && noticeValidEmail) && <Alert className='flex items-center mt-5'
                   severity='error'
-                  sx={{ fontSize: 30 }}
+                  sx={{ fontSize: style().fontSize }}
                 >Please enter valid email address
                 </Alert> }
                 {(!fillIn && notice) && <Alert className='flex items-center mt-5'
                   severity='error'
-                  sx={{ fontSize: 30 }}
+                  sx={{ fontSize: style().fontSize }}
                 >Please fill out all the required fields
                 </Alert> }
                 <Button
@@ -191,7 +230,7 @@ function SignUp() {
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
-                  style={{ fontSize: '30px' }}
+                  style={{ fontSize: style().fontSize }}
                 >
                   Sign Up
                 </Button>
@@ -200,9 +239,9 @@ function SignUp() {
                     <Link
                       href='/login'
                       variant='body3'
-                      style={{ fontSize: '33px' }}
+                      style={{ fontSize: style().linkSize }}
                     >
-                      {'Already a member? Log In'}
+                      {'Already a member? Log In or Sign Up through Google!'}
                     </Link>
                   </Grid>
                 </Grid>

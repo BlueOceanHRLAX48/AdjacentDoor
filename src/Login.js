@@ -27,16 +27,11 @@ function Login() {
   );
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
     getLocation();
   });
 
   const handleResize = () => {
-    if (window.innerWidth < 720) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
+    setIsMobile(!isMobile);
   };
 
   const getLocation = () => {
@@ -97,10 +92,10 @@ function Login() {
 
   const handleLogin = (data) => {
 
-    const userAddress = address.split(',');
+    const userAddress = address.split(', ');
     const street = userAddress[0];
-    const city = userAddress[1].substring(1, userAddress[1].length);
-    const state = userAddress[2].substring(1, userAddress[2].length - 6);
+    const city = userAddress[1];
+    const state = userAddress[2].substring(0, userAddress[2].length - 6);
     const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
 
     const userInfo = {
@@ -134,18 +129,58 @@ function Login() {
     document.location.href = '/';
   };
 
+  const style = () => {
+    let fontStyle = {};
+    if (isMobile) {
+      fontStyle = {
+        variant1: 'h2',
+        variant2: 'h3',
+        fontSize: 40,
+        logoSize: 60,
+        linkSize: 33,
+        pt: '10%',
+        pd: '1%'
+      };
+    } else {
+      fontStyle = {
+        variant1: 'h2',
+        variant2: 'h4',
+        fontSize: 20,
+        logoSize: 30,
+        linkSize: 20,
+        pt: '20%',
+        pb: '5%'
+      };
+    }
+    return fontStyle;
+  }
+
   return (
     <div className='w-screen flex-1 h-screen justify-content-center text-2xl bg-ghostWhite'>
-      <img src={require('./image/up.jpg')} alt='up' />
-      <ThemeProvider theme={theme} className='mt-20' >
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={handleResize}
+        style={{
+          height: style().logoSize,
+          fontSize: style().linkSize,
+          marginLeft: '75%',
+          marginTop: '1%',
+          position: 'absolute'
+        }}
+      >{isMobile ? 'Desktop' : 'Mobile'}</Button>
+      { isMobile && <img src={require('./image/up.jpg')} alt='up' /> }
+      <ThemeProvider theme={theme}>
         <Container component='main' maxWidth='md' className='w-20'>
           <CssBaseline />
           <Typography
             component='h1'
-            variant='h2'
+            variant={ style().variant1 }
             color='secondary'
+            fontFamily='Dancing Script'
             align='center'
-            mt='10%'
+            pt={style().pt}
+            pb={style().pb}
           >
             ADJACENT DOOR
           </Typography>
@@ -154,14 +189,14 @@ function Login() {
             sx={{ flexDirection: 'column' }}
           >
             <RiLoginCircleFill />
-            <Typography component='h1' variant='h3'>
+            <Typography component='h1' variant={ style().variant2 } >
               Login
             </Typography>
             <Box
               component='form'
               onSubmit={handleSubmit}
               noValidate
-              sx={{ mt: 1 }}
+              sx={{ mt: 2 }}
             >
               <TextField
                 margin='normal'
@@ -170,8 +205,8 @@ function Login() {
                 id='username'
                 label='Username'
                 name='username'
-                inputProps={{style: {fontSize: 40}}}
-                InputLabelProps={{style: {fontSize: 40}}}
+                inputProps={{ style: {fontSize: style().fontSize} }}
+                InputLabelProps={{ style: {fontSize: style().fontSize} }}
               />
               <TextField
                 margin='normal'
@@ -181,12 +216,12 @@ function Login() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
-                inputProps={{style: {fontSize: 40}}}
-                InputLabelProps={{style: {fontSize: 40}}}
+                inputProps={{ style: {fontSize: style().fontSize} }}
+                InputLabelProps={{ style: {fontSize: style().fontSize} }}
               />
               {!fillIn && notice && (
                 <Alert className='flex items-center mt-5 font-bold'  severity='error'
-                  sx={{ fontSize: 30 }}
+                  sx={{ fontSize: style().fontSize }}
                 >
                   Please fill out all the required fields
                 </Alert>
@@ -198,7 +233,7 @@ function Login() {
                 font-color='primary'
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
-                style={{ fontSize: '40px' }}
+                style={{ fontSize: style().fontSize }}
               >
                 Continue
               </Button>
@@ -217,14 +252,14 @@ function Login() {
                       justifyContent: 'center',
                       fontFamily: 'Roboto',
                       fontWeight: '900',
-                      fontSize: '40px',
+                      fontSize: style().fontSize,
                       lineHeight: '1.75',
                       padding: '6px 14px',
                       borderRadius: '4px',
                     }}
                   >
                     <FcGoogle
-                      size='60px'
+                      size={style().logoSize}
                       style={{ marginRight: 60 }}
                     />
                     <span style={{ marginRight: 40 }}>Log in With Google</span>
@@ -234,23 +269,12 @@ function Login() {
                 onFailure={handleFailure}
                 cookiePolicy={'single_host_origin'}
               ></GoogleLogin>
-              {/* <div
-                className='fb-login-button'
-                data-width='500'
-                data-size='large'
-                data-button-type='login_with'
-                data-layout='default'
-                data-auto-logout-link='false'
-                data-use-continue-as='false'
-                data-redirecturi='/'
-                style={{ padding: '10px 0' }}
-              ></div> */}
               <Grid container sx={{ mt: 3, mb: 10 }}>
                 <Grid item>
                   <Link
                     href='/signup'
                     variant='body3'
-                    style={{ fontSize: '33px' }}
+                    style={{ fontSize: style().linkSize }}
                   >
                     {"Don't have an account? Sign Up"}
                   </Link>
@@ -260,7 +284,7 @@ function Login() {
           </Box>
         </Container>
       </ThemeProvider>
-      <img src={require('./image/down.jpg')} alt='down' />
+      { isMobile ? <img src={require('./image/down.jpg')} alt='down' /> : <img src={require('./image/friend.jpg')} alt='friend' />}
     </div>
   );
 }
