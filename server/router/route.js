@@ -81,6 +81,9 @@ router.route('/groups/user/:group_id/left')
 router.route('/groups/user/:group_id/photo')
   .put(controller.groups.changeImage)
 
+router.route('/groups/rating')
+  .post(controller.groups.voteForRating)
+
 router.route('/groups/user/:group_id/privacy')
   .put(controller.groups.changePrivacy)
 

@@ -47,6 +47,25 @@ CREATE TABLE IF NOT EXISTS user_groups(
   friendliness int NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS groups_rating CASCADE;
+CREATE TABLE IF NOT EXISTS groups_rating(
+  id SERIAL NOT NULL,
+  group_id INT,
+  default_id INT,
+  network_id text NOT NULL,
+  "safety" INT DEFAULT 0,
+  friendliness INT DEFAULT 0,
+  FOREIGN KEY (group_id)
+  REFERENCES user_groups(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (default_id)
+  REFERENCES default_groups(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (network_id)
+  REFERENCES user_account(network_id)
+  ON DELETE CASCADE
+);
+
 DROP TABLE IF EXISTS user_group_list CASCADE;
 CREATE TABLE user_group_list(
   id SERIAL NOT NULL PRIMARY KEY,
