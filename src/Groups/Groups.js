@@ -62,15 +62,14 @@ function Groups(props) {
                   else{
                     joinStatus = 'notJoined'
                   }
-                  return <GroupCard key={index} group={card} joinStatus={joinStatus} setUser={props.setUser} user_group={user_group} />
                 }
-                return 'error: joinStatus not recognized'
+                return <GroupCard key={index} group={card} joinStatus={joinStatus} setUser={props.setUser} user_group={user_group} />
               })}
             </div>
           </div>
         </div>
         <div>
-          <RightBar />
+          <RightBar user={props.user} />
         </div>
       </div>
     </div>
