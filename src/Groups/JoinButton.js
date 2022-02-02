@@ -45,7 +45,7 @@ const JoinButton = (props) => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Clicking 'Yes' will remove you from the group.
+                Clicking 'Yes' will remove you from the group. Private groups will require approval before you can rejoin.
               </DialogContentText>
             </DialogContent>
             <DialogActions>

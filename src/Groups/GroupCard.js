@@ -17,7 +17,7 @@ const GroupCard = (props) => {
           {props.group.name}
         </Typography>
         <Typography >
-          {/* Members: {props.group.users.length} */}
+          {/* Members: {props.group.users.length} */}{props.group.privacy ? 'Private' : 'Public'}
         </Typography>
       </CardContent>
     </CardActionArea>

@@ -19,9 +19,9 @@ const GroupsNearby = [
   },
   {
     id: 3,
-    name: 'Button Should Show Admin',
-    admin_id: '1124asfas',
-    privacy: false,
+    name: 'Button Should Show Joined',
+    admin_id: 3,
+    privacy: true,
     photo: '',
     safety: 5,
     friendliness: 2
