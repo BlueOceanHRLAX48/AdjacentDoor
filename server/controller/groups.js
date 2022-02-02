@@ -160,5 +160,37 @@ module.exports = {
       .query(query, values)
       .then(() => res.sendStatus(201))
       .catch((err) => res.status(500).send(err))
+  },
+  editSafety: (req, res) => {
+    const {group_id, default_group_id, network_id, safety } = req.body;
+    if(group_id) {
+      const query = `UPDATE groups_rating SET "safety" = $1 WHERE group_id = $2 AND network_id = $3;`;
+      pool
+        .query(query, [safety, group_id, network_id])
+        .then(() => res.sendStatus(204))
+        .catch((err) => res.status(500).send(err))
+    } else if(default_group_id) {
+      const query = `UPDATE groups_rating SET "safety" = $1 WHERE default_id = $2 AND network_id = $3;`;
+      pool
+        .query(query, [safety, default_group_id, network_id])
+        .then(() => res.sendStatus(204))
+        .catch((err) => res.status(500).send(err))
+    }
+  },
+  editFriendliness: (req, res) => {
+    const {group_id, default_group_id, network_id, friendliness } = req.body;
+    if(group_id) {
+      const query = `UPDATE groups_rating SET friendliness = $1 WHERE group_id = $2 AND network_id = $3;`;
+      pool
+        .query(query, [friendliness, group_id, network_id])
+        .then(() => res.sendStatus(204))
+        .catch((err) => res.status(500).send(err))
+    } else if(default_group_id) {
+      const query = `UPDATE groups_rating SET friendliness = $1 WHERE default_id = $2 AND network_id = $3;`;
+      pool
+        .query(query, [friendliness, default_group_id, network_id])
+        .then(() => res.sendStatus(204))
+        .catch((err) => res.status(500).send(err))
+    }
   }
 }

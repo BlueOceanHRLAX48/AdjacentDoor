@@ -84,6 +84,12 @@ router.route('/groups/user/:group_id/photo')
 router.route('/groups/rating')
   .post(controller.groups.voteForRating)
 
+router.route('/groups/rating/safety')
+  .put(controller.groups.editSafety)
+
+router.route('/groups/rating/friendliness')
+  .put(controller.groups.editFriendliness)
+
 router.route('/groups/user/:group_id/privacy')
   .put(controller.groups.changePrivacy)
 
