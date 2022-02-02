@@ -5,10 +5,10 @@ import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-ico
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
-function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag, id, time }) {
+function Post({ photos, postId, body, like, time, user }) {
   const handleComment = () => 'q';
   const handleLike = () => {
-    axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${id}`);
+    axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`);
   };
   const handleShare = () => 'q';
 
@@ -18,14 +18,15 @@ function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag,
         <Link to='/my-profile'>
           <Avatar
             alt='avatar'
-            src={userInfo?.profile_img || '/static/images/avatar/1.jpg'}
+            src={user?.profile_img || '/static/images/avatar/1.jpg'}
             sx={{ width: 40, height: 40 }}
             className='mt-1 ml-1 mr-6 ring-2 ring-offset-2 ring-primary'
           />
         </Link>
         <div className='w-full'>
-          <div className='font-medium w-min'>{userInfo?.username}</div>
+          <div className='font-medium w-min'>{user?.username}</div>
           <div className='text-xs font-light text-slate-500'>{time}</div>
+          <div className='text-xs font-light text-slate-500'>{(user.city, user.state)}</div>
           <div className='mt-2'>{body}</div>
           <div className='flex items-center justify-between mt-2 mr-2'>
             {[
@@ -38,7 +39,7 @@ function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag,
           </div>
         </div>
       </div>
-      <MoreMenu />
+      <MoreMenu postId={postId} />
     </div>
   );
 }

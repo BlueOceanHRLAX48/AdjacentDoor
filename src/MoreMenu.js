@@ -2,14 +2,20 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
+import axios from 'axios';
 
-function MoreMenu() {
+function MoreMenu({ postId }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleReport = () => {
+    axios.put(`${process.env.REACT_APP_SERVER}/posts/report/${postId}`);
     setAnchorEl(null);
   };
 
@@ -34,7 +40,7 @@ function MoreMenu() {
         }}
       >
         <MenuItem onClick={handleClose}>Privacy</MenuItem>
-        <MenuItem onClick={handleClose}>Report</MenuItem>
+        <MenuItem onClick={handleReport}>Report</MenuItem>
         <MenuItem onClick={handleClose}>Delete</MenuItem>
       </Menu>
     </div>

@@ -8,7 +8,6 @@ import axios from 'axios';
 function Home({ user }) {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
-  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     axios
@@ -21,7 +20,7 @@ function Home({ user }) {
   return (
     <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
       <div id='left-bar' className='hidden sm:flex'>
-        <LeftBar user={user} filter={filter} userGroup={user.user_group} setFilter={setFilter} />
+        <LeftBar user={user} userGroup={user.user_group} />
       </div>
       <div>
         <div className='hidden sm:flex'>
@@ -39,6 +38,7 @@ function Home({ user }) {
               setPosts={setPosts}
               filteredPosts={filteredPosts}
               setFilteredPosts={setFilteredPosts}
+              user={user}
             />
           </div>
           <div className='hidden sm:flex'>

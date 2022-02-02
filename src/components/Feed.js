@@ -1,31 +1,29 @@
-import moment from 'moment';
+import axios from 'axios';
 import { useRef } from 'react';
 import Post from './Post';
-import axios from 'axios';
 
-function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
+function Feed({ filteredPosts, user }) {
   const postInput = useRef(null);
 
   const handleSubmit = (e) => {
     let postContent = {
-      photos: [],
+      group_id: user.default_group.id,
+      user_group_id: user.default_group.id,
+      user_id: user.id,
       body: postInput.current.value,
-      privacy: false,
-      report: 0,
-      like: 0,
-      userInfo: {
-        username: 'ez',
-        profile_img: '1234.com',
-      },
-      coordinates: {
-        latitude: 123,
-        longitude: -456.5,
-      },
       tag: 'Sell',
-      id: 1,
+      privacy: false,
+      latitude: 123,
+      longitude: -456.5,
     };
-
-    axios.post(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=1`, postContent);
+    axios
+      .post(
+        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user.default_group.id}`,
+        postContent
+      )
+      .then((response) => {
+        console.log(response);
+      });
     // setFilteredPosts([postContent, ...filteredPosts]);
     postInput.current.value = '';
     e.preventDefault();
@@ -57,11 +55,11 @@ function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPo
             privacy={post.privacy}
             report={post.report}
             like={post.like}
-            userInfo={post.user_info}
             coordinates={post.coordinates}
             tag={post.tag}
-            id={post.post_id}
+            postId={post.post_id}
             time={post.time}
+            user={user}
           />
         ))}
     </div>
