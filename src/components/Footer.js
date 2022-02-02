@@ -23,7 +23,7 @@ function Footer({ groupId }) {
       <NavLink to={`/g/${groupId}`}>
         <MdGroups className='' size='30' onClick={closeLeftBar} />
       </NavLink>
-      <MdMenu className='' size='30' onClick={openLeftBar} />
+      <MdMenu className='cursor-pointer' size='30' onClick={openLeftBar} />
     </div>
   );
 }

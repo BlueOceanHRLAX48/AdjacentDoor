@@ -88,7 +88,7 @@ function App() {
           path='/groups'
           element={<Groups user={user} currentLocation={currentLocation} setUser={setUser} />}
         />
-        <Route path='/g/:groupId' element={<GroupDetail />} />
+        <Route path='/g/:groupId' element={<GroupDetail user={user} />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/create-post' element={<MakePost />} />
         <Route

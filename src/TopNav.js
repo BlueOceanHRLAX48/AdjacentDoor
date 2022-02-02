@@ -8,8 +8,6 @@ import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
 
 function TopNav({
-  search,
-  setSearch,
   posts,
   setPosts,
   filteredPosts,
@@ -17,6 +15,8 @@ function TopNav({
   filter,
   setFilter,
   userGroup,
+  search,
+  setSearch,
 }) {
   const [nextTheme, setTheme] = useTheme();
 
@@ -33,8 +33,6 @@ function TopNav({
     <div className='flex items-center justify-between w-full mt-4 mb-4 '>
       <div>
         <SearchBar
-          search={search}
-          setSearch={setSearch}
           posts={posts}
           setPosts={setPosts}
           filteredPosts={filteredPosts}
@@ -42,6 +40,8 @@ function TopNav({
           filter={filter}
           userGroup={userGroup}
           setFilter={setFilter}
+          search={search}
+          setSearch={setSearch}
         />
       </div>
       <div className='flex justify-end'>

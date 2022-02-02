@@ -2,7 +2,7 @@ import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-function LeftBar({ setFilter, filter, userGroup }) {
+function LeftBar({ setFilter, filter, user }) {
   const handleActive = ({ isActive }) => ({
     fontWeight: isActive ? 'bold' : '',
   });
@@ -19,19 +19,25 @@ function LeftBar({ setFilter, filter, userGroup }) {
 
         <div className='mt-4 mb-2 ml-4 text-sm'>Neighborhood</div>
 
+        <button onClick={() => setFilter('')}>All</button>
+        <button onClick={() => setFilter('general')}>General</button>
+        <button onClick={() => setFilter('safety')}>Safety</button>
+        <button onClick={() => setFilter('forsale')}>For Sale</button>
+
         {[
-          ['Safety', '/safety', <MdHealthAndSafety size='20' />],
-          ['Ratings', '/ratings', <MdGroups size='20' />],
-          ['Others', '/others', <MdGroups size='20' />],
-        ].map(([title, url, icon]) => (
-          <NavLink to={url} style={handleActive} key={uuidv4()}>
+          ['All', '', <MdHealthAndSafety size='20' />],
+          ['General', 'general', <MdGroups size='20' />],
+          ['Safety', 'safety', <MdHealthAndSafety size='20' />],
+          ['For Sale', 'forsale', <MdGroups size='20' />],
+        ].map(([title, value, icon]) => (
+          <button onClick={() => setFilter(value)}>
             <LeftBarButton icon={icon} text={title} />
-          </NavLink>
+          </button>
         ))}
 
         <div className='mt-4 mb-2 ml-4 text-sm'>All Groups</div>
 
-        {userGroup?.map(({ id, name }) => (
+        {user?.user_group?.map(({ id, name }) => (
           <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
             <LeftBarButton text={name} />
           </NavLink>
