@@ -92,45 +92,42 @@ function Login() {
   };
 
   const handleLogin = (data) => {
-    if (address) {
-      const userAddress = address.split(', ');
-      const city = userAddress[1];
-      const state = userAddress[2].substring(0, userAddress[2].length - 6);
-      const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
+    const userAddress = address.split(', ');
+    const city = userAddress[1];
+    const state = userAddress[2].substring(0, userAddress[2].length - 6);
+    const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
 
-      const userInfo = {
-        firstName: data.Du.VX,
-        lastName: data.Du.iW,
-        username: data.Du.tf,
-        profile_img: data.Du.eN,
-        email: data.Du.tv,
-        network_id: data.Du.FW,
-        city: city,
-        state: state,
-        zip: zipcode,
-        privacy: false
-      };
+    const userInfo = {
+      firstName: data.Du.VX,
+      lastName: data.Du.iW,
+      username: data.Du.tf,
+      profile_img: data.Du.eN,
+      email: data.Du.tv,
+      network_id: data.Du.FW,
+      city: city,
+      state: state,
+      zip: zipcode,
+      privacy: false
+    };
 
-      console.log(userInfo);
-      setLoginData(userInfo);
-      localStorage.setItem('loginData', JSON.stringify(userInfo));
+    setLoginData(userInfo);
+    localStorage.setItem('loginData', JSON.stringify(userInfo));
 
-      axios
-        .get(`http://localhost:3001/user/${userInfo.network_id}`)
-        .then((res) => {
-          document.location.href = '/';
-        })
-        .catch((err) => {
-          axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
-            .then(response => {
-              console.log('New user signed up');
-              document.location.href = '/';
-            })
-            .catch(err => {
-              console.error(err);
-            })
-        });
-    }
+    axios
+      .get(`http://localhost:3001/user/${userInfo.network_id}`)
+      .then((res) => {
+        document.location.href = '/';
+      })
+      .catch((err) => {
+        axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
+          .then(response => {
+            console.log('New user signed up');
+            document.location.href = '/';
+          })
+          .catch(err => {
+            console.error(err);
+          })
+      });
   };
 
   const style = () => {
