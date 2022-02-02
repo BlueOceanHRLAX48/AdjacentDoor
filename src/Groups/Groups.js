@@ -19,7 +19,12 @@ function Groups(props) {
             1: 'Jojo',
           },
           Name: 'Rockin Group 1',
-          Users: [{ 2345: 'jessie' }, { 5462: 'johnny' }, { 46756: 'jane' }, { 253: 'jenny' }],
+          Users: [
+            { 2345: 'jessie' },
+            { 5462: 'johnny' },
+            { 46756: 'jane' },
+            { 253: 'jenny' },
+          ],
           City: 'Santa Ana',
           State: 'California',
           Zip: 92705,
@@ -99,7 +104,9 @@ function Groups(props) {
           <div id='seeGroups'>
             {groups.map((card, index) => {
               let joinStatus = 'notJoined';
-              let groupIndex = userGroupIds.findIndex((element) => element.id === card.Id);
+              let groupIndex = userGroupIds.findIndex(
+                (element) => element.id === card.Id
+              );
               if (groupIndex !== -1) {
                 joinStatus = userGroupIds[groupIndex].joinStatus;
               }

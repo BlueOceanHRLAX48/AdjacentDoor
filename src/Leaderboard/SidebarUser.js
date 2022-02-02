@@ -23,11 +23,16 @@ function SidebarUser(props) {
       </div>
       <div>
         <div className='text-sm font-semibold'>
-          {props.user.privacy ? 'Private Neighbor' : props.user.name}
+          {props.user.privacy
+            ? 'Private Neighbor'
+            : `${props.user.firstname} ${props.user.lastname}`}
         </div>
         <div className='ml-auto text-xs text-neutral-500'>
-          {props.user.location}
+          {props.user.city}, {props.user.state}
         </div>
+      </div>
+      <div className='ml-auto text-sm font-semibold'>
+        {props.user.contribution}
       </div>
     </div>
   );
