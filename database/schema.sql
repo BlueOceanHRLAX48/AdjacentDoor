@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
   admin_id text NOT NULL,
+  "description" text Not NULL,
   city text NOT NULL,
   "state" text NOT NULL,
   zip text not NULL,
@@ -65,7 +66,6 @@ CREATE TABLE IF NOT EXISTS groups_rating(
 DROP TABLE IF EXISTS user_group_list CASCADE;
 CREATE TABLE user_group_list(
   id SERIAL NOT NULL PRIMARY KEY,
-  user_id int NOT NULL REFERENCES user_account(user_id),
   network_id text,
   user_group_id int NOT NULL,
   accepted boolean NOT NULL DEFAULT false,
@@ -147,9 +147,9 @@ VALUES ('Canton', 'Canton', 'Michigan', '02021', 'photo.com');
 INSERT INTO default_groups(name, city, state, zip, photo)
 VALUES ('Detroit', 'Detroit', 'Michigan', '48708', 'photo.com');
 
-INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 1, true), (2, '12l5kjasf', 1 ,true), (3, '09afaspoi', 1, true);
+INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES ('1124asfas', 1, true), ('12l5kjasf', 1 ,true), ('09afaspoi', 1, true);
 
-INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 2 ,true), (3, '09afaspoi', 2, false);
+INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES ('1124asfas', 2 ,true), ('09afaspoi', 2, false);
 
 INSERT INTO posts(group_id, user_group_id, user_id, body, time, report, tag, privacy, latitude, longitude)
 VALUES(1, null, 1, 'asfasfasf', default, default,  'Sell', default, 123, -456.5);
