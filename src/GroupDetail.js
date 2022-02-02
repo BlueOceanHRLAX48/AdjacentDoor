@@ -11,15 +11,17 @@ function GroupDetail(props) {
   const groupId = useParams().groupId;
 
   const [filter, setFilter] = React.useState('');
+  const [search, setSearch] = React.useState('');
   const [posts, setPosts] = React.useState([]);
+  const [group, setGroup] = React.useState({});
 
   React.useEffect(() => {
     getData();
   });
 
-  const filteredPosts = posts.filter((post) =>
-    post.tag.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredPosts = posts
+    .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
+    .filter((post) => post.body.toLowerCase().includes(search.toLowerCase()));
 
   function getData() {
     axios
@@ -33,12 +35,13 @@ function GroupDetail(props) {
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} />
       <div className='flex flex-col grow'>
-        <TopNav />
+        <TopNav setSearch={setSearch} search={search} />
         <div className='flex grow'>
           <div className='flex flex-col overflow-y-scroll h-screen hide-scroll-bar pb-12'>
             <div className='w-[600px] px-4 pt-4'>
               <div className='flex justify-center items-center bg-ghostWhite border rounded h-[400px]'>
                 MAP PLACEHOLDER
+                {/* <Map group={group} posts={filteredPosts} /> */}
               </div>
             </div>
             <MakePost

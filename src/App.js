@@ -28,6 +28,7 @@ function App() {
       })
       .catch((err) => {
         console.error("User doesn't exist");
+        localStorage.removeItem('AdjacentDoorUser');
         setUser({});
       });
   }, [user.network_id]);
