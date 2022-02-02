@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AdminPanel from './AdminPanel';
 import Footer from './components/Footer';
-import MakePost from './components/MakePost';
 import GroupDetail from './GroupDetail';
 import Groups from './Groups/Groups';
 import Home from './Home';
@@ -60,11 +59,7 @@ function App() {
           path='/'
           element={
             user.network_id ? (
-              <Home
-                user={user}
-                setUser={setUser}
-                currentLocation={currentLocation}
-              />
+              <Home user={user} setUser={setUser} currentLocation={currentLocation} />
             ) : (
               <Navigate to='/login' />
             )
@@ -82,13 +77,7 @@ function App() {
         />
         <Route
           path='/g/:groupId'
-          element={
-            <GroupDetail
-              user={user}
-              setUser={setUser}
-              currentLocation={currentLocation}
-            />
-          }
+          element={<GroupDetail user={user} setUser={setUser} currentLocation={currentLocation} />}
         />
         <Route path='/leaderboard' element={<Leaderboard user={user} />} />
         <Route
@@ -96,12 +85,8 @@ function App() {
           element={user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />}
         />
       </Routes>
-<<<<<<< HEAD
-      {user.default_group && (
-=======
 
       {window.location.pathname === '/signup' || window.location.pathname === '/login' ? null : (
->>>>>>> 76996b3 (remove footer for signup & login)
         <div>
           <Footer groupId={user.default_group.id} />
         </div>

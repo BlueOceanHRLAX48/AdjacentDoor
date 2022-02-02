@@ -9,7 +9,7 @@ function LeftBar({ setFilter, filter, user }) {
   });
 
   return (
-    <div className='h-screen sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
+    <div className='w-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </NavLink>
