@@ -79,7 +79,18 @@ module.exports = {
   },
   getDefaultGroup: (req, res) => {
     const { group_id } = req.params;
-    const query = `SELECT * FROM default_groups WHERE id = $1`;
+    const query = `SELECT id, "name", city, "state", zip, photo,
+    (
+      SELECT AVG("safety")::numeric(10,1)
+         FROM groups_rating
+         WHERE default_id = default_groups.id
+    ) AS safety,
+    (
+      SELECT AVG(friendliness)::numeric(10,1)
+         FROM groups_rating
+         WHERE default_id = default_groups.id
+    ) AS friendliness
+    FROM default_groups WHERE id = $1;`;
     pool
       .query(query, [group_id])
       .then((results) => res.status(200).send(results.rows))
@@ -92,9 +103,20 @@ module.exports = {
     const long_min = parseInt(longitude) - parseInt(r);
     const long_max = parseInt(longitude) + parseInt(r);
     const values = [lat_min, lat_max, long_min, long_max];
-    const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo, g.safety, g.friendliness
+    const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo,
+    (
+      SELECT AVG("safety")::numeric(10,1)
+      FROM groups_rating
+      WHERE group_id = g.id
+    ) AS safety,
+    (
+      SELECT AVG(friendliness)::numeric(10,1)
+      FROM groups_rating
+      WHERE group_id = g.id
+    ) AS friendiness
     FROM user_groups g
-    WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4);`;
+    WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4)
+    ORDER BY g.id;`;
     pool
       .query(query, values)
       .then((results) => res.status(200).json(results.rows))
@@ -116,6 +138,16 @@ module.exports = {
     pool
       .query(query, [privacy, group_id])
       .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err))
+  },
+  voteForRating: (req, res) => {
+    const { group_id, default_group_id, network_id, safety, friendliness} = req.body;
+    const values = [ group_id, default_group_id, network_id, safety, friendliness];
+    const query = `INSERT INTO groups_rating (group_id, default_id, network_id, "safety", friendliness)
+    VALUES ($1, $2, $3, $4, $5);`;
+    pool
+      .query(query, values)
+      .then(() => res.sendStatus(201))
       .catch((err) => res.status(500).send(err))
   }
 }
