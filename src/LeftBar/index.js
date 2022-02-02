@@ -2,11 +2,13 @@ import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import UserInfo from './UserInfo';
 
-function LeftBar() {
+function LeftBar(props) {
   return (
     <div className='flex flex-col w-[250px] h-screen px-6 py-4'>
       <Link to='/'>
-        <div className='text-2xl  text-primary font-bold pb-4 px-4 '>Adjacent Door</div>
+        <div className='text-2xl  text-primary font-bold pb-4 px-4 '>
+          Adjacent Door
+        </div>
       </Link>
       {[
         ['Home', '/', <MdHome size='20' />],
@@ -15,10 +17,14 @@ function LeftBar() {
         ['ratings', '/ratings', <MdGroups size='20' />],
         ['Others', '/others', <MdGroups size='20' />],
       ].map(([title, url, icon], i) => (
-        <Link to={url}>
+        <Link to={url} key={i}>
           <LeftBarButton icon={icon} text={title} key={i} />
         </Link>
       ))}
+      <button onClick={() => props.setFilter('')}>All</button>
+      <button onClick={() => props.setFilter('general')}>General</button>
+      <button onClick={() => props.setFilter('safety')}>Safety</button>
+      <button onClick={() => props.setFilter('forsale')}>For Sale</button>
       <Link to='/my-profile'>
         <UserInfo />
       </Link>
@@ -31,7 +37,11 @@ const LeftBarButton = ({ icon, text = 'text' }) => (
     className={`flex py-4 px-4 hover:bg-ghostWhite hover:rounded-full cursor-pointer transition-all duration-150 dark:hover:bg-gray-600`}
   >
     <div className='relative flex items-center justify-start mr-4'>{icon}</div>
-    <div className={`relative flex items-center justify-start text-base font-medium`}>{text}</div>
+    <div
+      className={`relative flex items-center justify-start text-base font-medium`}
+    >
+      {text}
+    </div>
   </div>
 );
 

@@ -1,13 +1,23 @@
 import React from 'react';
-import Post from './Post';
+import { useParams } from 'react-router-dom';
+import MakePost from './components/MakePost';
+import PostFeed from './components/PostFeed';
+import LeftBar from './LeftBar';
+import RightBar from './RightBar';
+import TopNav from './TopNav';
 
-function Feed(props) {
-  const posts = [
+function GroupDetail(props) {
+  const groupId = useParams().groupId;
+
+  const [filter, setFilter] = React.useState('');
+
+  const samplePosts = [
     {
       avatar:
         'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
+      type: 'general',
       post_text:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
       report: 0,
@@ -20,6 +30,7 @@ function Feed(props) {
         'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
+      type: 'forsale',
       post_text:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
       report: 0,
@@ -32,6 +43,7 @@ function Feed(props) {
         'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
+      type: 'forsale',
       post_text:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
       report: 0,
@@ -44,6 +56,7 @@ function Feed(props) {
         'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
+      type: 'safety',
       post_text:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
       report: 0,
@@ -56,6 +69,7 @@ function Feed(props) {
         'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
+      type: 'general',
       post_text:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
       report: 0,
@@ -65,32 +79,33 @@ function Feed(props) {
     },
   ];
 
+  const filteredPosts = samplePosts.filter((post) =>
+    post.type.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  function getData() {
+    //axios request for data using groupId
+  }
   return (
-    <div className='w-[600px] p-4'>
-      <div className='hide-scroll-bar overflow-y-scroll'>
-        <div className='flex justify-center relative'>
-          <input
-            className='text-sm p-1 px-3 w-full h-10 rounded-xl border border-slate-100 shadow-sm focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'
-            placeholder='Write something...'
-          ></input>
-          {/* <button className='text-white font-medium text-xs px-4 py-2 rounded-full bg-primary absolute bottom-2 right-4'>
-            submit
-          </button> */}
+    <div className='flex h-screen overflow-y-clip'>
+      <LeftBar setFilter={setFilter} filter={filter} />
+      <div className='flex flex-col grow'>
+        <TopNav />
+        <div className='flex grow'>
+          <div className='flex flex-col overflow-y-scroll h-screen hide-scroll-bar pb-12'>
+            <div className='w-[600px] px-4 pt-4'>
+              <div className='flex justify-center items-center bg-ghostWhite border rounded h-[400px]'>
+                MAP PLACEHOLDER
+              </div>
+            </div>
+            <MakePost refresh={getData} />
+            <PostFeed posts={filteredPosts} />
+          </div>
+          <RightBar />
         </div>
-        {posts.map((post, i) => (
-          <Post
-            key={i}
-            avatar={post.avatar}
-            name={post.name}
-            date={post.date}
-            postBody={post.post_text}
-            report={post.reports}
-            likes={post.likes}
-          />
-        ))}
       </div>
     </div>
   );
 }
 
-export default Feed;
+export default GroupDetail;
