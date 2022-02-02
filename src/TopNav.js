@@ -3,9 +3,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
-import { v4 as uuidv4 } from 'uuid';
 
 function TopNav({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
   const [nextTheme, setTheme] = useTheme();

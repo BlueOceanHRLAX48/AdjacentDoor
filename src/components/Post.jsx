@@ -1,9 +1,9 @@
 import { Avatar } from '@mui/material';
-import { red } from '@mui/material/colors';
-import React, { useState } from 'react';
-import { MdChatBubbleOutline, MdFavoriteBorder, MdMoreHoriz, MdOutlineShare } from 'react-icons/md';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import React from 'react';
+import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import MoreMenu from '../MoreMenu';
 
 function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag, id, time }) {
   const handleComment = () => 'q';
@@ -11,7 +11,6 @@ function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag,
     axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${id}`);
   };
   const handleShare = () => 'q';
-  const handleMore = () => 'dropdown';
 
   return (
     <div className='relative p-4 my-3 transition-all duration-150 border shadow-sm border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'>
@@ -39,12 +38,7 @@ function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag,
           </div>
         </div>
       </div>
-
-      <MdMoreHoriz
-        className='absolute cursor-pointer top-4 right-6'
-        size='20'
-        onClick={handleMore}
-      />
+      <MoreMenu />
     </div>
   );
 }
