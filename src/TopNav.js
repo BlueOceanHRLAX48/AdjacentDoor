@@ -23,7 +23,7 @@ function TopNav({ search, setSearch, posts, setPosts, filteredPosts, setFiltered
           darkmode
         </button>
         <Link to='/my-profile'>
-          <div className='ml-4'>
+          <div className='ml-4 mr-4'>
             <Avatar
               alt='Remy Sharp'
               src='/static/images/avatar/1.jpg'

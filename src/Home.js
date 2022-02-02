@@ -49,7 +49,6 @@ function Home(props) {
           </div>
         </div>
       </div>
-      <RightBar />
     </div>
   );
 }
