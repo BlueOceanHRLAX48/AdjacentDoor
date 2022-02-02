@@ -5,7 +5,6 @@ import TopNav from '../TopNav';
 import LeftBar from '../LeftBar';
 import RightBar from '../RightBar';
 import axios from 'axios';
-import GroupsNearby from './sampledata';
 
 function Groups(props) {
   const [groups, setGroups] = useState([]);
@@ -65,6 +64,7 @@ function Groups(props) {
                   }
                   return <GroupCard key={index} group={card} joinStatus={joinStatus} setUser={props.setUser} user_group={user_group} />
                 }
+                return 'error: joinStatus not recognized'
               })}
             </div>
           </div>
