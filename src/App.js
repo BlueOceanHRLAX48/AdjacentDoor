@@ -1,43 +1,71 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import AdminPanel from './AdminPanel';
 import Home from './Home';
+import Leaderboard from './Leaderboard';
 import Login from './Login';
 import MyProfile from './MyProfile';
 import Groups from './Groups/Groups';
+import SignUp from './SignUp';
+import GroupDetail from './GroupDetail';
+import axios from 'axios';
 
 function App() {
-  const [user, setUser] = useState({
-    userID: 1,
-    firstName: 'Demo',
-    lastName: 'BlueOcean',
-    username: 'demoblueocean',
-    email: 'demo@blueocean.com',
-    address: '123 Demo Street, Santa Monica, CA, 90210',
-    city: 'Santa Monica',
-    state: 'CA',
-    zip: '90210',
-    privacy: false,
-    profileImage:
-      'https://templates.joomla-monster.com/joomla30/jm-news-portal/components/com_djclassifieds/assets/images/default_profile.png',
-    network_id: 'asnd19823y19231231akjsd',
-    contribution: 10,
-    defaultGroupId: 90210,
-    userGroupIds: [
-      { id: 1, name: 'Group Name', joinStatus: 'joined' },
-      { id: 2, name: 'Another Group', joinStatus: 'pending' },
-    ],
-    admin: true
-  });
+  const [user, setUser] = useState(
+    () =>
+      JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {
+        user_id: 1,
+        firstname: 'ernest',
+        lastname: 'zhang',
+        username: 'ez',
+        network_id: '1124asfas',
+        email: '12345@gmail.com',
+        admin: false,
+        address: '1234 street st',
+        city: 'city',
+        state: 'state',
+        zip: '5678',
+        privacy: false,
+        profile_img: '1234.com',
+        contribution: 0,
+        default_group: {
+          id: 1,
+          name: 'the place',
+        },
+        user_group: [
+          {
+            id: 1,
+            name: 'the group',
+          },
+          {
+            id: 2,
+            name: 'the second group',
+          },
+        ],
+      }
+  );
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
+    axios
+      .get(`http://localhost:3001/user/${user.network_id}`)
+      .then((res) => {
+        setUser(res.data);
+        localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        console.error("User doesn't exist");
+        setUser({});
+      });
+
     navigator.geolocation.getCurrentPosition((res) =>
       setCurrentLocation({
         latitude: res.coords.latitude,
         longitude: res.coords.longitude,
       })
     );
-  }, []);
+  }, [user.network_id]);
 
   setInterval(() => {
     navigator.geolocation.getCurrentPosition((res) =>
@@ -48,15 +76,31 @@ function App() {
     );
   }, 300000);
 
-
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home user={user} />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
-        <Route path='/groups' element={<Groups user={user} currentLocation={currentLocation} setUser={setUser}/>} />
+        <Route
+          path='/groups'
+          element={
+            <Groups
+              user={user}
+              currentLocation={currentLocation}
+              setUser={setUser}
+            />
+          }
+        />
+        <Route path='/g/:groupId' element={<GroupDetail />} />
+        <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route
+          path='/admin'
+          element={
+            user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

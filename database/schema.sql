@@ -27,9 +27,7 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  photo text NOT NULL,
-  "safety" int NOT NULL DEFAULT 0,
-  friendliness int NOT NULL DEFAULT 0
+  photo text NOT NULL
 );
 
 DROP TABLE IF EXISTS user_groups CASCADE;
@@ -44,9 +42,26 @@ CREATE TABLE IF NOT EXISTS user_groups(
   latitude FLOAT NOT NULL,
   longitude FLOAT NOT NULL,
   privacy boolean DEFAULT false,
-  photo text NOT NULL,
-  "safety" int NOT NULL DEFAULT 0,
-  friendliness int NOT NULL DEFAULT 0
+  photo text NOT NULL
+);
+
+DROP TABLE IF EXISTS groups_rating CASCADE;
+CREATE TABLE IF NOT EXISTS groups_rating(
+  id SERIAL NOT NULL,
+  group_id INT,
+  default_id INT,
+  network_id text NOT NULL,
+  "safety" INT DEFAULT 0,
+  friendliness INT DEFAULT 0,
+  FOREIGN KEY (group_id)
+  REFERENCES user_groups(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (default_id)
+  REFERENCES default_groups(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (network_id)
+  REFERENCES user_account(network_id)
+  ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS user_group_list CASCADE;
