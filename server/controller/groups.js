@@ -16,7 +16,7 @@ module.exports = {
     ),
     g.name, g.city, g.state, g.zip,
     json_build_object('latitude', g.latitude, 'longitude', g.longitude) AS coordinates,
-    g.photo,
+    g.photo, g.description,
     COALESCE((
       SELECT AVG("safety")::numeric(10,1)
       FROM groups_rating
@@ -38,11 +38,11 @@ module.exports = {
       .catch((err) => res.status(500).send(err))
   },
   createUserGroup: (req, res) => {
-    const { name, network_id, city, state, zip, latitude, longitude, photo } = req.body;
+    const { name, network_id, city, state, zip, latitude, longitude, photo, description } = req.body;
     const privacy = req.body.privacy || false;
-    const values = [ name, network_id, city, state, zip, latitude, longitude, privacy, photo];
-    const createGroup = `INSERT INTO user_groups ("name", admin_id, city, "state", zip, latitude, longitude, privacy, photo, "safety", friendliness)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, DEFAULT, DEFAULT)
+    const values = [ name, network_id, city, state, zip, latitude, longitude, privacy, photo, description];
+    const createGroup = `INSERT INTO user_groups ("name", admin_id, city, "state", zip, latitude, longitude, privacy, photo, description)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     RETURNING id;`;
     const addAdmin = `INSERT INTO user_group_list (network_id, user_group_id, accepted)
     VALUES ($1, $2, true);`;
@@ -50,7 +50,6 @@ module.exports = {
       .query(createGroup, values)
       .then((results) => {
         const group_id = results.rows[0].id;
-        console.log(results.rows[0].id);
         if(group_id) {
           pool
             .query(addAdmin, [network_id, group_id])
@@ -109,8 +108,8 @@ module.exports = {
       .catch((err) => res.status(500).send(err))
   },
   getGroupsByLocation: (req, res) => {
-    const { longitude, latitude} = req.query;
-    const r = parseFloat(req.query.r) || parseFloat(0.07);
+    const { longitude, latitude, mi} = req.query;
+    const r = parseFloat(mi/69) || parseFloat(0.07);
     const lat_min = parseInt(latitude) - r;
     const lat_max = parseInt(latitude) + r;
     const long_min = parseInt(longitude) - r;
