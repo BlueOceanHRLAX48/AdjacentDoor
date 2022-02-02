@@ -104,10 +104,10 @@ function SignUp() {
       };
     } else {
       fontStyle = {
-        variant1: 'h3',
-        variant2: 'h4',
-        fontSize: 20,
-        linkSize: 20
+        variant1: 'h4',
+        variant2: 'h5',
+        fontSize: 18,
+        linkSize: 18
       };
     }
     return fontStyle;
@@ -156,12 +156,10 @@ function SignUp() {
                 color='secondary'
                 fontFamily='Dancing Script'
                 align='center'
-                pt={style().pt}
-                pb={style().pb}
               >
               ADJACENT DOOR
               </Typography>
-              <Typography component='h1' variant={ style().variant2 } sx={{ mt: 5, mb: 5 }}>
+              <Typography component='h1' variant={ style().variant2 } sx={{ mt: 2, mb: 1 }}>
                 Sign Up
               </Typography>
               <Box
@@ -233,7 +231,7 @@ function SignUp() {
                   Sign Up
                 </Button>
                 <Grid container>
-                  <Grid item sx={{ mt: 5, mb: 2 }}>
+                  <Grid item sx={{ mt: 2, mb: 2 }}>
                     <Link
                       href='/login'
                       variant='body3'

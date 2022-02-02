@@ -144,11 +144,11 @@ function Login() {
       };
     } else {
       fontStyle = {
-        variant1: 'h3',
-        variant2: 'h4',
-        fontSize: 20,
+        variant1: 'h4',
+        variant2: 'h5',
+        fontSize: 18,
         logoSize: 30,
-        linkSize: 20,
+        linkSize: 18,
         pt: '5%',
         pb: '1%'
       };
