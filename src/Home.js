@@ -16,7 +16,9 @@ function Home({ user, setUser }) {
 
   function getPosts() {
     axios
-      .get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`)
+      .get(
+        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`
+      )
       .then(({ data }) => {
         setPosts(data.posts);
       });
@@ -45,10 +47,14 @@ function Home({ user, setUser }) {
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
-            <Feed filteredPosts={filteredPosts} user={user} getPosts={getPosts} />
+            <Feed
+              filteredPosts={filteredPosts}
+              user={user}
+              getPosts={getPosts}
+            />
           </div>
           <div className='hidden sm:flex'>
-            <RightBar />
+            <RightBar user={user} />
           </div>
         </div>
       </div>

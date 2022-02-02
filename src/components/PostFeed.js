@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from './Post';
+import moment from 'moment';
 
 function PostFeed(props) {
   const [posts, setPosts] = React.useState(props.posts);
@@ -13,13 +14,13 @@ function PostFeed(props) {
       <div className='hide-scroll-bar overflow-y-scroll'>
         {posts?.map((post, i) => (
           <Post
-            key={i}
-            avatar={post.avatar}
-            name={post.name}
-            date={post.date}
-            postBody={post.post_text}
-            report={post.reports}
-            likes={post.likes}
+            key={post.post_id}
+            avatar={post.user_info.profile_img}
+            name={post.user_info.username}
+            date={moment(post.time).fromNow()}
+            postBody={post.body}
+            report={post.report}
+            likes={post.like}
           />
         ))}
       </div>

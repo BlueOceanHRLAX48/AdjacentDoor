@@ -30,14 +30,16 @@ function App() {
         console.error("User doesn't exist");
         setUser({});
       });
+  }, [user.network_id]);
 
+  React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) =>
       setCurrentLocation({
         latitude: res.coords.latitude,
         longitude: res.coords.longitude,
       })
     );
-  }, [user.network_id]);
+  }, []);
 
   setInterval(() => {
     navigator.geolocation.getCurrentPosition((res) =>
@@ -80,9 +82,13 @@ function App() {
             />
           }
         />
-        <Route path='/g/:groupId' element={<GroupDetail user={user} />} />
-        <Route path='/leaderboard' element={<Leaderboard />} />
-        <Route path='/create-post' element={<MakePost />} />
+        <Route
+          path='/g/:groupId'
+          element={
+            <GroupDetail user={user} currentLocation={currentLocation} />
+          }
+        />
+        <Route path='/leaderboard' element={<Leaderboard user={user} />} />
         <Route
           path='/admin'
           element={
