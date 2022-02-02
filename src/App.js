@@ -14,8 +14,9 @@ import MakePost from './components/MakePost';
 
 function App() {
   const [user, setUser] = useState(
-    () =>
-      JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {
+    // () =>
+    //   JSON.parse(localStorage.getItem('AdjacentDoorUser')) ||
+      {
         user_id: 1,
         firstname: 'ernest',
         lastname: 'zhang',
@@ -45,6 +46,11 @@ function App() {
             name: 'the second group',
             accepted: false
           },
+          {
+            id: 3,
+            name: 'the third group',
+            accepted: true
+          }
         ],
       }
   );
@@ -52,16 +58,16 @@ function App() {
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
-    axios
-      .get(`http://localhost:3001/user/${user.network_id}`)
-      .then((res) => {
-        setUser(res.data);
-        localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
-      })
-      .catch((err) => {
-        console.error("User doesn't exist");
-        setUser({});
-      });
+    // axios
+    //   .get(`http://localhost:3001/user/${user.network_id}`)
+    //   .then((res) => {
+    //     setUser(res.data);
+    //     localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
+    //   })
+    //   .catch((err) => {
+    //     console.error("User doesn't exist");
+    //     setUser({});
+    //   });
 
     navigator.geolocation.getCurrentPosition((res) =>
       setCurrentLocation({

@@ -27,31 +27,28 @@ function MakeGroup(props) {
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
   const [photo, setPhoto] = useState('');
-  const [localRadius, setRadius] = useState('');
+  const [localRadius, setRadius] = useState(5);
 
   const [location, setLocation] = useState({
     place: '',
     city: '',
+    state: '',
     zip: '',
     coordinates: [null, null],
   });
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      axios
-        .get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${position.coords.longitude},${position.coords.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`
-        )
-        .then((results) => {
-          setLocation({
-            place: results.data.features[1].place_name,
-            city: results.data.features[2].text,
-            zip: results.data.features[1].text,
-            coordinates: [position.coords.longitude, position.coords.latitude],
-          });
-        });
-    });
-  }, [location.city, location.zip]);
+    axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${props.currentLocation.longitude},${props.currentLocation.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`)
+    .then((results) => {
+      setLocation({
+        place: results.data.features[1].place_name,
+        city: results.data.features[2].text,
+        state: results.data.features[4].text,
+        zip: results.data.features[1].text,
+        coordinates: [props.currentLocation.longitude, props.currentLocation.latitude]
+      });
+    })
+  }, [props.currentLocation.longitude, props.currentLocation.latitude])
 
   const modalStyle = {
     display: 'flex',
@@ -67,6 +64,7 @@ function MakeGroup(props) {
   };
 
   const fakeAxiosPost = () => {
+<<<<<<< HEAD
     console.log(
       'POSTING, ',
       groupName,
@@ -80,6 +78,28 @@ function MakeGroup(props) {
       localRadius
     );
   };
+=======
+    console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo, localRadius);
+    // axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
+    //   params: {
+    //     name: groupName,
+    //     network_id: props.user.network_id,
+    //     address: '',
+    //     city: location.city,
+    //     state: location.state,
+    //     zip: location.zip,
+    //     latitude: location.coordinates[1],
+    //     longitude: location.coordinates[0],
+    //     privacy: privacy,
+    //     photo: photo
+    //   }
+    // })
+    // .then((result) => {
+    //   console.log('success', result)
+    // })
+    // .catch(err => console.log(err))
+  }
+>>>>>>> 12bd393 (identified and fixed bugs)
 
   const resetInputs = () => {
     setGname('');

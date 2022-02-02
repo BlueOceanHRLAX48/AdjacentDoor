@@ -22,7 +22,7 @@ const GroupCard = (props) => {
       </CardContent>
     </CardActionArea>
     <CardActions>
-      <JoinButton joinStatus={props.joinStatus} privacy={props.group.privacy} group={props.group} setUser={props.setUser} user_group={props.user_group} />
+      <JoinButton joinStatus={props.joinStatus} group={props.group} setUser={props.setUser} user_group={props.user_group} />
     </CardActions>
   </Card>)
 }
