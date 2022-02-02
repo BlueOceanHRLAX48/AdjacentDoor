@@ -64,21 +64,6 @@ function MakeGroup(props) {
   };
 
   const fakeAxiosPost = () => {
-<<<<<<< HEAD
-    console.log(
-      'POSTING, ',
-      groupName,
-      description,
-      location.coordinates,
-      location.city,
-      location.zip,
-      privacy,
-      local,
-      photo,
-      localRadius
-    );
-  };
-=======
     console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo, localRadius);
     // axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
     //   params: {
@@ -99,7 +84,6 @@ function MakeGroup(props) {
     // })
     // .catch(err => console.log(err))
   }
->>>>>>> 12bd393 (identified and fixed bugs)
 
   const resetInputs = () => {
     setGname('');
