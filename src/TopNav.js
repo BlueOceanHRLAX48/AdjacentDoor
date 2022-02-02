@@ -7,7 +7,17 @@ import { v4 as uuidv4 } from 'uuid';
 import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
 
-function TopNav({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
+function TopNav({
+  search,
+  setSearch,
+  posts,
+  setPosts,
+  filteredPosts,
+  setFilteredPosts,
+  filter,
+  setFilter,
+  userGroup,
+}) {
   const [nextTheme, setTheme] = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,6 +39,9 @@ function TopNav({ search, setSearch, posts, setPosts, filteredPosts, setFiltered
           setPosts={setPosts}
           filteredPosts={filteredPosts}
           setFilteredPosts={setFilteredPosts}
+          filter={filter}
+          userGroup={userGroup}
+          setFilter={setFilter}
         />
       </div>
       <div className='flex justify-end'>

@@ -5,21 +5,23 @@ import RightBar from './RightBar';
 import TopNav from './TopNav';
 import axios from 'axios';
 
-function Home(props) {
+function Home({ user }) {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=1`).then(({ data }) => {
-      setPosts(data.posts);
-    });
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user.default_group.id}`)
+      .then(({ data }) => {
+        setPosts(data.posts);
+      });
   }, []);
 
   return (
     <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
       <div id='left-bar' className='hidden sm:flex'>
-        <LeftBar user={props.user} />
+        <LeftBar user={user} filter={filter} userGroup={user.user_group} setFilter={setFilter} />
       </div>
       <div>
         <div className='hidden sm:flex'>
@@ -28,7 +30,6 @@ function Home(props) {
             setPosts={setPosts}
             filteredPosts={filteredPosts}
             setFilteredPosts={setFilteredPosts}
-            filter={filter}
           />
         </div>
         <div className='sm:flex'>
@@ -38,8 +39,6 @@ function Home(props) {
               setPosts={setPosts}
               filteredPosts={filteredPosts}
               setFilteredPosts={setFilteredPosts}
-              filter={filter}
-              setFilter={setFilter}
             />
           </div>
           <div className='hidden sm:flex'>

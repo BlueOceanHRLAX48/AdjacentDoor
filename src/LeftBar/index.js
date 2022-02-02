@@ -2,50 +2,34 @@ import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-function LeftBar({ setFilter }) {
-  const groupInfo = [
-    ['Dog Club', '123', <MdGroups size='20' />],
-    ['Cat Club', '456', <MdGroups size='20' />],
-  ];
-
+function LeftBar({ setFilter, filter, userGroup }) {
   const handleActive = ({ isActive }) => ({
     fontWeight: isActive ? 'bold' : '',
   });
+
   return (
     <div className='sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </NavLink>
       <div className='overflow-y-scroll hide-scroll-bar'>
-        <NavLink to='/admin' style={handleActive} key={uuidv4()}>
-          <LeftBarButton icon={<MdHome size='20' />} text='Admin' key={uuidv4()} />
+        <NavLink to='/' style={handleActive} key={uuidv4()}>
+          <LeftBarButton icon={<MdHome size='20' />} text='Home' />
         </NavLink>
-        <NavLink to='/home' style={handleActive} key={uuidv4()}>
-          <LeftBarButton icon={<MdHome size='20' />} text='Home' key={uuidv4()} />
-        </NavLink>
-
-        <div className='ml-4 text-sm'>Neighborhood</div>
-
+        <div className='mt-4 mb-2 ml-4 text-sm'>Neighborhood</div>
         {[
           ['Safety', '/safety', <MdHealthAndSafety size='20' />],
-          ['ratings', '/ratings', <MdGroups size='20' />],
+          ['Ratings', '/ratings', <MdGroups size='20' />],
           ['Others', '/others', <MdGroups size='20' />],
-          ['ratings', '/ratings', <MdGroups size='20' />],
-          ['Groups', '/groups', <MdGroups size='20' />],
         ].map(([title, url, icon]) => (
           <NavLink to={url} style={handleActive} key={uuidv4()}>
-            <LeftBarButton icon={icon} text={title} key={uuidv4()} />
+            <LeftBarButton icon={icon} text={title} />
           </NavLink>
         ))}
-        <div className='ml-4 text-sm'>All Groups</div>
-        {groupInfo.map(([title, url, icon, filter], i) => (
-          <NavLink to={`/g/:group_id` + url} style={handleActive} key={uuidv4()}>
-            <LeftBarButton
-              icon={icon}
-              text={title}
-              key={uuidv4()}
-              onClick={() => setFilter(title)}
-            />
+        <div className='mt-4 mb-2 ml-4 text-sm'>All Groups</div>
+        {userGroup.map(({ id, name }) => (
+          <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
+            <LeftBarButton text={name} />
           </NavLink>
         ))}
       </div>

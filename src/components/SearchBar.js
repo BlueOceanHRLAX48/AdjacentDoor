@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 
-function SearchBar({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
+function SearchBar({
+  search,
+  setSearch,
+  posts,
+  setPosts,
+  filteredPosts,
+  setFilteredPosts,
+  userGroup,
+}) {
   const [searchInput, setSearchInput] = useState('');
 
   const handleSearchInput = (e) => {
