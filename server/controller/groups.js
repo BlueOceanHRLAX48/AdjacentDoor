@@ -9,11 +9,11 @@ module.exports = {
       JOIN user_groups ON user_group_list.user_group_id = user_groups.id
       WHERE accepted = true AND user_group_id = $1
     ),
-    (
+    COALESCE((
       SELECT json_agg(network_id) as userPending FROM user_group_list
       JOIN user_groups ON user_group_list.user_group_id = user_groups.id
-      WHERE accepted = false AND user_group_id = $1
-    ),
+      WHERE accepted = false AND user_group_id = 1
+    ), '[]') AS userPenging,
     g.name, g.city, g.state, g.zip,
     json_build_object('latitude', g.latitude, 'longitude', g.longitude) AS coordinates,
     g.photo, g.description,
