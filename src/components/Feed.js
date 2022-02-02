@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useRef } from 'react';
 import Post from './Post';
+import MakePost from './MakePost';
 
 function Feed({ filteredPosts, user }) {
   const postInput = useRef(null);
@@ -45,6 +46,7 @@ function Feed({ filteredPosts, user }) {
             submit
           </button>
         </form>
+        {/* <MakePost /> */}
       </div>
       {filteredPosts &&
         filteredPosts.map((post, i) => (

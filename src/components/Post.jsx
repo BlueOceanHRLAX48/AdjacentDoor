@@ -1,10 +1,9 @@
 import { Avatar } from '@mui/material';
 import axios from 'axios';
-import React from 'react';
+import moment from 'moment';
 import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
-import moment from 'moment';
 
 function Post({ photos, postId, body, like, time, user }) {
   const handleComment = () => 'q';

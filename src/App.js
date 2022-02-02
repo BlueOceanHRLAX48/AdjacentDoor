@@ -10,6 +10,7 @@ import Leaderboard from './Leaderboard';
 import Login from './Login';
 import MyProfile from './MyProfile';
 import SignUp from './SignUp';
+import MakePost from './components/MakePost';
 
 function App() {
   const [user, setUser] = useState(
@@ -89,13 +90,14 @@ function App() {
         />
         <Route path='/g/:groupId' element={<GroupDetail />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/create-post' element={<MakePost />} />
         <Route
           path='/admin'
           element={user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />}
         />
       </Routes>
       <div>
-        <Footer />
+        <Footer groupId={user.default_group.id} />
       </div>
     </BrowserRouter>
   );

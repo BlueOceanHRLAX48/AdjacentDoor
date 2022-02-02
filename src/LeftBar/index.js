@@ -16,7 +16,9 @@ function LeftBar({ setFilter, filter, userGroup }) {
         <NavLink to='/' style={handleActive} key={uuidv4()} className='hidden sm:block'>
           <LeftBarButton icon={<MdHome size='20' />} text='Home' />
         </NavLink>
+
         <div className='mt-4 mb-2 ml-4 text-sm'>Neighborhood</div>
+
         {[
           ['Safety', '/safety', <MdHealthAndSafety size='20' />],
           ['Ratings', '/ratings', <MdGroups size='20' />],
@@ -26,8 +28,10 @@ function LeftBar({ setFilter, filter, userGroup }) {
             <LeftBarButton icon={icon} text={title} />
           </NavLink>
         ))}
+
         <div className='mt-4 mb-2 ml-4 text-sm'>All Groups</div>
-        {userGroup.map(({ id, name }) => (
+
+        {userGroup?.map(({ id, name }) => (
           <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
             <LeftBarButton text={name} />
           </NavLink>
@@ -38,11 +42,9 @@ function LeftBar({ setFilter, filter, userGroup }) {
 }
 
 const LeftBarButton = ({ icon, text = 'text' }) => (
-  <div
-    className={`flex py-4 px-4 hover:bg-ghostWhite hover:rounded-full cursor-pointer transition-all duration-150 dark:hover:bg-gray-600`}
-  >
-    <div className='relative flex items-center justify-start mr-4'>{icon}</div>
-    <div className='relative flex items-center justify-start font-medium'>{text}</div>
+  <div className='flex px-4 py-4 transition-all duration-150 cursor-pointer hover:bg-ghostWhite hover:rounded-full dark:hover:bg-gray-600'>
+    <div className='items-center justify-start mr-4'>{icon}</div>
+    <div className='items-center justify-start font-medium'>{text}</div>
   </div>
 );
 
