@@ -4,6 +4,7 @@ import React from 'react';
 import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
+import moment from 'moment';
 
 function Post({ photos, postId, body, like, time, user }) {
   const handleComment = () => 'q';
@@ -24,9 +25,13 @@ function Post({ photos, postId, body, like, time, user }) {
           />
         </Link>
         <div className='w-full'>
-          <div className='font-medium w-min'>{user?.username}</div>
-          <div className='text-xs font-light text-slate-500'>{time}</div>
-          <div className='text-xs font-light text-slate-500'>{(user.city, user.state)}</div>
+          <div className='flex font-medium align-top w-min'>{user?.username}</div>
+          <div className='flex items-center'>
+            <div className='text-xs font-light text-slate-500'>{user?.city}</div>
+            <div className='ml-2 mr-2'> • </div>
+            <div className='text-xs font-light text-slate-500'>{moment(time).format('LL')}</div>
+          </div>
+
           <div className='mt-2'>{body}</div>
           <div className='flex items-center justify-between mt-2 mr-2'>
             {[

@@ -8,12 +8,12 @@ function LeftBar({ setFilter, filter, userGroup }) {
   });
 
   return (
-    <div className='sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
+    <div className='h-screen sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </NavLink>
       <div className='overflow-y-scroll hide-scroll-bar'>
-        <NavLink to='/' style={handleActive} key={uuidv4()}>
+        <NavLink to='/' style={handleActive} key={uuidv4()} className='hidden sm:block'>
           <LeftBarButton icon={<MdHome size='20' />} text='Home' />
         </NavLink>
         <div className='mt-4 mb-2 ml-4 text-sm'>Neighborhood</div>

@@ -18,7 +18,7 @@ function Home({ user }) {
   }, []);
 
   return (
-    <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
+    <div className='w-screen h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
       <div id='left-bar' className='hidden sm:flex'>
         <LeftBar user={user} userGroup={user.user_group} />
       </div>
