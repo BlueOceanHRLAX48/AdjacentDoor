@@ -11,12 +11,12 @@ function SearchBar({ search, setSearch, posts, setPosts, filteredPosts, setFilte
     if (searchInput.length) {
       let filtered =
         posts &&
-        posts.filter((post) => post['post_text'].toUpperCase().includes(searchInput.toUpperCase()));
+        posts.filter((post) => post['body'].toUpperCase().includes(searchInput.toUpperCase()));
       setFilteredPosts(filtered);
     } else {
       setFilteredPosts(posts);
     }
-  });
+  }, [searchInput]);
 
   return (
     <div className='flex justify-center w-[600px]'>

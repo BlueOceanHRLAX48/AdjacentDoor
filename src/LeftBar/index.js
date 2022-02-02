@@ -1,5 +1,6 @@
 import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 function LeftBar() {
   const groupInfo = [
@@ -12,12 +13,12 @@ function LeftBar() {
   });
   return (
     <div className='sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
-      <NavLink to='/'>
+      <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
       </NavLink>
       <div className='overflow-y-scroll hide-scroll-bar'>
-        <NavLink to='/admin' style={handleActive}>
-          <LeftBarButton icon={<MdHome size='20' />} text='Admin' />
+        <NavLink to='/admin' style={handleActive} key={uuidv4()}>
+          <LeftBarButton icon={<MdHome size='20' />} text='Admin' key={uuidv4()} />
         </NavLink>
         {[
           ['Home', '/', <MdHome size='20' />],
@@ -27,13 +28,13 @@ function LeftBar() {
           ['ratings', '/ratings', <MdGroups size='20' />],
           ['Groups', '/groups', <MdGroups size='20' />],
         ].map(([title, url, icon], i) => (
-          <NavLink to={url} style={handleActive}>
-            <LeftBarButton icon={icon} text={title} key={i} />
+          <NavLink to={url} style={handleActive} key={uuidv4()}>
+            <LeftBarButton icon={icon} text={title} key={uuidv4()} />
           </NavLink>
         ))}
         {groupInfo.map(([title, url, icon], i) => (
-          <NavLink to={'/groups/' + url} style={handleActive}>
-            <LeftBarButton icon={icon} text={title} key={i} />
+          <NavLink to={'/groups/' + url} style={handleActive} key={uuidv4()}>
+            <LeftBarButton icon={icon} text={title} key={uuidv4()} />
           </NavLink>
         ))}
         {/* <button onClick={() => props.setFilter('')}>All</button>
