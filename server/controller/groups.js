@@ -62,10 +62,11 @@ module.exports = {
   joinGroup: (req, res) => {
     const { group_id} = req.params;
     const { network_id } = req.query;
+    const accepted = req.query.accepted || false;
     const query = `INSERT INTO user_group_list (network_id, user_group_id, accepted)
-    VALUES ($1, $2, DEFAULT)`;
+    VALUES ($1, $2, $3)`;
     pool
-      .query(query, [network_id, group_id])
+      .query(query, [network_id, group_id, accepted])
       .then(() => res.status(201).send('send request to join group'))
       .catch(err => res.status(500).send(err))
   },
