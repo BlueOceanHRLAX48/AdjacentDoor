@@ -20,7 +20,7 @@ function Footer({ groupId }) {
       <NavLink to='/create-post'>
         <MdOutlineAddCircle className='' size='30' onClick={closeLeftBar} />
       </NavLink>
-      <NavLink to={`/g/${groupId}`}>
+      <NavLink to={`/groups`}>
         <MdGroups className='' size='30' onClick={closeLeftBar} />
       </NavLink>
       <MdMenu className='cursor-pointer' size='30' onClick={openLeftBar} />

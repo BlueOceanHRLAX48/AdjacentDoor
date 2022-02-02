@@ -10,6 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
+<<<<<<< HEAD
 function Post({
   photos,
   postId,
@@ -35,6 +36,14 @@ function Post({
         })
         .catch((err) => console.error(err));
     }
+=======
+function Post({ photos, postId, body, like, time, user, getPosts }) {
+  const handleComment = () => 'q';
+  const handleLike = () => {
+    axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`).then(() => {
+      getPosts();
+    });
+>>>>>>> f7cabca (like button update)
   };
 
   const handleShare = () => 'q';
@@ -104,8 +113,14 @@ function Post({
             post={post}
           />
         </div>
+<<<<<<< HEAD
       )}
     </>
+=======
+      </div>
+      <MoreMenu postId={postId} getPosts={getPosts} />
+    </div>
+>>>>>>> f7cabca (like button update)
   );
 }
 
