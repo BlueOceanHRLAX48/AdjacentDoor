@@ -62,10 +62,8 @@ module.exports = {
       city,
       state,
       zip,
-      photo,
-      safety,
-      friendliness
-      ) values($1, $2, $3, $4, null, default, default)
+      photo
+      ) values($1, $2, $3, $4,'https://www.placebear.com/200/300' )
       returning id`
 
     let groupRes = await pool.query(findDefault, [zip])
