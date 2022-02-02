@@ -13,8 +13,7 @@ function GroupDetail(props) {
 
   const samplePosts = [
     {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       type: 'general',
@@ -26,8 +25,7 @@ function GroupDetail(props) {
       longitude: '-73.989308',
     },
     {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       type: 'forsale',
@@ -39,8 +37,7 @@ function GroupDetail(props) {
       longitude: '-73.989308',
     },
     {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       type: 'forsale',
@@ -52,8 +49,7 @@ function GroupDetail(props) {
       longitude: '-73.989308',
     },
     {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       type: 'safety',
@@ -65,8 +61,7 @@ function GroupDetail(props) {
       longitude: '-73.989308',
     },
     {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
       name: 'name',
       date: '1-2-2022',
       type: 'general',
@@ -88,11 +83,11 @@ function GroupDetail(props) {
   }
   return (
     <div className='flex h-screen overflow-y-clip'>
-      <LeftBar setFilter={setFilter} filter={filter} />
+      <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
       <div className='flex flex-col grow'>
-        <TopNav />
+        <TopNav user={props.user} />
         <div className='flex grow'>
-          <div className='flex flex-col overflow-y-scroll h-screen hide-scroll-bar pb-12'>
+          <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
             <div className='w-[600px] px-4 pt-4'>
               <div className='flex justify-center items-center bg-ghostWhite border rounded h-[400px]'>
                 MAP PLACEHOLDER

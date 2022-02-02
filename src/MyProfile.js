@@ -1,6 +1,5 @@
-import RightBar from './RightBar/index';
-import LeftBar from './LeftBar/index';
 import { Avatar } from '@mui/material';
+import LeftBar from './LeftBar/index';
 
 function MyProfile() {
   return (
@@ -8,6 +7,7 @@ function MyProfile() {
       <div className='hidden sm:flex'>
         <LeftBar />
       </div>
+
       <div className='w-[600px] min-h-screen p-4 flex items-center justify-center'>
         <Avatar
           alt='Remy Sharp'
@@ -20,9 +20,6 @@ function MyProfile() {
           <div className='font-light'>Email</div>
           <div className='font-light'>Address</div>
         </div>
-      </div>
-      <div>
-        <RightBar />
       </div>
     </div>
   );

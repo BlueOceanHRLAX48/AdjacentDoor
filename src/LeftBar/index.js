@@ -1,47 +1,51 @@
 import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import UserInfo from './UserInfo';
+import { NavLink } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
-function LeftBar(props) {
+function LeftBar({ setFilter, filter, user }) {
+  const handleActive = ({ isActive }) => ({
+    fontWeight: isActive ? 'bold' : '',
+  });
+
   return (
-    <div className='flex flex-col w-[250px] h-screen px-6 py-4'>
-      <Link to='/'>
-        <div className='text-2xl  text-primary font-bold pb-4 px-4 '>
-          Adjacent Door
-        </div>
-      </Link>
-      {[
-        ['Home', '/', <MdHome size='20' />],
-        ['Safety', '/safety', <MdHealthAndSafety size='20' />],
-        ['Groups', '/groups', <MdGroups size='20' />],
-        ['ratings', '/ratings', <MdGroups size='20' />],
-        ['Others', '/others', <MdGroups size='20' />],
-      ].map(([title, url, icon], i) => (
-        <Link to={url} key={i}>
-          <LeftBarButton icon={icon} text={title} key={i} />
-        </Link>
-      ))}
-      <button onClick={() => props.setFilter('')}>All</button>
-      <button onClick={() => props.setFilter('general')}>General</button>
-      <button onClick={() => props.setFilter('safety')}>Safety</button>
-      <button onClick={() => props.setFilter('forsale')}>For Sale</button>
-      <Link to='/my-profile'>
-        <UserInfo />
-      </Link>
+    <div className='h-screen sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
+      <NavLink to='/' key={uuidv4()}>
+        <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
+      </NavLink>
+      <div className='overflow-y-scroll hide-scroll-bar'>
+        <NavLink to='/' style={handleActive} key={uuidv4()} className='hidden sm:block'>
+          <LeftBarButton icon={<MdHome size='20' />} text='Home' />
+        </NavLink>
+
+        <div className='mt-4 mb-2 ml-4 text-sm'>Neighborhood</div>
+
+        {[
+          ['All', '', <MdHealthAndSafety size='20' />],
+          ['General', 'general', <MdGroups size='20' />],
+          ['Safety', 'safety', <MdHealthAndSafety size='20' />],
+          ['For Sale', 'forsale', <MdGroups size='20' />],
+        ].map(([title, value, icon]) => (
+          <button onClick={() => setFilter(value)}>
+            <LeftBarButton icon={icon} text={title} />
+          </button>
+        ))}
+
+        <div className='mt-4 mb-2 ml-4 text-sm'>All Groups</div>
+
+        {user?.user_group?.map(({ id, name }) => (
+          <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
+            <LeftBarButton text={name} />
+          </NavLink>
+        ))}
+      </div>
     </div>
   );
 }
 
 const LeftBarButton = ({ icon, text = 'text' }) => (
-  <div
-    className={`flex py-4 px-4 hover:bg-ghostWhite hover:rounded-full cursor-pointer transition-all duration-150 dark:hover:bg-gray-600`}
-  >
-    <div className='relative flex items-center justify-start mr-4'>{icon}</div>
-    <div
-      className={`relative flex items-center justify-start text-base font-medium`}
-    >
-      {text}
-    </div>
+  <div className='flex px-4 py-4 transition-all duration-150 cursor-pointer hover:bg-ghostWhite hover:rounded-full dark:hover:bg-gray-600'>
+    <div className='items-center justify-start mr-4'>{icon}</div>
+    <div className='items-center justify-start font-medium'>{text}</div>
   </div>
 );
 
