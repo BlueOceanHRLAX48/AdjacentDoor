@@ -26,6 +26,7 @@ function MakePost(props) {
       privacy,
       latitude: props.currentLocation.latitude,
       longitude: props.currentLocation.longitude,
+      photos: ['http://placecorgi.com/250', 'http://placecorgi.com/250'],
     });
     setBody('');
     setType('');
