@@ -22,6 +22,11 @@ function Login() {
   const [notice, setNotice] = useState(false);
   const [fillIn, setFillIn] = useState(false);
   const [address, setAddress] = useState('');
+  const [loginData, setLoginData] = useState(
+    localStorage.getItem('loginData')
+      ? JSON.parse(localStorage.getItem('loginData'))
+      : null
+  );
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -88,11 +93,13 @@ function Login() {
   };
 
   const handleLogin = (data) => {
+
     const userAddress = address.split(',');
     const street = userAddress[0];
     const city = userAddress[1].substring(1, userAddress[1].length);
     const state = userAddress[2].substring(1, userAddress[2].length - 6);
     const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
+
     const userInfo = {
       firstName: data.Du.VX,
       lastName: data.Du.iW,
@@ -103,17 +110,26 @@ function Login() {
       address: street,
       city: city,
       state: state,
-      zipcode: zipcode
+      zip: zipcode,
+      privacy: false
     };
     console.log(userInfo);
-    // axios.post('/user/signup', userInfo)
-    //   .then(response => {
-    //     console.log('New user signed up');
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   })
+    setLoginData(userInfo);
+    localStorage.setItem('loginData', JSON.stringify(userInfo));
+
+    axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
+      .then(response => {
+        console.log('New user signed up');
+      })
+      .catch(err => {
+        console.error(err);
+      })
     // document.location.href = '/';
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loginData');
+    setLoginData(null);
   };
 
   return (
