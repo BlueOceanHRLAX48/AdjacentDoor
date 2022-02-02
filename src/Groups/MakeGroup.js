@@ -65,24 +65,24 @@ function MakeGroup(props) {
 
   const fakeAxiosPost = () => {
     console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo, localRadius);
-    // axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
-    //   params: {
-    //     name: groupName,
-    //     network_id: props.user.network_id,
-    //     address: '',
-    //     city: location.city,
-    //     state: location.state,
-    //     zip: location.zip,
-    //     latitude: location.coordinates[1],
-    //     longitude: location.coordinates[0],
-    //     privacy: privacy,
-    //     photo: photo
-    //   }
-    // })
-    // .then((result) => {
-    //   console.log('success', result)
-    // })
-    // .catch(err => console.log(err))
+    axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
+      params: {
+        name: groupName,
+        network_id: props.user.network_id,
+        address: '',
+        city: location.city,
+        state: location.state,
+        zip: location.zip,
+        latitude: location.coordinates[1],
+        longitude: location.coordinates[0],
+        privacy: privacy,
+        photo: photo
+      }
+    })
+    .then((result) => {
+      console.log('success', result)
+    })
+    .catch(err => console.log(err))
   }
 
   const resetInputs = () => {

@@ -12,19 +12,19 @@ function Groups(props) {
   const {user_group} = props.user;
 
   useEffect(() => {
-    setGroups(GroupsNearby)
-    // axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
-    //   params: {
-    //     longitude: props.currentLocation.longitude,
-    //     latitude: props.currentLocation.latitude,
-    //     r: 5
-    //   }
-    // })
-    // .then((result) => {
-    //   console.log(result.data)
-    //   setGroups(result.data);
-    // })
-    // .catch(err => console.log(err));
+    // setGroups(GroupsNearby)
+    axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
+      params: {
+        longitude: props.currentLocation.longitude,
+        latitude: props.currentLocation.latitude,
+        r: 5000
+      }
+    })
+    .then((result) => {
+      console.log(result.data)
+      setGroups(result.data);
+    })
+    .catch(err => console.log(err));
   }, [props.currentLocation.longitude, props.currentLocation.latitude])
 
   return (
