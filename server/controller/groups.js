@@ -16,7 +16,18 @@ module.exports = {
     ),
     g.name, g.city, g.state, g.zip,
     json_build_object('latitude', g.latitude, 'longitude', g.longitude) AS coordinates,
-    g.photo, g.safety, g.friendliness, g.privacy
+    g.photo,
+    COALESCE((
+      SELECT AVG("safety")::numeric(10,1)
+      FROM groups_rating
+      WHERE group_id = g.id
+    ), 0) AS safety,
+    COALESCE((
+      SELECT AVG(friendliness)::numeric(10,1)
+      FROM groups_rating
+      WHERE group_id = g.id
+    ), 0) AS friendiness,
+    g.privacy
     FROM user_groups g
     WHERE id=$1;`;
     pool
@@ -80,16 +91,16 @@ module.exports = {
   getDefaultGroup: (req, res) => {
     const { group_id } = req.params;
     const query = `SELECT id, "name", city, "state", zip, photo,
-    (
+    COALESCE((
       SELECT AVG("safety")::numeric(10,1)
          FROM groups_rating
          WHERE default_id = default_groups.id
-    ) AS safety,
-    (
+    ),0) AS safety,
+    COALESCE((
       SELECT AVG(friendliness)::numeric(10,1)
          FROM groups_rating
          WHERE default_id = default_groups.id
-    ) AS friendliness
+    ), 0) AS friendliness
     FROM default_groups WHERE id = $1;`;
     pool
       .query(query, [group_id])
@@ -104,16 +115,16 @@ module.exports = {
     const long_max = parseInt(longitude) + parseInt(r);
     const values = [lat_min, lat_max, long_min, long_max];
     const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo,
-    (
+    COALESCE((
       SELECT AVG("safety")::numeric(10,1)
       FROM groups_rating
       WHERE group_id = g.id
-    ) AS safety,
-    (
+    ),0) AS safety,
+    COALESCE((
       SELECT AVG(friendliness)::numeric(10,1)
       FROM groups_rating
       WHERE group_id = g.id
-    ) AS friendiness
+    ),0) AS friendiness
     FROM user_groups g
     WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4)
     ORDER BY g.id;`;
