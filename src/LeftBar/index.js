@@ -1,10 +1,11 @@
 import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import BackgroundLetterAvatars from '../components/StringAvatar';
 
 function LeftBar({ setFilter, filter, user }) {
   const handleActive = ({ isActive }) => ({
-    fontWeight: isActive ? 'bold' : '',
+    color: isActive ? '#9381FF' : '',
   });
 
   return (
@@ -31,10 +32,15 @@ function LeftBar({ setFilter, filter, user }) {
           ['General', 'general', <MdGroups size='20' />],
           ['Safety', 'safety', <MdHealthAndSafety size='20' />],
           ['For Sale', 'forsale', <MdGroups size='20' />],
+<<<<<<< HEAD
         ].map(([title, value, icon], i) => (
           <button onClick={() => setFilter(value)} key={i}>
+=======
+        ].map(([title, value, icon]) => (
+          <div onClick={() => setFilter(value)}>
+>>>>>>> 1fa9ec7 (add icon to groups and active color)
             <LeftBarButton icon={icon} text={title} />
-          </button>
+          </div>
         ))}
 
         <div className='mt-4 mb-2 ml-4 text-sm'>Discover Groups</div>
@@ -45,7 +51,7 @@ function LeftBar({ setFilter, filter, user }) {
 
         {user?.user_group?.map(({ id, name }) => (
           <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
-            <LeftBarButton text={name} />
+            <LeftBarButton text={name} icon={BackgroundLetterAvatars(name)} />
           </NavLink>
         ))}
       </div>
