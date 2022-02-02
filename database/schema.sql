@@ -26,8 +26,7 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  photo text NOT NULL,
-  "description" text
+  photo text NOT NULL
 );
 
 DROP TABLE IF EXISTS user_groups CASCADE;
@@ -67,7 +66,6 @@ CREATE TABLE IF NOT EXISTS groups_rating(
 DROP TABLE IF EXISTS user_group_list CASCADE;
 CREATE TABLE user_group_list(
   id SERIAL NOT NULL PRIMARY KEY,
-  user_id int NOT NULL REFERENCES user_account(user_id),
   network_id text,
   user_group_id int NOT NULL,
   accepted boolean NOT NULL DEFAULT false,
@@ -140,6 +138,9 @@ VALUES ('the group', '1124asfas', 'city', 'state', '5678', 123, -456, DEFAULT, '
 INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, description)
 VALUES ('the second group', '1124asfas', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', 'group description');
 
+INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, description)
+VALUES ('group3', '1124asfas', 'city', 'state', '5678', 125, -456, DEFAULT, '1234.com', 'group description');
+
 INSERT INTO default_groups(name, city, state, zip, photo)
 VALUES ('Ada', 'Ada', 'Michigan', '49301', 'photo.com');
 
@@ -149,9 +150,9 @@ VALUES ('Canton', 'Canton', 'Michigan', '02021', 'photo.com');
 INSERT INTO default_groups(name, city, state, zip, photo)
 VALUES ('Detroit', 'Detroit', 'Michigan', '48708', 'photo.com');
 
-INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 1, true), (2, '12l5kjasf', 1 ,true), (3, '09afaspoi', 1, true);
+INSERT INTO user_group_list(network_id, user_group_id, accepted) VALUES ('1124asfas', 1, true), ('12l5kjasf', 1 ,true), ('09afaspoi', 1, true);
 
-INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 2 ,true), (3, '09afaspoi', 2, false);
+INSERT INTO user_group_list(network_id, user_group_id, accepted) VALUES ('1124asfas', 2 ,true), ('09afaspoi', 2, false);
 
 INSERT INTO posts(group_id, user_group_id, user_id, body, time, report, tag, privacy, latitude, longitude)
 VALUES(1, null, 1, 'asfasfasf', default, default,  'Sell', default, 123, -456.5);
@@ -170,6 +171,9 @@ VALUES (1, '1124asfas', 3, 4);
 
 INSERT INTO groups_rating (default_id, network_id, "safety", friendliness)
 VALUES (1, '1124asfas', 5, 5);
+
+INSERT INTO posts(group_id, user_group_id, user_id, body, time, report, tag, privacy, latitude, longitude)
+VALUES(null, 1, 1, 'asfasfasf', default, default,  'Sell', default, 123, -456.5);
 
 CREATE INDEX user_user_id on user_account(user_id);
 CREATE INDEX user_network_id on user_account(network_id);
