@@ -6,9 +6,9 @@ import TopNav from './TopNav';
 import axios from 'axios';
 
 function Home(props) {
-  const [search, setSearch] = useState('');
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=1`).then(({ data }) => {
@@ -24,23 +24,22 @@ function Home(props) {
       <div>
         <div className='hidden sm:flex'>
           <TopNav
-            search={search}
-            setSearch={setSearch}
             posts={posts}
             setPosts={setPosts}
             filteredPosts={filteredPosts}
             setFilteredPosts={setFilteredPosts}
+            filter={filter}
           />
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
             <Feed
-              search={search}
-              setSearch={setSearch}
               posts={posts}
               setPosts={setPosts}
               filteredPosts={filteredPosts}
               setFilteredPosts={setFilteredPosts}
+              filter={filter}
+              setFilter={setFilter}
             />
           </div>
           <div className='hidden sm:flex'>

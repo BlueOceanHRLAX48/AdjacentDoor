@@ -3,11 +3,13 @@ import { red } from '@mui/material/colors';
 import React, { useState } from 'react';
 import { MdChatBubbleOutline, MdFavoriteBorder, MdMoreHoriz, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag, id, time }) {
-  const [likeCount, toggleLikeCount] = useState(false);
   const handleComment = () => 'q';
-  const handleLike = () => toggleLikeCount(!like);
+  const handleLike = () => {
+    axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${id}`);
+  };
   const handleShare = () => 'q';
   const handleMore = () => 'dropdown';
 
@@ -29,10 +31,10 @@ function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag,
           <div className='flex items-center justify-between mt-2 mr-2'>
             {[
               ['comment', <MdChatBubbleOutline size='15' />, handleComment],
-              [like, <MdFavoriteBorder size='15' style={{ color: red[200] }} />, handleLike],
+              [like, <MdFavoriteBorder size='15' />, handleLike],
               ['share', <MdOutlineShare size='15' />, handleShare],
             ].map(([title, icon, handleClick], i) => (
-              <PostButton icon={icon} text={title} onClick={handleClick} key={i} />
+              <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
             ))}
           </div>
         </div>
@@ -49,8 +51,8 @@ function Post({ photos, body, privacy, report, like, userInfo, coordinates, tag,
 
 export default Post;
 
-const PostButton = ({ icon, text = 'text' }) => (
-  <div className={`flex items-center cursor-pointer`}>
+const PostButton = ({ icon, text = 'text', handleClick }) => (
+  <div className={`flex items-center cursor-pointer`} onClick={handleClick}>
     <div className='mr-4 '>{icon}</div>
     <div>{text}</div>
   </div>

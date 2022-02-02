@@ -23,10 +23,9 @@ function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPo
       },
       tag: 'Sell',
       id: 1,
-      time: moment().format('LL'),
     };
 
-    axios.post(`http://localhost:3001/posts/defaultgroup?group_id=1`, postContent);
+    axios.post(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=1`, postContent);
     // setFilteredPosts([postContent, ...filteredPosts]);
     postInput.current.value = '';
     e.preventDefault();

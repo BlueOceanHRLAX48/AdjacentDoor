@@ -2,7 +2,7 @@ import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-function LeftBar() {
+function LeftBar({ setFilter }) {
   const groupInfo = [
     ['Dog Club', '123', <MdGroups size='20' />],
     ['Cat Club', '456', <MdGroups size='20' />],
@@ -20,27 +20,34 @@ function LeftBar() {
         <NavLink to='/admin' style={handleActive} key={uuidv4()}>
           <LeftBarButton icon={<MdHome size='20' />} text='Admin' key={uuidv4()} />
         </NavLink>
+        <NavLink to='/home' style={handleActive} key={uuidv4()}>
+          <LeftBarButton icon={<MdHome size='20' />} text='Home' key={uuidv4()} />
+        </NavLink>
+
+        <div className='ml-4 text-sm'>Neighborhood</div>
+
         {[
-          ['Home', '/', <MdHome size='20' />],
           ['Safety', '/safety', <MdHealthAndSafety size='20' />],
           ['ratings', '/ratings', <MdGroups size='20' />],
           ['Others', '/others', <MdGroups size='20' />],
           ['ratings', '/ratings', <MdGroups size='20' />],
           ['Groups', '/groups', <MdGroups size='20' />],
-        ].map(([title, url, icon], i) => (
+        ].map(([title, url, icon]) => (
           <NavLink to={url} style={handleActive} key={uuidv4()}>
             <LeftBarButton icon={icon} text={title} key={uuidv4()} />
           </NavLink>
         ))}
-        {groupInfo.map(([title, url, icon], i) => (
-          <NavLink to={'/groups/' + url} style={handleActive} key={uuidv4()}>
-            <LeftBarButton icon={icon} text={title} key={uuidv4()} />
+        <div className='ml-4 text-sm'>All Groups</div>
+        {groupInfo.map(([title, url, icon, filter], i) => (
+          <NavLink to={`/g/:group_id` + url} style={handleActive} key={uuidv4()}>
+            <LeftBarButton
+              icon={icon}
+              text={title}
+              key={uuidv4()}
+              onClick={() => setFilter(title)}
+            />
           </NavLink>
         ))}
-        {/* <button onClick={() => props.setFilter('')}>All</button>
-      <button onClick={() => props.setFilter('general')}>General</button>
-      <button onClick={() => props.setFilter('safety')}>Safety</button>
-      <button onClick={() => props.setFilter('forsale')}>For Sale</button> */}
       </div>
     </div>
   );

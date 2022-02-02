@@ -1,10 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Avatar } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import useTheme from './components/useTheme';
-import { Avatar } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 
 function TopNav({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPosts }) {
   const [nextTheme, setTheme] = useTheme();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className='flex items-center justify-between w-full mt-4 mb-4 '>
@@ -22,15 +35,40 @@ function TopNav({ search, setSearch, posts, setPosts, filteredPosts, setFiltered
         <button className='text-sm' onClick={() => setTheme(nextTheme)}>
           darkmode
         </button>
-        <Link to='/my-profile'>
-          <div className='ml-4 mr-4'>
-            <Avatar
-              alt='Remy Sharp'
-              src='/static/images/avatar/1.jpg'
-              sx={{ width: 35, height: 35 }}
-            />
-          </div>
-        </Link>
+
+        <div className='ml-4 mr-4 cursor-pointer'>
+          <Avatar
+            alt='Avatar'
+            src='/static/images/avatar/1.jpg'
+            sx={{ width: 35, height: 35 }}
+            id='user-profile'
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          />
+        </div>
+
+        <Menu
+          id='basic-menu'
+          anchorEl={anchorEl}
+          open={open}
+          onClick={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'user-profile',
+          }}
+          className='text-sm'
+        >
+          <NavLink to='/admin' key={uuidv4()}>
+            <MenuItem onClick={handleClose}>Admin</MenuItem>
+          </NavLink>
+          <NavLink to='/my-profile' key={uuidv4()}>
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+          </NavLink>
+          <NavLink to='/logout' key={uuidv4()}>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </NavLink>
+        </Menu>
       </div>
     </div>
   );
