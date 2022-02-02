@@ -8,14 +8,13 @@ import axios from 'axios';
 function Home(props) {
   const [search, setSearch] = useState('');
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/defaultgroup?group_id=1`).then(({ data }) => {
+    axios.get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=1`).then(({ data }) => {
       setPosts(data.posts);
     });
   }, []);
-
-  const [filteredPosts, setFilteredPosts] = useState([]);
 
   return (
     <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
