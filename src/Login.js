@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 import { ThemeProvider } from '@mui/material/styles';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import { FcGoogle } from 'react-icons/fc';
@@ -70,7 +71,7 @@ function Login() {
       username: data.get('username'),
       email: data.get('email')
     };
-    console.log(submitData);
+
     if (!submitData.username || !submitData.email) {
       setNotice(true);
       setFillIn(false);
@@ -91,45 +92,45 @@ function Login() {
   };
 
   const handleLogin = (data) => {
-    const userAddress = address.split(', ');
-    // const street = userAddress[0];
-    const city = userAddress[1];
-    const state = userAddress[2].substring(0, userAddress[2].length - 6);
-    const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
+    if (address) {
+      const userAddress = address.split(', ');
+      const city = userAddress[1];
+      const state = userAddress[2].substring(0, userAddress[2].length - 6);
+      const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
 
-    const userInfo = {
-      firstName: data.Du.VX,
-      lastName: data.Du.iW,
-      username: data.Du.tf,
-      profile_img: data.Du.eN,
-      email: data.Du.tv,
-      network_id: data.Du.FW,
-      // address: street,
-      city: city,
-      state: state,
-      zip: zipcode,
-      privacy: false
-    };
+      const userInfo = {
+        firstName: data.Du.VX,
+        lastName: data.Du.iW,
+        username: data.Du.tf,
+        profile_img: data.Du.eN,
+        email: data.Du.tv,
+        network_id: data.Du.FW,
+        city: city,
+        state: state,
+        zip: zipcode,
+        privacy: false
+      };
 
-    console.log(userInfo);
-    setLoginData(userInfo);
-    localStorage.setItem('loginData', JSON.stringify(userInfo));
+      console.log(userInfo);
+      setLoginData(userInfo);
+      localStorage.setItem('loginData', JSON.stringify(userInfo));
 
-    // if (JSON.parse(localStorage.getItem('loginData')).network_id !== userInfo.network_id) {
-    axios.get(`${process.env.REACT_APP_SERVER}/user/${userInfo.network_id}`)
-      .then(response => {
-        document.location.href = '/';
-      })
-      .catch(noFound => {
-        axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
-        .then(response => {
-          console.log('New user signed up');
+      axios
+        .get(`http://localhost:3001/user/${userInfo.network_id}`)
+        .then((res) => {
+          document.location.href = '/';
         })
-        .catch(err => {
-          console.error(err);
-        })
-      })
-
+        .catch((err) => {
+          axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
+            .then(response => {
+              console.log('New user signed up');
+              document.location.href = '/';
+            })
+            .catch(err => {
+              console.error(err);
+            })
+        });
+    }
   };
 
   const style = () => {
@@ -229,49 +230,57 @@ function Login() {
                   Please fill out all the required fields
                 </Alert>
               )}
-              <Button
-                type='submit'
-                fullWidth
-                color='primary'
-                font-color='primary'
-                variant='contained'
-                sx={{ mt: 3, mb: 2 }}
-                style={{ fontSize: style().fontSize }}
-              >
-                Continue
-              </Button>
+              { address ?
+                <Button
+                  type='submit'
+                  fullWidth
+                  color='primary'
+                  font-color='primary'
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2 }}
+                  style={{ fontSize: style().fontSize }}
+                >
+                  Continue
+                </Button>
+                :
+                <CircularProgress />
+              }
               <div className='text-center pt-3'>Or</div>
               <br />
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                render={(renderProps) => (
-                  <button
-                    onClick={renderProps.onClick}
-                    style={{
-                      backgroundColor: '#FFEEDD',
-                      color: '#B8B8FF',
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      fontFamily: 'Roboto',
-                      fontWeight: '900',
-                      fontSize: style().fontSize,
-                      lineHeight: '1.75',
-                      padding: '6px 14px',
-                      borderRadius: '4px',
-                    }}
-                  >
-                    <FcGoogle
-                      size={style().logoSize}
-                      style={{ marginRight: 60 }}
-                    />
-                    <span style={{ marginRight: 40 }}>Log in With Google</span>
-                  </button>
-                )}
-                onSuccess={handleLogin}
-                onFailure={handleFailure}
-                cookiePolicy={'single_host_origin'}
-              ></GoogleLogin>
+              { address ?
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  render={(renderProps) => (
+                    <button
+                      onClick={renderProps.onClick}
+                      style={{
+                        backgroundColor: '#FFEEDD',
+                        color: '#B8B8FF',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        fontFamily: 'Roboto',
+                        fontWeight: '900',
+                        fontSize: style().fontSize,
+                        lineHeight: '1.75',
+                        padding: '6px 14px',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      <FcGoogle
+                        size={style().logoSize}
+                        style={{ marginRight: 60 }}
+                      />
+                      <span style={{ marginRight: 40 }}>Log in With Google</span>
+                    </button>
+                  )}
+                  onSuccess={handleLogin}
+                  onFailure={handleFailure}
+                  cookiePolicy={'single_host_origin'}
+                ></GoogleLogin>
+                :
+                <CircularProgress />
+              }
               <Grid container sx={{ mt: 3, mb: 10 }}>
                 <Grid item>
                   <Link
