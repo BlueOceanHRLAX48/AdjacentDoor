@@ -6,7 +6,7 @@ module.exports = {
     let userStr =
     `select
     user_id, firstName, lastName, username,
-    network_id, email, admin, address, city, state,
+    network_id, email, admin, city, state,
     zip, privacy, profile_img, contribution,
     (select json_build_object('id', id, 'name', name)
     from default_groups
@@ -87,7 +87,6 @@ module.exports = {
       email,
       network_id,
       admin,
-      address,
       city,
       state,
       zip,
@@ -99,10 +98,10 @@ module.exports = {
     let createStr =
     `insert into user_account(
       firstName, lastName, username,
-      email, network_id, admin, address,
+      email, network_id, admin,
       city, state, zip, privacy, profile_img,
       default_groupID)
-      values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+      values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       `
 
     pool.query(createStr, userParams)
@@ -116,7 +115,7 @@ module.exports = {
     let globalStr =
     `select
     user_id, firstName, lastName, username,
-    network_id, email, admin, address, city, state,
+    network_id, email, admin, city, state,
     zip, privacy, profile_img, contribution,
     (select json_build_object('id', id, 'name', name)
     from default_groups
@@ -135,7 +134,7 @@ module.exports = {
     let globalStr =
     `select
     user_id, firstName, lastName, username,
-    network_id, email, admin, address, city, state,
+    network_id, email, admin, city, state,
     zip, privacy, profile_img, contribution,
     (select json_build_object('id', id, 'name', name)
     from default_groups
@@ -149,7 +148,7 @@ module.exports = {
 
   getLeaderBoardByUserGroup: async (req, res) => {
     let { count } = req.query
-    console.log(count)
+
     let { user_group_id } = req.params
 
     let getUsers =
@@ -163,7 +162,7 @@ module.exports = {
     let getScores =
     `select
     user_id, firstName, lastName, username,
-    network_id, email, admin, address, city, state,
+    network_id, email, admin, city, state,
     zip, privacy, profile_img, contribution,
     (select json_build_object('id', id, 'name', name)
     from default_groups
@@ -196,7 +195,7 @@ module.exports = {
     let getAll =
     `select
     user_id, firstName, lastName, username,
-    network_id, email, admin, address, city, state,
+    network_id, email, admin, city, state,
     zip, privacy, profile_img, contribution
     from user_account where zip = $1;`
 
@@ -214,12 +213,13 @@ module.exports = {
     let userList = await pool.query(getUserId, [user_group_id])
 
     let array = userList.rows[0].id
+
     let promiseQ = []
 
     let getUsers =
     `select
     user_id, firstName, lastName, username,
-    network_id, email, admin, address, city, state,
+    network_id, email, admin, city, state,
     zip, privacy, profile_img, contribution,
     (select json_build_object('id', id, 'name', name)
     from default_groups
@@ -259,14 +259,13 @@ module.exports = {
 
   updateLocation: async (req, res) => {
     let { id } = req.params
-    let locationParams = [req.body.address,  req.body.city,  req.body.state,  req.body.zip, id ]
+    let locationParams = [req.body.city,  req.body.state,  req.body.zip, id ]
 
     let locationStr =
-    `update user_account set address = $1, city = $2, state = $3, zip= $4 where network_id = $5;`
+    `update user_account set city = $1, state = $2, zip= $3 where network_id = $4;`
 
     await pool.query(locationStr, locationParams)
-    // .then(result => res.status(201).send('Your location has been updated'))
-    //   .catch(err => res.status(500).send('Could not update your location'))
+      .catch(err => res.status(500).send('Could not update your location'))
 
     let findDefault =
     `select id from default_groups
