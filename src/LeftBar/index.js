@@ -36,6 +36,10 @@ function LeftBar() {
             <LeftBarButton icon={icon} text={title} key={i} />
           </NavLink>
         ))}
+        {/* <button onClick={() => props.setFilter('')}>All</button>
+      <button onClick={() => props.setFilter('general')}>General</button>
+      <button onClick={() => props.setFilter('safety')}>Safety</button>
+      <button onClick={() => props.setFilter('forsale')}>For Sale</button> */}
       </div>
     </div>
   );

@@ -5,65 +5,9 @@ import RightBar from './RightBar';
 import TopNav from './TopNav';
 import axios from 'axios';
 
-function Home() {
+function Home(props) {
   const [search, setSearch] = useState('');
-  const [posts, setPosts] = useState([
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Something ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'different ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:3001/posts/defaultgroup?group_id=1`).then(({ data }) => {
@@ -76,7 +20,7 @@ function Home() {
   return (
     <div className='flex w-screen h-screen overflow-hidden dark:bg-gray-900 dark:text-white'>
       <div id='left-bar' className='hidden sm:flex'>
-        <LeftBar />
+        <LeftBar user={props.user} />
       </div>
       <div>
         <div className='hidden sm:flex'>
@@ -105,6 +49,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <RightBar />
     </div>
   );
 }

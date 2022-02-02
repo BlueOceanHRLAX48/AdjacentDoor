@@ -19,15 +19,15 @@ function SearchBar({ search, setSearch, posts, setPosts, filteredPosts, setFilte
   });
 
   return (
-    <>
+    <div className='flex justify-center w-[600px]'>
       <input
-        className='text-sm p-1 text-center px-2 ml-4 w-[570px] rounded-full focus:outline-none dark:bg-gray-900'
+        className='w-11/12 p-1 text-sm text-center transition-all duration-150 rounded-full outline-none focus:outline-primary dark:bg-gray-900'
         placeholder='Search Adjacent Door'
         onChange={handleSearchInput}
         onFocus={(e) => (e.target.placeholder = '')}
         onBlur={(e) => (e.target.placeholder = 'Search Adjacent Door')}
       ></input>
-    </>
+    </div>
   );
 }
 
