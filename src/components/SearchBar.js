@@ -16,7 +16,7 @@ function SearchBar({ search, setSearch, posts, setPosts, filteredPosts, setFilte
     } else {
       setFilteredPosts(posts);
     }
-  }, [searchInput]);
+  }, [posts, searchInput, setFilteredPosts]);
 
   return (
     <div className='flex justify-center w-[600px]'>

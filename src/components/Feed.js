@@ -49,21 +49,22 @@ function Feed({ search, setSearch, posts, setPosts, filteredPosts, setFilteredPo
           </button>
         </form>
       </div>
-      {filteredPosts.map((post, i) => (
-        <Post
-          key={i}
-          photos={post.photos}
-          body={post.body}
-          privacy={post.privacy}
-          report={post.report}
-          like={post.like}
-          userInfo={post.user_info}
-          coordinates={post.coordinates}
-          tag={post.tag}
-          id={post.post_id}
-          time={post.time}
-        />
-      ))}
+      {filteredPosts &&
+        filteredPosts.map((post, i) => (
+          <Post
+            key={i}
+            photos={post.photos}
+            body={post.body}
+            privacy={post.privacy}
+            report={post.report}
+            like={post.like}
+            userInfo={post.user_info}
+            coordinates={post.coordinates}
+            tag={post.tag}
+            id={post.post_id}
+            time={post.time}
+          />
+        ))}
     </div>
   );
 }
