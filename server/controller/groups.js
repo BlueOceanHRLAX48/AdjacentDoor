@@ -129,7 +129,7 @@ module.exports = {
     ),0) AS friendiness
     FROM user_groups g
     WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4)
-    ORDER BY g.id;`;
+    ORDER BY g.id;`
     pool
       .query(query, values)
       .then((results) => res.status(200).json(results.rows))
