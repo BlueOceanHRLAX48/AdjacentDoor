@@ -6,23 +6,23 @@ import { Link } from 'react-router-dom';
 const GroupCard = (props) => {
 
   return (<Card sx={{maxWidth: 400}}>
-    <CardActionArea component={Link} to={`/g/${props.group.Id}`}>
+    <CardActionArea component={Link} to={`/g/${props.group.id}`}>
       <CardMedia
         component="img"
         height="140"
-        image={props.group.Photo}
+        image={props.group.photo}
       />
       <CardContent>
         <Typography >
-          {props.group.Name}
+          {props.group.name}
         </Typography>
         <Typography >
-          Members: {props.group.Users.length}
+          {/* Members: {props.group.users.length} */}
         </Typography>
       </CardContent>
     </CardActionArea>
     <CardActions>
-      <JoinButton joinStatus={props.joinStatus} privacy={props.group.Privacy} group={props.group} setUser={props.setUser} userGroupIds={props.userGroupIds} />
+      <JoinButton joinStatus={props.joinStatus} privacy={props.group.privacy} group={props.group} setUser={props.setUser} user_group={props.user_group} />
     </CardActions>
   </Card>)
 }

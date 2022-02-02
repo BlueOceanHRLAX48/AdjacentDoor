@@ -8,89 +8,21 @@ import axios from 'axios';
 
 function Groups(props) {
   const [groups, setGroups] = useState([]);
-  const { userGroupIds } = props.user;
-
-  const fakeAxiosGetGroups = () => {
-    //maybe this data is passed down already from the App page
-    return {
-      groups: [
-        {
-          Id: 1,
-          Admin_id: {
-            1: 'Jojo',
-          },
-          Name: 'Rockin Group 1',
-          Users: [{ 2345: 'jessie' }, { 5462: 'johnny' }, { 46756: 'jane' }, { 253: 'jenny' }],
-          City: 'Santa Ana',
-          State: 'California',
-          Zip: 92705,
-          Coordinates: {
-            longitude: -117.79459,
-            latitude: 33.74128,
-          },
-          Photo:
-            'https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixlib=rb-1.2.1&ixid=MnwxM[…]8MHxzZWFyY2h8MXx8Y3V0ZSUyMGNhdHxlbnwwfHwwfHw%3D&w=1000&q=80',
-          Friendliness: 3,
-          Safety: 5,
-          Privacy: false,
-          Pending: [{ 7534: 'jackie' }],
-        },
-        {
-          Id: 2,
-          Admin_id: {
-            48567: 'Joy',
-          },
-          Name: 'Bluesy Number 2',
-          Users: [{ 4765: 'jay' }, { 1: 'jaja' }, { 347: 'jones' }],
-          City: 'Santa Ana',
-          State: 'California',
-          Zip: 92705,
-          Coordinates: {
-            longitude: -117.79431,
-            latitude: 33.74027,
-          },
-          Photo: '',
-          Friendliness: 4,
-          Safety: 4,
-          Privacy: false,
-          Pending: [],
-        },
-        {
-          Id: 3,
-          Admin_id: {
-            96478: 'Jenie',
-          },
-          Name: 'Workin numero 3',
-          Users: [{ 26452: 'jack' }, { 253: 'jenny' }],
-          City: 'Santa Ana',
-          State: 'California',
-          Zip: 92705,
-          Coordinates: {
-            longitude: -117.79791,
-            latitude: 33.741,
-          },
-          Photo: '',
-          Friendliness: 2,
-          Safety: 2,
-          Privacy: true,
-          Pending: [{ 26435: 'Jojo' }],
-        },
-      ],
-    };
-  };
+  const {user_group} = props.user;
 
   useEffect(() => {
-    // let returnedResult = fakeAxiosGetGroups()
     axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
-      longitude: props.currentLocation.longitude,
-      latitude: props.currentLocation.latitude,
-      r: 500000
+      params: {
+        longitude: props.currentLocation.longitude,
+        latitude: props.currentLocation.latitude,
+        r: 500000
+      }
     })
     .then((result) => {
-      console.log(result)
+      console.log(result.data)
+      setGroups(result.data);
     })
     .catch(err => console.log(err));
-
     // setGroups(returnedResult.groups);
   }, [props.currentLocation.longitude, props.currentLocation.latitude]);
 
@@ -104,37 +36,28 @@ function Groups(props) {
           <TopNav user={props.user} />
         </div>
         <div className='flex-col'>
-          <div>
-            <MakeGroup />
-          </div>
           <div id="seeGroups">
             {groups.map((card, index) => {
               let joinStatus = 'notJoined';
-              let groupIndex = userGroupIds.findIndex(element => element.id === card.Id);
+              let groupIndex = user_group.findIndex(element => element.id === card.id);
               let isAdmin = false;
               if(groupIndex !== -1) {
-                if(userGroupIds[groupIndex].accepted){
-                  if(card.Admin_id)
-                  joinStatus = 'joined';
-
+                if(user_group[groupIndex].accepted){
+                  if(card.admin_id === props.user.network_id){
+                    joinStatus = 'admin';
+                  } else {
+                    joinStatus = 'joined';
+                  }
                 } else {
                   joinStatus = 'pending';
                 }
-                return (
-                  <GroupCard
-                    key={index}
-                    group={card}
-                    joinStatus={joinStatus}
-                    setUser={props.setUser}
-                    userGroupIds={userGroupIds}
-                  />
-                );
               }
+              return <GroupCard key={index} group={card} joinStatus={joinStatus} setUser={props.setUser} user_group={user_group} />
             })}
           </div>
-          <div>
-            <RightBar user={props.user} />
-          </div>
+        </div>
+        <div>
+          <RightBar />
         </div>
       </div>
     </div>
