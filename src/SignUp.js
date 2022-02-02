@@ -104,12 +104,10 @@ function SignUp() {
       };
     } else {
       fontStyle = {
-        variant1: 'h2',
+        variant1: 'h3',
         variant2: 'h4',
         fontSize: 20,
-        linkSize: 20,
-        pt: '10%',
-        pb: '5%'
+        linkSize: 20
       };
     }
     return fontStyle;
@@ -117,7 +115,7 @@ function SignUp() {
 
   return (
     <div className='w-screen flex'>
-      <Button
+      {/* <Button
         variant='contained'
         color='primary'
         onClick={handleResize}
@@ -128,7 +126,7 @@ function SignUp() {
           marginTop: '1%',
           position: 'absolute'
         }}
-      >{isMobile ? 'Desktop' : 'Mobile'}</Button>
+      >{isMobile ? 'Desktop' : 'Mobile'}</Button> */}
       <ThemeProvider theme={theme}>
         <Grid container component='main' sx={{ height: '100vh' }}>
           <CssBaseline />
@@ -136,7 +134,7 @@ function SignUp() {
             item
             xs={false}
             sm={3}
-            md={5}
+            md={7}
             sx={{
               backgroundImage: 'url(https://source.unsplash.com/random)',
               backgroundRepeat: 'no-repeat',
@@ -148,7 +146,7 @@ function SignUp() {
               backgroundPosition: 'center',
             }}
           />
-          <Grid item xs={12} sm={9} md={7} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={9} md={5} component={Paper} elevation={6} square>
             <Box className='flex items-center my-10 mx-10'
               sx={{ flexDirection: 'column' }}
             >

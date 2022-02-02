@@ -144,13 +144,13 @@ function Login() {
       };
     } else {
       fontStyle = {
-        variant1: 'h2',
+        variant1: 'h3',
         variant2: 'h4',
         fontSize: 20,
         logoSize: 30,
         linkSize: 20,
-        pt: '20%',
-        pb: '5%'
+        pt: '5%',
+        pb: '1%'
       };
     }
     return fontStyle;
@@ -158,7 +158,7 @@ function Login() {
 
   return (
     <div className='w-screen flex-1 h-screen justify-content-center text-2xl bg-ghostWhite'>
-      <Button
+      {/* <Button
         variant='contained'
         color='primary'
         onClick={handleResize}
@@ -169,7 +169,7 @@ function Login() {
           marginTop: '1%',
           position: 'absolute'
         }}
-      >{isMobile ? 'Desktop' : 'Mobile'}</Button>
+      >{isMobile ? 'Desktop' : 'Mobile'}</Button> */}
       { isMobile && <img src={require('./image/up.jpg')} alt='up' /> }
       <ThemeProvider theme={theme}>
         <Container component='main' maxWidth='md' className='w-20'>
