@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Legend from './components/legend';
 import 'mapbox-gl/dist/mapbox-gl.css';
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
@@ -106,7 +105,6 @@ function Map(props) {
 
   return (
     <div className='flex grow justify-center relative z-0'>
-      {/* <Legend /> */}
       <div ref={mapContainer}
         className='flex grow min-h-[400px] rounded border-2 border-secondary'/>
     </div>
