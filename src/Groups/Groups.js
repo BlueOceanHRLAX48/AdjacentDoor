@@ -11,7 +11,6 @@ function Groups(props) {
   const {user_group} = props.user;
 
   useEffect(() => {
-    // setGroups(GroupsNearby)
     axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
       params: {
         longitude: props.currentLocation.longitude,
