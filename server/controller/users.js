@@ -43,7 +43,6 @@ module.exports = {
       email,
       network_id,
       admin,
-      address,
       city,
       state,
       zip,
