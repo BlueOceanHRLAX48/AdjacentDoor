@@ -84,7 +84,12 @@ function Login() {
     } else {
       setNotice(false);
       setFillIn(true);
+      if (JSON.parse(localStorage.getItem('loginData')).email !== submitData.email) {
+        alert('We couldn\'t find your account. Want to try another or create one?');
+        document.location.href = '/signup';
+      } else {
       document.location.href = '/';
+      }
     }
   };
 
@@ -113,23 +118,22 @@ function Login() {
       zip: zipcode,
       privacy: false
     };
+
     console.log(userInfo);
     setLoginData(userInfo);
     localStorage.setItem('loginData', JSON.stringify(userInfo));
 
-    axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
+    if (JSON.parse(localStorage.getItem('loginData')).network_id !== userInfo.network_id) {
+      axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
       .then(response => {
         console.log('New user signed up');
       })
       .catch(err => {
         console.error(err);
       })
-    // document.location.href = '/';
-  };
+    }
 
-  const handleLogout = () => {
-    localStorage.removeItem('loginData');
-    setLoginData(null);
+    document.location.href = '/';
   };
 
   return (

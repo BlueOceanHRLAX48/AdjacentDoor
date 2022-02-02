@@ -80,15 +80,19 @@ function SignUp() {
       setNotice(false);
       setValidated(true);
       setFillIn(true);
-
-      axios.post('/user/signup', submitData)
-      .then(response => {
-        console.log('New user signed up');
-      })
-      .catch(err => {
-        console.error(err);
-      })
-      document.location.href = '/';
+      if (JSON.parse(localStorage.getItem('loginData')).email === submitData.email) {
+        alert('This email address has been taken. Do you already have an account?');
+        document.location.href = '/login';
+      } else {
+        axios.post('/user/signup', submitData)
+        .then(response => {
+          console.log('New user signed up');
+        })
+        .catch(err => {
+          console.error(err);
+        })
+        document.location.href = '/';
+      }
     }
   };
 
