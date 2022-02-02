@@ -15,7 +15,8 @@ import MakePost from './components/MakePost';
 function App() {
   const [user, setUser] = useState(
     () =>
-      JSON.parse(localStorage.getItem('AdjacentDoorUser')) ||
+      JSON.parse(localStorage.getItem('AdjacentDoorUser'))
+      ||
       {
         user_id: 1,
         firstname: 'ernest',
@@ -61,7 +62,6 @@ function App() {
     axios
       .get(`http://localhost:3001/user/${user.network_id}`)
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
         localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
       })
