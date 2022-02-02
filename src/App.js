@@ -72,21 +72,13 @@ function App() {
         />
         <Route
           path='/login'
-          element={
-            user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />
-          }
+          element={user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />}
         />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route
           path='/groups'
-          element={
-            <Groups
-              user={user}
-              currentLocation={currentLocation}
-              setUser={setUser}
-            />
-          }
+          element={<Groups user={user} currentLocation={currentLocation} setUser={setUser} />}
         />
         <Route
           path='/g/:groupId'
@@ -101,12 +93,15 @@ function App() {
         <Route path='/leaderboard' element={<Leaderboard user={user} />} />
         <Route
           path='/admin'
-          element={
-            user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />
-          }
+          element={user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />}
         />
       </Routes>
+<<<<<<< HEAD
       {user.default_group && (
+=======
+
+      {window.location.pathname === '/signup' || window.location.pathname === '/login' ? null : (
+>>>>>>> 76996b3 (remove footer for signup & login)
         <div>
           <Footer groupId={user.default_group.id} />
         </div>
