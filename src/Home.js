@@ -15,7 +15,7 @@ function Home(props) {
           <Feed />
         </div>
       </div>
-      <RightBar />
+      <RightBar user={props.user} />
     </div>
   );
 }

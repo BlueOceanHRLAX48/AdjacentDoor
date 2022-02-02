@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import MakePost from './components/MakePost';
@@ -10,81 +11,23 @@ function GroupDetail(props) {
   const groupId = useParams().groupId;
 
   const [filter, setFilter] = React.useState('');
+  const [posts, setPosts] = React.useState([]);
 
-  const samplePosts = [
-    {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'general',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'forsale',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'forsale',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'safety',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar:
-        'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'general',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-  ];
+  React.useEffect(() => {
+    getData();
+  });
 
-  const filteredPosts = samplePosts.filter((post) =>
-    post.type.toLowerCase().includes(filter.toLowerCase())
+  const filteredPosts = posts.filter((post) =>
+    post.tag.toLowerCase().includes(filter.toLowerCase())
   );
 
   function getData() {
-    //axios request for data using groupId
+    axios
+      .get(
+        `${process.env.REACT_APP_SERVER}/posts/usergroup?user_group_id=${groupId}`
+      )
+      .then((res) => setPosts(res.data.posts))
+      .catch((err) => console.error(err));
   }
   return (
     <div className='flex h-screen overflow-y-clip'>
@@ -98,10 +41,14 @@ function GroupDetail(props) {
                 MAP PLACEHOLDER
               </div>
             </div>
-            <MakePost refresh={getData} />
+            <MakePost
+              refresh={getData}
+              user={props.user}
+              currentLocation={props.currentLocation}
+            />
             <PostFeed posts={filteredPosts} />
           </div>
-          <RightBar />
+          <RightBar user={props.user} />
         </div>
       </div>
     </div>

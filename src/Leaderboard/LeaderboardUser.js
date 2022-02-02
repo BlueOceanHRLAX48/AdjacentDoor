@@ -1,5 +1,6 @@
 import { Avatar } from '@mui/material';
 import React from 'react';
+import { IoMdStar } from 'react-icons/io';
 
 function LeaderboardUser(props) {
   function getPlaceColor(place) {
@@ -28,11 +29,18 @@ function LeaderboardUser(props) {
           border: '1px #B8B8FF solid',
         }}
       >
-        {props.user.name.slice(0, 1)}
-        {props.user.name.split(' ')[1].slice(0, 1)}
+        {props.user.firstname[0].toUpperCase()}
+        {props.user.lastname[0].toUpperCase()}
       </Avatar>
-      {props.user.name}
-      <div className='ml-auto text-xs text-gray-400'>{props.user.location}</div>
+      <div className='flex flex-col font-semibold'>
+        {props.user.privacy
+          ? 'Private Neighbor'
+          : `${props.user.firstname} ${props.user.lastname}`}
+        <div className='text-xs text-gray-400 font-normal'>
+          {props.user.city}, {props.user.state}
+        </div>
+      </div>
+      <div className='ml-auto font-bold'>{props.user.contribution}</div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 function MakePost(props) {
   const [body, setBody] = React.useState('');
   const [type, setType] = React.useState('');
+  const [privacy, setPrivacy] = React.useState(false);
   const [files, setFiles] = React.useState();
 
   const groupId = useParams().groupId;
@@ -17,13 +18,18 @@ function MakePost(props) {
   }
 
   function handleSubmit() {
-    console.log(`/api/whatever/${groupId}`, {
+    axios.post(`${process.env.REACT_APP_SERVER}/posts/usergroup`, {
+      user_group_id: groupId,
+      user_id: props.user.user_id,
       body: body.trim(),
-      type,
-      files,
+      tag: type,
+      privacy,
+      latitude: props.currentLocation.latitude,
+      longitude: props.currentLocation.longitude,
     });
     setBody('');
     setType('');
+    setPrivacy(false);
     props.refresh();
   }
 

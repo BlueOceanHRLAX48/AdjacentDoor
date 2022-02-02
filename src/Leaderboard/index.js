@@ -2,45 +2,39 @@ import React from 'react';
 import LeftBar from '../LeftBar';
 import LeaderboardUser from './LeaderboardUser';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import axios from 'axios';
 
-function Leaderboard() {
-  const [groupFilter, setGroupFilter] = React.useState('');
-  const [groupData, setGroupData] = React.useState([]);
+function Leaderboard(props) {
+  const [localUserData, setLocalUserData] = React.useState([]);
+  const [globalUserData, setGlobalUserData] = React.useState([]);
 
   React.useEffect(() => {
-    //axios call based on filter id to get users in that group
-    //.then(res => setGroupData(res))
-  });
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/leaderboard?count=25`)
+      .then((res) => {
+        setGlobalUserData(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
-  const sampleData = [
-    { name: 'John Smith', contribution: 45, location: 'Los Angeles, CA' },
-    { name: 'Mike Lemon', contribution: 22, location: 'San Diego, CA' },
-    { name: 'Elton Lemon', contribution: 169, location: 'Seattle, WA' },
-    { name: 'Quinton Maki', contribution: 200, location: 'Las Vegas, NV' },
-    { name: 'Ben Bernardy', contribution: 11, location: 'San Francisco, CA' },
-  ];
+  React.useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_SERVER}/${props.user.zip}/leaderboard?count=25`
+      )
+      .then((res) => {
+        setLocalUserData(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
-  const globalUsers = sampleData.map((user, i) => (
+  const globalUsers = globalUserData.map((user, i) => (
     <LeaderboardUser user={user} key={i} place={i + 1} />
   ));
 
-  const groupUsers = groupData.map((user, i) => (
+  const localUsers = localUserData.map((user, i) => (
     <LeaderboardUser user={user} key={i} place={i + 1} />
   ));
-
-  const groupOptions = [
-    { name: 'Group One', id: 'v182391823' },
-    { name: 'Group Two', id: 'asd19218923' },
-    { name: 'Group Three', id: '19239lad' },
-  ].map((option, i) => (
-    <MenuItem key={i} value={option.id}>
-      {option.name}
-    </MenuItem>
-  ));
-
-  function handleChange(e) {
-    setGroupFilter(e.target.value);
-  }
 
   return (
     <div className='flex h-screen'>
@@ -53,24 +47,10 @@ function Leaderboard() {
           {globalUsers}
         </div>
         <div className='w-1/2 h-fit flex flex-col rounded border'>
-          <div className='text-center text-2xl font-bold decoration-wavy decoration-secondary underline underline-offset-2 pb-2'>
-            <FormControl variant='standard' sx={{ m: 1, minWidth: 300 }}>
-              <InputLabel id='groupSelect'>Group</InputLabel>
-              <Select
-                labelId='groupSelect'
-                id='group'
-                label='Group'
-                onChange={handleChange}
-                value={groupFilter}
-              >
-                <MenuItem value=''>
-                  <em>None</em>
-                </MenuItem>
-                {groupOptions}
-              </Select>
-            </FormControl>
+          <div className='font-bold text-2xl text-center py-2 decoration-secondary underline underline-offset-1'>
+            Local
           </div>
-          {groupUsers}
+          {localUsers}
         </div>
       </div>
     </div>
