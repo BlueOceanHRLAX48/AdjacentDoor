@@ -146,10 +146,9 @@ module.exports = {
   },
   changePrivacy: (req, res) => {
     const { group_id } = req.params;
-    const { privacy } = req.body;
-    const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
+    const query = `UPDATE user_groups SET privacy = not privacy WHERE id = $1;`;
     pool
-      .query(query, [privacy, group_id])
+      .query(query, [group_id])
       .then(() => res.sendStatus(204))
       .catch((err) => res.status(500).send(err))
   },
