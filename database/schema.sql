@@ -124,7 +124,7 @@ SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('default_groups', 'id')), (SELECT (
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('user_groups', 'id')), (SELECT (MAX("id") + 1) FROM "user_groups"), FALSE);
 
 INSERT INTO user_account(firstName, lastName, username, email, network_id, city, state, zip, profile_img, privacy, contribution, default_groupID)
-VALUES ('ernest','zhang','ez', '12345@gmail.com', '1124asfas', 'Ada', 'Michigan', '49301', '1234.com', DEFAULT, DEFAULT, 1);
+VALUES ('ernest','zhang','ez', '12345@gmail.com', , 'Ada', 'Michigan', '49301', '1234.com', DEFAULT, DEFAULT, 1);
 
 INSERT INTO user_account(firstName, lastName, username,  email, network_id, city, state, zip, profile_img, privacy, contribution, default_groupID)
 VALUES ('ernst','zheng', 'ez123','23456@gmail.com', '12l5kjasf','Canton', 'Michigan', '02021', '1sf.com', DEFAULT, DEFAULT, 2);
@@ -132,11 +132,11 @@ VALUES ('ernst','zheng', 'ez123','23456@gmail.com', '12l5kjasf','Canton', 'Michi
 INSERT INTO user_account(firstName, lastName, username,  email, network_id, city, state, zip, profile_img, privacy, contribution, default_groupID)
 VALUES ('arnest','zhung', 'ez456','afas@gmail.com', '09afaspoi','Detroit', 'Michigan', '48708', 'asd.com', DEFAULT, DEFAULT, 3);
 
-INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
-VALUES ('the group', 1, 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
+INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo,)
+VALUES ('the group', '1124asfas', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com');
 
-INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
-VALUES ('the second group', 1, 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
+INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, )
+VALUES ('the second group', '1124asfas', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com');
 
 INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
 VALUES ('Ada', 'Ada', 'Michigan', '49301', 'photo.com', DEFAULT, DEFAULT);

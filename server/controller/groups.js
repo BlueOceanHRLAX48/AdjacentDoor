@@ -109,11 +109,12 @@ module.exports = {
       .catch((err) => res.status(500).send(err))
   },
   getGroupsByLocation: (req, res) => {
-    const { longitude, latitude, r } = req.query;
-    const lat_min = parseInt(latitude) - parseInt(r);
-    const lat_max = parseInt(latitude) + parseInt(r);
-    const long_min = parseInt(longitude) - parseInt(r);
-    const long_max = parseInt(longitude) + parseInt(r);
+    const { longitude, latitude} = req.query;
+    const r = parseFloat(req.query.r) || parseFloat(0.07);
+    const lat_min = parseInt(latitude) - r;
+    const lat_max = parseInt(latitude) + r;
+    const long_min = parseInt(longitude) - r;
+    const long_max = parseInt(longitude) + r;
     const values = [lat_min, lat_max, long_min, long_max];
     const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo,
     COALESCE((
@@ -128,7 +129,7 @@ module.exports = {
     ),0) AS friendiness
     FROM user_groups g
     WHERE (latitude BETWEEN $1 AND $2) AND (longitude BETWEEN $3 AND $4)
-    ORDER BY g.id;`;
+    ORDER BY g.id;`
     pool
       .query(query, values)
       .then((results) => res.status(200).json(results.rows))
