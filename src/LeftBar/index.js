@@ -37,8 +37,12 @@ function LeftBar({ setFilter, filter, user }) {
           <button onClick={() => setFilter(value)} key={i}>
 =======
         ].map(([title, value, icon]) => (
+<<<<<<< HEAD
           <div onClick={() => setFilter(value)}>
 >>>>>>> 1fa9ec7 (add icon to groups and active color)
+=======
+          <div onClick={() => setFilter(value)} key={uuidv4()}>
+>>>>>>> 08d1c9f (fix uuid)
             <LeftBarButton icon={icon} text={title} />
           </div>
         ))}
