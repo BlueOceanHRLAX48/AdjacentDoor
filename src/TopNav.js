@@ -14,9 +14,10 @@ function TopNav({
   setFilteredPosts,
   filter,
   setFilter,
-  userGroup,
+  user,
   search,
   setSearch,
+  setUser,
 }) {
   const [nextTheme, setTheme] = useTheme();
 
@@ -25,6 +26,12 @@ function TopNav({
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleLogout = () => {
+    setUser({});
+    setAnchorEl(null);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -38,7 +45,6 @@ function TopNav({
           filteredPosts={filteredPosts}
           setFilteredPosts={setFilteredPosts}
           filter={filter}
-          userGroup={userGroup}
           setFilter={setFilter}
           search={search}
           setSearch={setSearch}
@@ -72,15 +78,17 @@ function TopNav({
           }}
           className='text-sm'
         >
-          <NavLink to='/admin' key={uuidv4()}>
-            <MenuItem onClick={handleClose}>Admin</MenuItem>
-          </NavLink>
+          {user.admin && (
+            <NavLink to='/admin' key={uuidv4()}>
+              <MenuItem onClick={handleClose}>Admin</MenuItem>
+            </NavLink>
+          )}
+
           <NavLink to='/my-profile' key={uuidv4()}>
             <MenuItem onClick={handleClose}>Profile</MenuItem>
           </NavLink>
-          <NavLink to='/logout' key={uuidv4()}>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-          </NavLink>
+
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </div>
     </div>

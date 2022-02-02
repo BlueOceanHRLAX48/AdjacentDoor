@@ -85,7 +85,7 @@ function GroupDetail(props) {
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
       <div className='flex flex-col grow'>
-        <TopNav />
+        <TopNav user={props.user} />
         <div className='flex grow'>
           <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
             <div className='w-[600px] px-4 pt-4'>

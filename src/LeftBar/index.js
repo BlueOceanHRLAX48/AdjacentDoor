@@ -19,11 +19,6 @@ function LeftBar({ setFilter, filter, user }) {
 
         <div className='mt-4 mb-2 ml-4 text-sm'>Neighborhood</div>
 
-        <button onClick={() => setFilter('')}>All</button>
-        <button onClick={() => setFilter('general')}>General</button>
-        <button onClick={() => setFilter('safety')}>Safety</button>
-        <button onClick={() => setFilter('forsale')}>For Sale</button>
-
         {[
           ['All', '', <MdHealthAndSafety size='20' />],
           ['General', 'general', <MdGroups size='20' />],

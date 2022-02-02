@@ -22,7 +22,7 @@ function App() {
         username: 'ez',
         network_id: '1124asfas',
         email: '12345@gmail.com',
-        admin: false,
+        admin: true,
         address: '1234 street st',
         city: 'city',
         state: 'state',
@@ -80,7 +80,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home user={user} />} />
+        <Route path='/' element={<Home user={user} setUser={setUser} />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />

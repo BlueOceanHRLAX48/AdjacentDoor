@@ -5,18 +5,22 @@ import RightBar from './RightBar';
 import TopNav from './TopNav';
 import axios from 'axios';
 
-function Home({ user }) {
+function Home({ user, setUser }) {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
 
   useEffect(() => {
+    getPosts();
+  }, []);
+
+  function getPosts() {
     axios
       .get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user.default_group.id}`)
       .then(({ data }) => {
         setPosts(data.posts);
       });
-  }, []);
+  }
 
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
@@ -35,11 +39,13 @@ function Home({ user }) {
             filteredPosts={filteredPosts}
             search={search}
             setSearch={setSearch}
+            user={user}
+            setUser={setUser}
           />
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
-            <Feed filteredPosts={filteredPosts} user={user} />
+            <Feed filteredPosts={filteredPosts} user={user} getPosts={getPosts} />
           </div>
           <div className='hidden sm:flex'>
             <RightBar />

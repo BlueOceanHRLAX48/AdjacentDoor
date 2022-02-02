@@ -3,27 +3,23 @@ import { useRef } from 'react';
 import Post from './Post';
 import MakePost from './MakePost';
 
-function Feed({ filteredPosts, user }) {
+function Feed({ filteredPosts, user, getPosts }) {
   const postInput = useRef(null);
 
   const handleSubmit = (e) => {
     let postContent = {
       group_id: user.default_group.id,
-      user_group_id: user.default_group.id,
-      user_id: user.id,
+      user_id: user.user_id,
       body: postInput.current.value,
-      tag: 'Sell',
+      tag: 'forsale',
       privacy: false,
       latitude: 123,
       longitude: -456.5,
     };
     axios
-      .post(
-        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user.default_group.id}`,
-        postContent
-      )
+      .post(`${process.env.REACT_APP_SERVER}/posts/defaultgroup`, postContent)
       .then((response) => {
-        console.log(response);
+        getPosts();
       });
     // setFilteredPosts([postContent, ...filteredPosts]);
     postInput.current.value = '';
@@ -33,7 +29,7 @@ function Feed({ filteredPosts, user }) {
   return (
     <div className='w-full sm:w-[600px] px-4 mb-12 sm:mb-20'>
       <div className='hidden sm:block'>
-        <form className='relative flex justify-center'>
+        {/* <form className='relative flex justify-center'>
           <textarea
             className='w-full h-10 p-1 px-3 text-sm border shadow-sm rounded-xl border-slate-100 focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'
             placeholder='Write something...'
@@ -45,8 +41,8 @@ function Feed({ filteredPosts, user }) {
           >
             submit
           </button>
-        </form>
-        {/* <MakePost /> */}
+        </form> */}
+        <MakePost />
       </div>
       {filteredPosts &&
         filteredPosts.map((post, i) => (
