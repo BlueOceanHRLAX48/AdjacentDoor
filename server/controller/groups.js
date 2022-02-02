@@ -38,11 +38,11 @@ module.exports = {
       .catch((err) => res.status(500).send(err))
   },
   createUserGroup: (req, res) => {
-    const { name, network_id, address, city, state, zip, latitude, longitude, photo } = req.body;
+    const { name, network_id, city, state, zip, latitude, longitude, photo } = req.body;
     const privacy = req.body.privacy || false;
-    const values = [ name, network_id, address, city, state, zip, latitude, longitude, privacy, photo];
-    const createGroup = `INSERT INTO user_groups ("name", admin_id, address, city, "state", zip, latitude, longitude, privacy, photo, "safety", friendliness)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, DEFAULT, DEFAULT)
+    const values = [ name, network_id, city, state, zip, latitude, longitude, privacy, photo];
+    const createGroup = `INSERT INTO user_groups ("name", admin_id, city, "state", zip, latitude, longitude, privacy, photo, "safety", friendliness)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, DEFAULT, DEFAULT)
     RETURNING id;`;
     const addAdmin = `INSERT INTO user_group_list (network_id, user_group_id, accepted)
     VALUES ($1, $2, true);`;
@@ -62,10 +62,11 @@ module.exports = {
   joinGroup: (req, res) => {
     const { group_id} = req.params;
     const { network_id } = req.query;
+    const accepted = req.query.accepted || false;
     const query = `INSERT INTO user_group_list (network_id, user_group_id, accepted)
-    VALUES ($1, $2, DEFAULT)`;
+    VALUES ($1, $2, $3)`;
     pool
-      .query(query, [network_id, group_id])
+      .query(query, [network_id, group_id, accepted])
       .then(() => res.status(201).send('send request to join group'))
       .catch(err => res.status(500).send(err))
   },
@@ -108,11 +109,12 @@ module.exports = {
       .catch((err) => res.status(500).send(err))
   },
   getGroupsByLocation: (req, res) => {
-    const { longitude, latitude, r } = req.query;
-    const lat_min = parseInt(latitude) - parseInt(r);
-    const lat_max = parseInt(latitude) + parseInt(r);
-    const long_min = parseInt(longitude) - parseInt(r);
-    const long_max = parseInt(longitude) + parseInt(r);
+    const { longitude, latitude} = req.query;
+    const r = parseFloat(req.query.r) || parseFloat(0.07);
+    const lat_min = parseInt(latitude) - r;
+    const lat_max = parseInt(latitude) + r;
+    const long_min = parseInt(longitude) - r;
+    const long_max = parseInt(longitude) + r;
     const values = [lat_min, lat_max, long_min, long_max];
     const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo,
     COALESCE((

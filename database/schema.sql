@@ -26,9 +26,7 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  photo text,
-  "safety" int NOT NULL DEFAULT 0,
-  friendliness int NOT NULL DEFAULT 0
+  photo text NOT NULL
 );
 
 DROP TABLE IF EXISTS user_groups CASCADE;
@@ -42,9 +40,7 @@ CREATE TABLE IF NOT EXISTS user_groups(
   latitude FLOAT NOT NULL,
   longitude FLOAT NOT NULL,
   privacy boolean DEFAULT false,
-  photo text NOT NULL,
-  "safety" int NOT NULL DEFAULT 0,
-  friendliness int NOT NULL DEFAULT 0
+  photo text NOT NULL
 );
 
 DROP TABLE IF EXISTS groups_rating CASCADE;
@@ -142,14 +138,14 @@ VALUES ('the group', 1, 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com',
 INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
 VALUES ('the second group', 1, 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
 
-INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
-VALUES ('Ada', 'Ada', 'Michigan', '49301', 'photo.com', DEFAULT, DEFAULT);
+INSERT INTO default_groups(name, city, state, zip, photo)
+VALUES ('Ada', 'Ada', 'Michigan', '49301', 'photo.com';
 
-INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
-VALUES ('Canton', 'Canton', 'Michigan', '02021', 'photo.com', DEFAULT, DEFAULT);
+INSERT INTO default_groups(name, city, state, zip, photo)
+VALUES ('Canton', 'Canton', 'Michigan', '02021', 'photo.com');
 
-INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
-VALUES ('Detroit', 'Detroit', 'Michigan', '48708', 'photo.com', DEFAULT, DEFAULT);
+INSERT INTO default_groups(name, city, state, zip, photo)
+VALUES ('Detroit', 'Detroit', 'Michigan', '48708', 'photo.com');
 
 INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 1, true), (2, '12l5kjasf', 1 ,true), (3, '09afaspoi', 1, true);
 
@@ -171,3 +167,4 @@ CREATE INDEX user_groups_id on user_groups(id);
 CREATE INDEX posts_id on posts(post_id);
 CREATE INDEX replies_id on replies(id);
 CREATE INDEX post_img_id on post_imgs(id);
+CREATE INDEX group_rating_id on groups_rating(id);
