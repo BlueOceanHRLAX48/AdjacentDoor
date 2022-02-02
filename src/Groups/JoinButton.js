@@ -127,43 +127,7 @@ const JoinButton = (props) => {
     }
   }
 
-  return (<div>
-    <Button size="small" color="primary" onClick={() => {
-      let user_group = props.user_group;
-      let groupIndex = user_group.findIndex(element => element.id === props.group.id);
-      user_group.splice(groupIndex, 1)
-      props.setUser(prevState => ({
-        ...prevState,
-        user_group: user_group
-      }))
-    }
-      }>Joined</Button>
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        Do you wish to leave this group?
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Clicking 'Yes' will remove you from the group.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>No</Button>
-        <Button onClick={() => {
-          user_group.splice(groupIndex, 1)
-          props.setUser(prevState => ({
-            ...prevState,
-            user_group: user_group
-          }))
-        }}>Yes</Button>
-      </DialogActions>
-    </Dialog>
-  </div>)
+  return statusButton(props.joinStatus)
 }
 
 export default JoinButton;

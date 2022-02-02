@@ -5,6 +5,7 @@ import TopNav from '../TopNav';
 import LeftBar from '../LeftBar';
 import RightBar from '../RightBar';
 import axios from 'axios';
+import GroupsNearby from './sampledata';
 
 function Groups(props) {
   const [groups, setGroups] = useState([]);
