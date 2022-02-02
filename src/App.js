@@ -59,9 +59,12 @@ function App() {
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
-    const newworkId = JSON.parse(localStorage.getItem('loginData')).network_id;
+    let networkId = '1124asfas';
+    if (JSON.parse(localStorage.getItem('loginData'))){
+      networkId = JSON.parse(localStorage.getItem('loginData')).network_id;
+    }
     axios
-      .get(`http://localhost:3001/user/${newworkId}`)
+      .get(`http://localhost:3001/user/${networkId}`)
       .then((res) => {
         setUser(res.data);
         localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
