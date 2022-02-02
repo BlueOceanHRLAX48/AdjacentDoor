@@ -11,11 +11,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-//localhost:3001/home
+//localhost:3001 for user routes
 app.use('/', router);
 
-
-//app2.use()
+//localhost:3002 for group routes
 
 /**
  *
@@ -34,6 +33,6 @@ app.listen(port, () => {
   console.log('listening on ', port)
 })
 
-// app2.listen(port + 2, () => {
-//   console.log('listening on ', port + 2)
+// app2.listen(port + 1, () => {
+//   console.log('listening on ', port + 1)
 // })

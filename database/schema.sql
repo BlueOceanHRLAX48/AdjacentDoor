@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS user_account(
   email text NOT NULL,
   network_id text NOT NULL UNIQUE,
   "admin" BOOLEAN DEFAULT false,
-  "address" text NOT NULL,
   city text NOT NULL,
   "state" text NOT NULL,
   zip text not NULL,
@@ -27,9 +26,7 @@ CREATE TABLE IF NOT EXISTS default_groups(
   city text NOT NULL,
   "state" text NOT NULL,
   zip text NOT NULL,
-  photo text NOT NULL,
-  "safety" int NOT NULL DEFAULT 0,
-  friendliness int NOT NULL DEFAULT 0
+  photo text NOT NULL
 );
 
 DROP TABLE IF EXISTS user_groups CASCADE;
@@ -37,16 +34,32 @@ CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
   admin_id text NOT NULL,
-  "address" text NOT NULL,
   city text NOT NULL,
   "state" text NOT NULL,
   zip text not NULL,
   latitude FLOAT NOT NULL,
   longitude FLOAT NOT NULL,
   privacy boolean DEFAULT false,
-  photo text NOT NULL,
-  "safety" int NOT NULL DEFAULT 0,
-  friendliness int NOT NULL DEFAULT 0
+  photo text NOT NULL
+);
+
+DROP TABLE IF EXISTS groups_rating CASCADE;
+CREATE TABLE IF NOT EXISTS groups_rating(
+  id SERIAL NOT NULL,
+  group_id INT,
+  default_id INT,
+  network_id text NOT NULL,
+  "safety" INT DEFAULT 0,
+  friendliness INT DEFAULT 0,
+  FOREIGN KEY (group_id)
+  REFERENCES user_groups(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (default_id)
+  REFERENCES default_groups(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (network_id)
+  REFERENCES user_account(network_id)
+  ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS user_group_list CASCADE;
@@ -110,27 +123,33 @@ SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('replies', 'id')), (SELECT (MAX("id
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('default_groups', 'id')), (SELECT (MAX("id") + 1) FROM "default_groups"), FALSE);
 SELECT SETVAL((SELECT PG_GET_SERIAL_SEQUENCE('user_groups', 'id')), (SELECT (MAX("id") + 1) FROM "user_groups"), FALSE);
 
-INSERT INTO user_account(firstName, lastName, username, email, network_id,address, city, state, zip, profile_img, privacy, contribution, default_groupID)
-VALUES ('ernest','zhang','ez', '12345@gmail.com', '1124asfas','1234 street st', 'city', 'state', '5678', '1234.com', DEFAULT, DEFAULT, 1);
+INSERT INTO user_account(firstName, lastName, username, email, network_id, city, state, zip, profile_img, privacy, contribution, default_groupID)
+VALUES ('ernest','zhang','ez', '12345@gmail.com','1124asfas', 'Ada', 'Michigan', '49301', '1234.com', DEFAULT, DEFAULT, 1);
 
-INSERT INTO user_account(firstName, lastName, username,  email, network_id, address, city, state, zip, profile_img, privacy, contribution, default_groupID)
-VALUES ('ernst','zheng', 'ez123','23456@gmail.com', '12l5kjasf','2345 street st', 'city1', 'state1', '1234', '1sf.com', DEFAULT, DEFAULT, 3);
+INSERT INTO user_account(firstName, lastName, username,  email, network_id, city, state, zip, profile_img, privacy, contribution, default_groupID)
+VALUES ('ernst','zheng', 'ez123','23456@gmail.com', '12l5kjasf','Canton', 'Michigan', '02021', '1sf.com', DEFAULT, DEFAULT, 2);
 
-INSERT INTO user_account(firstName, lastName, username,  email, network_id, address, city, state, zip, profile_img, privacy, contribution, default_groupID)
-VALUES ('arnest','zhung', 'ez456','afas@gmail.com', '09afaspoi','3456 street st', 'city2', 'state2', '7890', 'asd.com', DEFAULT, DEFAULT, 2);
+INSERT INTO user_account(firstName, lastName, username,  email, network_id, city, state, zip, profile_img, privacy, contribution, default_groupID)
+VALUES ('arnest','zhung', 'ez456','afas@gmail.com', '09afaspoi','Detroit', 'Michigan', '48708', 'asd.com', DEFAULT, DEFAULT, 3);
 
-INSERT INTO user_groups(name, admin_id, address, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
-VALUES ('the group', 1, '1234 street st', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
+INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo,)
+VALUES ('the group', '1124asfas', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com');
 
-INSERT INTO user_groups(name, admin_id, address, city, state, zip, latitude, longitude,privacy, photo, safety, friendliness )
-VALUES ('the second group', 1, '1234 street st', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com', DEFAULT, DEFAULT);
+INSERT INTO user_groups(name, admin_id, city, state, zip, latitude, longitude,privacy, photo, )
+VALUES ('the second group', '1124asfas', 'city', 'state', '5678', 123, -456, DEFAULT, '1234.com');
 
-INSERT INTO default_groups(name, city, state, zip, photo, safety, friendliness)
-VALUES ('the place', 'city', 'state', '5678', 'photo.com', DEFAULT, DEFAULT);
+INSERT INTO default_groups(name, city, state, zip, photo)
+VALUES ('Ada', 'Ada', 'Michigan', '49301', 'photo.com';
 
-INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 1, true), (2, '12l5kjasf', 1,true), (3, '09afaspoi', 1, true);
+INSERT INTO default_groups(name, city, state, zip, photo)
+VALUES ('Canton', 'Canton', 'Michigan', '02021', 'photo.com');
 
-INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 2,true), (3, '09afaspoi', 2, true);
+INSERT INTO default_groups(name, city, state, zip, photo)
+VALUES ('Detroit', 'Detroit', 'Michigan', '48708', 'photo.com');
+
+INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 1, true), (2, '12l5kjasf', 1 ,true), (3, '09afaspoi', 1, true);
+
+INSERT INTO user_group_list(user_id, network_id, user_group_id, accepted) VALUES (1, '1124asfas', 2 ,true), (3, '09afaspoi', 2, false);
 
 INSERT INTO posts(group_id, user_group_id, user_id, body, time, report, tag, privacy, latitude, longitude)
 VALUES(1, null, 1, 'asfasfasf', default, default,  'Sell', default, 123, -456.5);
@@ -141,3 +160,11 @@ VALUES(2, 'username', 1, 'hihi', default, default,  567, 123.5);
 INSERT INTO replies(user_id,  username, post_id, reply, report,  time, latitude, longitude)
 VALUES(3, 'gggggg', 1, 'byebye', default, default,  456, 89.5);
 
+CREATE INDEX user_user_id on user_account(user_id);
+CREATE INDEX user_network_id on user_account(network_id);
+CREATE INDEX default_group_id on default_groups(id);
+CREATE INDEX user_groups_id on user_groups(id);
+CREATE INDEX posts_id on posts(post_id);
+CREATE INDEX replies_id on replies(id);
+CREATE INDEX post_img_id on post_imgs(id);
+CREATE INDEX group_rating_id on groups_rating(id);
