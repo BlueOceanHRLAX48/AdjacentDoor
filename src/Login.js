@@ -137,16 +137,17 @@ function Login() {
   };
 
   return (
-    <div className='w-screen flex'>
-      <ThemeProvider theme={theme}>
-        <Container component='main' maxWidth='xs'>
+    <div className='w-screen flex-1 h-screen justify-content-center text-2xl bg-ghostWhite'>
+      <img src={require('./image/up.jpg')} alt='up' />
+      <ThemeProvider theme={theme} className='mt-20' >
+        <Container component='main' maxWidth='md' className='w-20'>
           <CssBaseline />
           <Typography
             component='h1'
-            variant='h4'
+            variant='h2'
             color='secondary'
             align='center'
-            mt='20px'
+            mt='10%'
           >
             ADJACENT DOOR
           </Typography>
@@ -155,7 +156,7 @@ function Login() {
             sx={{ flexDirection: 'column' }}
           >
             <RiLoginCircleFill />
-            <Typography component='h1' variant='h5'>
+            <Typography component='h1' variant='h3'>
               Login
             </Typography>
             <Box
@@ -171,7 +172,8 @@ function Login() {
                 id='username'
                 label='Username'
                 name='username'
-                autoFocus
+                inputProps={{style: {fontSize: 40}}}
+                InputLabelProps={{style: {fontSize: 40}}}
               />
               <TextField
                 margin='normal'
@@ -181,14 +183,13 @@ function Login() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
-                autoFocus
-              />
-              <FormControlLabel
-                control={<Checkbox value='remember' color='primary' />}
-                label='Remember me'
+                inputProps={{style: {fontSize: 40}}}
+                InputLabelProps={{style: {fontSize: 40}}}
               />
               {!fillIn && notice && (
-                <Alert className='flex items-center mt-5' severity='error'>
+                <Alert className='flex items-center mt-5 font-bold'  severity='error'
+                  sx={{ fontSize: 30 }}
+                >
                   Please fill out all the required fields
                 </Alert>
               )}
@@ -199,6 +200,7 @@ function Login() {
                 font-color='primary'
                 variant='contained'
                 sx={{ mt: 3, mb: 2 }}
+                style={{ fontSize: '40px' }}
               >
                 Continue
               </Button>
@@ -217,24 +219,24 @@ function Login() {
                       justifyContent: 'center',
                       fontFamily: 'Roboto',
                       fontWeight: '900',
-                      fontSize: '1.1rem',
+                      fontSize: '40px',
                       lineHeight: '1.75',
                       padding: '6px 14px',
                       borderRadius: '4px',
                     }}
                   >
                     <FcGoogle
-                      size='25px'
-                      style={{ marginRight: 100, marginLeft: -7 }}
+                      size='60px'
+                      style={{ marginRight: 60 }}
                     />
-                    <span style={{ marginRight: 100 }}>Log in With Google</span>
+                    <span style={{ marginRight: 40 }}>Log in With Google</span>
                   </button>
                 )}
                 onSuccess={handleLogin}
                 onFailure={handleFailure}
                 cookiePolicy={'single_host_origin'}
               ></GoogleLogin>
-              <div
+              {/* <div
                 className='fb-login-button'
                 data-width='500'
                 data-size='large'
@@ -244,10 +246,14 @@ function Login() {
                 data-use-continue-as='false'
                 data-redirecturi='/'
                 style={{ padding: '10px 0' }}
-              ></div>
-              <Grid container sx={{ mt: 3 }}>
+              ></div> */}
+              <Grid container sx={{ mt: 3, mb: 10 }}>
                 <Grid item>
-                  <Link href='/signup' variant='body2'>
+                  <Link
+                    href='/signup'
+                    variant='body3'
+                    style={{ fontSize: '33px' }}
+                  >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -256,6 +262,7 @@ function Login() {
           </Box>
         </Container>
       </ThemeProvider>
+      <img src={require('./image/down.jpg')} alt='down' />
     </div>
   );
 }

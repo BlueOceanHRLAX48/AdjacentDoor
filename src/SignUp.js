@@ -104,8 +104,8 @@ function SignUp() {
           <Grid
             item
             xs={false}
-            sm={4}
-            md={7}
+            sm={3}
+            md={5}
             sx={{
               backgroundImage: 'url(https://source.unsplash.com/random)',
               backgroundRepeat: 'no-repeat',
@@ -117,14 +117,14 @@ function SignUp() {
               backgroundPosition: 'center',
             }}
           />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={9} md={7} component={Paper} elevation={6} square>
             <Box className='flex items-center my-10 mx-10'
               sx={{ flexDirection: 'column' }}
             >
-              <Typography component='h1' variant='h4' color='secondary' align='center' mb='6px'>
+              <Typography component='h1' variant='h2' color='secondary' align='center' mb='6px' mt='20%'>
               ADJACENT DOOR
               </Typography>
-              <Typography component='h1' variant='h5' sx={{mt: 5}}>
+              <Typography component='h1' variant='h3' sx={{ mt: 5, mb: 5 }}>
                 Sign Up
               </Typography>
               <Box
@@ -141,6 +141,8 @@ function SignUp() {
                   label='First Name'
                   name='firstName'
                   autoComplete='firstName'
+                  inputProps={{style: {fontSize: 30}}}
+                  InputLabelProps={{style: {fontSize: 30}}}
                 />
                 <TextField
                   margin='dense'
@@ -150,6 +152,8 @@ function SignUp() {
                   label='Last Name'
                   name='lastName'
                   autoComplete='lastName'
+                  inputProps={{style: {fontSize: 30}}}
+                  InputLabelProps={{style: {fontSize: 30}}}
                 />
                 <TextField
                   margin='dense'
@@ -158,6 +162,8 @@ function SignUp() {
                   id='username'
                   label='Username'
                   name='username'
+                  inputProps={{style: {fontSize: 30}}}
+                  InputLabelProps={{style: {fontSize: 30}}}
                 />
                 <TextField
                   margin='dense'
@@ -167,24 +173,35 @@ function SignUp() {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
+                  inputProps={{style: {fontSize: 30}}}
+                  InputLabelProps={{style: {fontSize: 30}}}
                 />
                 {(!validated && noticeValidEmail) && <Alert className='flex items-center mt-5'
-                  severity='error'>Please enter valid email address
+                  severity='error'
+                  sx={{ fontSize: 30 }}
+                >Please enter valid email address
                 </Alert> }
                 {(!fillIn && notice) && <Alert className='flex items-center mt-5'
-                  severity='error'>Please fill out all the required fields
+                  severity='error'
+                  sx={{ fontSize: 30 }}
+                >Please fill out all the required fields
                 </Alert> }
                 <Button
                   type='submit'
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
+                  style={{ fontSize: '30px' }}
                 >
                   Sign Up
                 </Button>
                 <Grid container>
-                  <Grid item>
-                    <Link href='/login' variant='body2'>
+                  <Grid item sx={{ mt: 5, mb: 2 }}>
+                    <Link
+                      href='/login'
+                      variant='body3'
+                      style={{ fontSize: '33px' }}
+                    >
                       {'Already a member? Log In'}
                     </Link>
                   </Grid>
