@@ -51,14 +51,14 @@ function TopNav({
         />
       </div>
       <div className='flex justify-end'>
-        <button className='text-sm' onClick={() => setTheme(nextTheme)}>
+        {/* <button className='text-sm' onClick={() => setTheme(nextTheme)}>
           darkmode
-        </button>
+        </button> */}
 
         <div className='ml-4 mr-4 cursor-pointer'>
           <Avatar
             alt='Avatar'
-            src='/static/images/avatar/1.jpg'
+            src={user.profile_img || '/static/images/avatar/1.jpg'}
             sx={{ width: 35, height: 35 }}
             id='user-profile'
             aria-controls={open ? 'basic-menu' : undefined}
