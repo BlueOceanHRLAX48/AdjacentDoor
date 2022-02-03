@@ -16,6 +16,11 @@ function Footer() {
   const toggleCreatePost = () => {
     if (create) {
       document.getElementById('create-post').style.display = 'flex';
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
     } else {
       document.getElementById('create-post').style.display = 'none';
     }

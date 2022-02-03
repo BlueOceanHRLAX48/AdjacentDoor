@@ -37,7 +37,7 @@ function TopNav({
   };
 
   return (
-    <div className='flex items-center justify-between w-full mt-4 mb-4 '>
+    <div className='flex items-center justify-between w-full mt-4 mb-2 sm:mt-4 sm:mb-4 '>
       <div>
         <SearchBar
           posts={posts}

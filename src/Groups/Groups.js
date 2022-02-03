@@ -13,6 +13,7 @@ function Groups(props) {
   const [radius, setRadius] = useState(50);
 
   useEffect(() => {
+<<<<<<< HEAD
     axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
       params: {
         longitude: props.currentLocation.longitude,
@@ -25,17 +26,32 @@ function Groups(props) {
     })
     .catch(err => console.log(err));
   }, [props.currentLocation, radius])
+=======
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
+        params: {
+          longitude: props.currentLocation.longitude,
+          latitude: props.currentLocation.latitude,
+          mi: 100,
+        },
+      })
+      .then((result) => {
+        setGroups(result.data);
+      })
+      .catch((err) => console.log(err));
+  }, [props.currentLocation]);
+>>>>>>> 3a7ef5a (mobile layout adjustment)
 
   return (
     <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
-      <div className='hidden sm:flex'>
+      <div>
         <LeftBar user={props.user} />
       </div>
       <div>
         <div>
           <TopNav user={props.user} />
         </div>
-        <div className='flex-col'>
+        <div className='flex-col w-screen px-4 sm:w-full'>
           <div>
             <MakeGroup currentLocation={props.currentLocation} user={props.user} />
             <div>
@@ -49,10 +65,10 @@ function Groups(props) {
             <div id='seeGroups'>
               {groups.map((card, index) => {
                 let joinStatus = '';
-                let groupIndex = user_group.findIndex(element => element.id === card.id);
-                if(groupIndex !== -1) {
-                  if(user_group[groupIndex].accepted){
-                    if(parseInt(card.admin_id) === parseInt(props.user.network_id)){
+                let groupIndex = user_group.findIndex((element) => element.id === card.id);
+                if (groupIndex !== -1) {
+                  if (user_group[groupIndex].accepted) {
+                    if (parseInt(card.admin_id) === parseInt(props.user.network_id)) {
                       joinStatus = 'admin';
                     } else {
                       joinStatus = 'joined';
@@ -67,7 +83,16 @@ function Groups(props) {
                     joinStatus = 'notJoined';
                   }
                 }
-                return <GroupCard key={index} group={card} user={props.user} joinStatus={joinStatus} setUser={props.setUser} user_group={user_group} />
+                return (
+                  <GroupCard
+                    key={index}
+                    group={card}
+                    user={props.user}
+                    joinStatus={joinStatus}
+                    setUser={props.setUser}
+                    user_group={user_group}
+                  />
+                );
               })}
             </div>
           </div>

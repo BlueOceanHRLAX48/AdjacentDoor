@@ -88,7 +88,7 @@ function MakePost(props) {
   }
 
   return (
-    <div className='pt-4 sm:pt-0 w-full sm:w-[600px] px-4'>
+    <div className='hidden sm:flex pt-4 sm:pt-0 w-screen sm:w-[600px] px-4' id='create-post'>
       <div className='w-full p-4 border rounded-lg'>
         <div className='flex items-center'>
           <Tooltip title='Clear Everything' placement='right' arrow={true}>

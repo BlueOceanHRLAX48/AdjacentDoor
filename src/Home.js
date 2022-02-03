@@ -29,7 +29,7 @@ function Home({ user, setUser, currentLocation }) {
 
   return (
     <div className='h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
-      <div id='left-bar' className='hidden sm:flex'>
+      <div>
         <LeftBar user={user} filter={filter} setFilter={setFilter} />
       </div>
       <div>
@@ -46,7 +46,7 @@ function Home({ user, setUser, currentLocation }) {
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
-            <div className='hidden sm:flex' id='create-post'>
+            <div>
               <MakePost user={user} currentLocation={currentLocation} refresh={getPosts} />
             </div>
 
@@ -57,7 +57,7 @@ function Home({ user, setUser, currentLocation }) {
               currentLocation={currentLocation}
             />
           </div>
-          <div className='hidden sm:flex'>
+          <div>
             <RightBar user={user} />
           </div>
         </div>
