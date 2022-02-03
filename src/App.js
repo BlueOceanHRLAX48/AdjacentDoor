@@ -60,7 +60,11 @@ function App() {
           path='/'
           element={
             user.network_id ? (
-              <Home user={user} setUser={setUser} />
+              <Home
+                user={user}
+                setUser={setUser}
+                currentLocation={currentLocation}
+              />
             ) : (
               <Navigate to='/login' />
             )
@@ -102,7 +106,11 @@ function App() {
           }
         />
       </Routes>
-      <div>{/* <Footer groupId={user.default_group.id} /> */}</div>
+      {user.default_group && (
+        <div>
+          <Footer groupId={user.default_group.id} />
+        </div>
+      )}
     </BrowserRouter>
   );
 }
