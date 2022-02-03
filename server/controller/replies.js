@@ -49,6 +49,17 @@ module.exports = {
       .catch(err => res.status(500).send('Could not like comment'))
   },
 
+  unlikeReply: (req, res) => {
+    let { reply_id } = req.params
+
+    let updateLike =
+    `update replies set "like" = "like" - 1 where id = $1`
+
+    pool.query(updateLike, [reply_id])
+      .then(result => res.status(201).send('Comment Liked'))
+      .catch(err => res.status(500).send('Could not like comment'))
+  },
+
   reportReply: (req, res) => {
     let { reply_id } = req.params
 

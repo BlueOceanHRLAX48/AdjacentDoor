@@ -107,6 +107,9 @@ router.route('/posts/:post_id/replies')
 router.route('/reply/:reply_id/like')
   .put(controller.replies.likeReply)
 
+router.route('/reply/:reply_id/unlike')
+  .put(controller.replies.unlikeReply)
+
 router.route('/reply/:reply_id/report')
   .put(controller.replies.reportReply)
 
