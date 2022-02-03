@@ -186,3 +186,5 @@ CREATE INDEX post_img_id on post_imgs(id);
 CREATE INDEX group_rating_id on groups_rating(id);
 CREATE INDEX user_group_list_accepted on user_group_list(accepted);
 CREATE INDEX posts_deleted on posts(deleted);
+CREATE INDEX posts_group_id on posts(group_id);
+CREATE INDEX posts_user_groups_id on posts(user_group_id);
