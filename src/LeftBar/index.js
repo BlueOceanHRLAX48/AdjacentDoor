@@ -29,7 +29,7 @@ function LeftBar({ setFilter, filter, user }) {
           ['Safety', 'safety', <MdHealthAndSafety size='20' />],
           ['For Sale', 'forsale', <MdGroups size='20' />],
         ].map(([title, value, icon]) => (
-          <div onClick={() => setFilter(value)}>
+          <div onClick={() => setFilter(value)} key={uuidv4()}>
             <LeftBarButton icon={icon} text={title} />
           </div>
         ))}
