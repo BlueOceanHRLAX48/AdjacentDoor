@@ -1,4 +1,4 @@
-import { Avatar } from '@mui/material';
+import { Avatar, Modal, Box } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
@@ -22,6 +22,7 @@ function Post({
   post,
 }) {
   const [liked, setLiked] = React.useState(false);
+  const [isEnlarged, setEnlarge] = React.useState(false);
 
   const handleComment = () => 'q';
   const handleLike = () => {
@@ -42,6 +43,10 @@ function Post({
     return moment().isSame(timestamp, 'day')
       ? moment(timestamp).fromNow()
       : moment(timestamp).format('LL');
+  }
+
+  function handleModal() {
+    setEnlarge(!isEnlarged);
   }
 
   return (
@@ -73,13 +78,36 @@ function Post({
               <div className='mt-2'>{body}</div>
               <div className='flex gap-2 py-2'>
                 {photos.map((photo, i) => (
-                  <img
-                    key={i}
-                    src={photo.image_url}
-                    alt='upload'
-                    width='75px'
-                    className='border border-black'
-                  />
+                  <div>
+                    <img
+                      onClick={handleModal}
+                      key={i}
+                      src={photo.image_url}
+                      alt='upload'
+                      width='75px'
+                      className='border border-black'
+                    />
+                    <Modal
+                      open={isEnlarged}
+                      onClose={handleModal}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Box>
+                        <img
+                          key={i}
+                          onClick={handleModal}
+                          src={photo.image_url}
+                          alt='upload'
+                          width='800px'
+                          className='border border-black'
+                        />
+                      </Box>
+                    </Modal>
+                  </div>
                 ))}
               </div>
               <div className='flex items-center justify-between mt-2 mr-2'>
