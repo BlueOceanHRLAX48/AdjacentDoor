@@ -7,6 +7,7 @@ import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
 import Map from './Map';
+import Feed from './components/Feed';
 
 function GroupDetail(props) {
   const groupId = useParams().groupId;
@@ -57,7 +58,12 @@ function GroupDetail(props) {
               user={props.user}
               currentLocation={props.currentLocation}
             />
-            <PostFeed posts={filteredPosts} />
+            <Feed
+              filteredPosts={filteredPosts}
+              user={props.user}
+              getPosts={props.getPosts}
+              currentLocation={props.currentLocation}
+            />
           </div>
           <RightBar user={props.user} />
         </div>

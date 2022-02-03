@@ -14,6 +14,7 @@ function PostFeed(props) {
       <div className='hide-scroll-bar overflow-y-scroll'>
         {posts?.map((post, i) => (
           <Post
+            post={post}
             key={post.post_id}
             avatar={post.user_info.profile_img}
             name={post.user_info.username}

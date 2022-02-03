@@ -98,7 +98,7 @@ function Post({
               <Avatar
                 alt='avatar'
                 src={
-                  post.user_info.profile_img ||
+                  post?.user_info?.profile_img ||
                   'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
                 }
                 sx={{ width: 40, height: 40 }}
