@@ -6,6 +6,7 @@ import { MdEdit } from 'react-icons/md';
 import UploadPhoto from './Groups/UploadPhoto';
 
 function MyProfile({ user, setUser }) {
+  console.log(user);
   const [username, setUsername] = React.useState(user.username);
   const [city, setCity] = React.useState(user.city);
   const [state, setState] = React.useState(user.state);
