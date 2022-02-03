@@ -77,13 +77,15 @@ module.exports = {
       groupId = groupRes.rows[0].id
     }
 
+    let adminValue = admin || false;
+
     let userParams = [
       firstName,
       lastName,
       username,
       email,
       network_id,
-      admin,
+      adminValue,
       city,
       state,
       zip,
