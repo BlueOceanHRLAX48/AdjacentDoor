@@ -125,10 +125,9 @@ function Post({
               <div className='mt-2'>{body}</div>
               <div className='flex gap-2 py-2'>
                 {photos.map((photo, i) => (
-                  <div>
+                  <div key={i}>
                     <img
                       onClick={handleModal}
-                      key={i}
                       src={photo.image_url}
                       alt='upload'
                       width='75px'
