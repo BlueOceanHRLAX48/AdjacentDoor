@@ -38,6 +38,12 @@ function Post({
 
   const handleShare = () => 'q';
 
+  function handleTime(timestamp) {
+    return moment().isSame(timestamp, 'day')
+      ? moment(timestamp).fromNow()
+      : moment(timestamp).format('LL');
+  }
+
   return (
     <>
       {(report < 5 || user.admin) && (
@@ -55,16 +61,12 @@ function Post({
               />
             </Link>
             <div className='w-full'>
-              <div className='flex font-medium align-top w-min'>
-                {user?.username}
+              <div className='flex font-medium align-top'>
+                {post.user_info.username}
               </div>
               <div className='flex items-center'>
                 <div className='text-xs font-light text-slate-500'>
-                  {user?.city}
-                </div>
-                <div className='ml-2 mr-2'> • </div>
-                <div className='text-xs font-light text-slate-500'>
-                  {moment(time).format('LL')}
+                  {handleTime(time)}
                 </div>
               </div>
 
