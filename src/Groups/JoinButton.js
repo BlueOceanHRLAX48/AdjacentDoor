@@ -18,9 +18,8 @@ const JoinButton = (props) => {
     setType(props.joinStatus)
   })
 
-  const handleJoin =() => {
+  const handleJoin = () => {
     let userGroupCopy = user_group;
-    //let database know user joined this group
     console.log('privacy', props.group.privacy)
     let accepted = props.group.privacy ? false : true;
     axios.post(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/join?network_id=${props.user.network_id}&accepted=${accepted}`)
@@ -34,12 +33,24 @@ const JoinButton = (props) => {
       setUserGroup(userGroupCopy);
     })
     .catch(err => console.log(err))
-    //get back joined group object {id:<num>, name:<name>, joinStatus:<joined>}
+  }
+
+  const handleLeave = () => {
+    let userGroupCopy = user_group;
+    let groupIndex = user_group.findIndex(element => element.id === props.group.id);
+    axios.delete(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/left?network_id=${props.user.network_id}`)
+    .then(() => {
+      userGroupCopy.splice(groupIndex, 1);
+      props.setUser(prevState => ({
+        ...prevState,
+        user_group: userGroupCopy
+      }))
+      setUserGroup(userGroupCopy);
+    })
+    .catch(err => console.log(err))
   }
 
   const statusButton = (privacy) => {
-    let userGroupCopy = user_group;
-    let groupIndex = user_group.findIndex(element => element.id === props.group.id);
     //send update to server based on button type
     switch(buttonType) {
       case 'joined':
@@ -67,12 +78,7 @@ const JoinButton = (props) => {
               <Button onClick={handleClose}>No</Button>
               <Button onClick={() => {
                 handleClose();
-                userGroupCopy.splice(groupIndex, 1)
-                props.setUser(prevState => ({
-                  ...prevState,
-                  user_group: userGroupCopy
-                }))
-                setUserGroup(userGroupCopy);
+                handleLeave();
               }}>Yes</Button>
             </DialogActions>
           </Dialog>
@@ -99,12 +105,7 @@ const JoinButton = (props) => {
               <Button onClick={handleClose}>No</Button>
               <Button onClick={() => {
                 handleClose();
-                userGroupCopy.splice(groupIndex, 1)
-                props.setUser(prevState => ({
-                  ...prevState,
-                  user_group: userGroupCopy
-                }))
-                setUserGroup(userGroupCopy)
+                handleLeave()
               }}>Yes</Button>
             </DialogActions>
           </Dialog>
