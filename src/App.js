@@ -15,7 +15,9 @@ import MakePost from './components/MakePost';
 function App() {
   const [user, setUser] = useState(
     () =>
-      JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {
+      JSON.parse(localStorage.getItem('AdjacentDoorUser'))
+      ||
+      {
         user_id: 1,
         firstname: 'ernest',
         lastname: 'zhang',
@@ -38,14 +40,22 @@ function App() {
           {
             id: 1,
             name: 'the group',
+            accepted: true
           },
           {
             id: 2,
             name: 'the second group',
+            accepted: false
           },
+          {
+            id: 3,
+            name: 'the third group',
+            accepted: true
+          }
         ],
       }
   );
+
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
