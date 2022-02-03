@@ -20,7 +20,6 @@ const JoinButton = (props) => {
 
   const handleJoin = () => {
     let userGroupCopy = user_group;
-    console.log('privacy', props.group.privacy)
     let accepted = props.group.privacy ? false : true;
     axios.post(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/join?network_id=${props.user.network_id}&accepted=${accepted}`)
     .then(() => {

@@ -11,7 +11,6 @@ function Groups(props) {
   const { user_group } = props.user;
 
   useEffect(() => {
-    console.log(props.currentLocation)
     axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
       params: {
         longitude: props.currentLocation.longitude,
@@ -40,7 +39,6 @@ function Groups(props) {
             <div>Groups near you</div>
             <div id='seeGroups'>
               {groups.map((card, index) => {
-                console.log(card.id)
                 let joinStatus = '';
                 let groupIndex = user_group.findIndex(element => element.id === card.id);
                 if(groupIndex !== -1) {
