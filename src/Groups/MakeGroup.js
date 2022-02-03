@@ -11,6 +11,7 @@ import {
   FormControl,
   FormLabel,
 } from '@mui/material';
+import UploadPhoto from './UploadPhoto';
 import axios from 'axios';
 import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
 
@@ -26,7 +27,7 @@ function MakeGroup(props) {
   const [description, setDescription] = useState('');
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState('http://placecorgi.com/260/180');
   const [localRadius, setRadius] = useState(5);
 
   const [location, setLocation] = useState({
@@ -63,26 +64,22 @@ function MakeGroup(props) {
     p: 4,
   };
 
-  const fakeAxiosPost = () => {
-    console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo, localRadius);
-    // axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
-    //   params: {
-    //     name: groupName,
-    //     network_id: props.user.network_id,
-    //     address: '',
-    //     city: location.city,
-    //     state: location.state,
-    //     zip: location.zip,
-    //     latitude: location.coordinates[1],
-    //     longitude: location.coordinates[0],
-    //     privacy: privacy,
-    //     photo: photo
-    //   }
-    // })
-    // .then((result) => {
-    //   console.log('success', result)
-    // })
-    // .catch(err => console.log(err))
+  const createAGroup = () => {
+    let privacybool = privacy === 'public' ? false : true;
+
+    axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
+      name: groupName,
+      network_id: props.user.network_id,
+      city: location.city,
+      state: location.state,
+      zip: location.zip,
+      latitude: location.coordinates[1],
+      longitude: location.coordinates[0],
+      privacy: privacybool,
+      photo: photo,
+      description: description
+    })
+    .catch(err => console.log(err))
   }
 
   const resetInputs = () => {
@@ -243,19 +240,7 @@ function MakeGroup(props) {
       case 'p5':
         return (
           <div>
-            <Typography variant='h6' component='h2'>
-              Choose a Photo
-            </Typography>
-            {/* PHOTO FUNCTIONALITY */}
-            <Button
-              onClick={() => {
-                fakeAxiosPost();
-                setSlide('p1');
-                handleClose();
-              }}
-            >
-              CREATE
-            </Button>
+            <UploadPhoto createAGroup={createAGroup} setSlide={() => {setSlide('p1')}} handleClose={handleClose} setPhoto={setPhoto}/>
           </div>
         );
       default:
