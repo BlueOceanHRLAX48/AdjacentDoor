@@ -26,7 +26,7 @@ function MakeGroup(props) {
   const [description, setDescription] = useState('');
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState('http://placecorgi.com/260/180');
   const [localRadius, setRadius] = useState(5);
 
   const [location, setLocation] = useState({
@@ -64,19 +64,20 @@ function MakeGroup(props) {
   };
 
   const findNearbyGroups = () => {
+    console.log('posting data', groupName, props.user.network_id, location.city, location.state, location.zip, location.coordinates[1], location.coordinates[0], privacy, photo, description)
+
     axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
-        name: groupName,
-        network_id: props.user.network_id,
-        city: location.city,
-        state: location.state,
-        zip: location.zip,
-        latitude: location.coordinates[1],
-        longitude: location.coordinates[0],
-        privacy: privacy,
-        photo: photo,
-        description: description
-      }
-    )
+      name: groupName,
+      network_id: props.user.network_id,
+      city: location.city,
+      state: location.state,
+      zip: location.zip,
+      latitude: location.coordinates[1],
+      longitude: location.coordinates[0],
+      privacy: privacy,
+      photo: photo,
+      description: description
+    })
     .then((result) => {
       console.log('success', result)
     })
