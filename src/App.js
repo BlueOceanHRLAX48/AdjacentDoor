@@ -80,7 +80,7 @@ function App() {
         />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/signout' element={<SignUp />} />
-        <Route path='/my-profile' element={<MyProfile />} />
+        <Route path='/my-profile' element={<MyProfile user={user} />} />
         <Route path='/create-post' element={<MakePost />} />
         <Route
           path='/groups'

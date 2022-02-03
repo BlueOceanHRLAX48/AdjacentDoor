@@ -130,7 +130,6 @@ const JoinButton = (props) => {
         <div>
           <Button size="small" color="primary" onClick={() => {
             handleJoin();
-
           }}>Join</Button>
         </div>)
     }

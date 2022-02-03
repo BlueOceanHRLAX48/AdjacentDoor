@@ -55,7 +55,7 @@ function Map(props) {
       const marker = new mapboxgl.Marker({
         color: selectColor(post),
       })
-        .setLngLat([post.location.longitude, post.location.latitude])
+        .setLngLat([post.coordinates.longitude, post.coordinates.latitude])
         .setPopup(
           new mapboxgl.Popup({
             closeButton: false,
