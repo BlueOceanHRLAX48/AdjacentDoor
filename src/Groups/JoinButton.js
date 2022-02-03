@@ -5,6 +5,7 @@ import axios from 'axios';
 const JoinButton = (props) => {
   const [buttonType, setType] = useState('');
   const [open, setOpen] = useState(false);
+  const [user_group, setUserGroup] = useState(props.user_group);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,14 +18,27 @@ const JoinButton = (props) => {
     setType(props.joinStatus)
   })
 
-  const fakeAxiosPost =() => {
+  const handleJoin =() => {
+    let userGroupCopy = user_group;
     //let database know user joined this group
+    console.log('privacy', props.group.privacy)
+    let accepted = props.group.privacy ? false : true;
+    axios.post(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/join?network_id=${props.user.network_id}&accepted=${accepted}`)
+    .then(() => {
+      let response = {id: props.group.id, name: props.group.name, accepted: accepted}
+      userGroupCopy.push(response);
+      props.setUser(prevState => ({
+        ...prevState,
+        user_group: userGroupCopy
+      }))
+      setUserGroup(userGroupCopy);
+    })
+    .catch(err => console.log(err))
     //get back joined group object {id:<num>, name:<name>, joinStatus:<joined>}
-    return {id: props.group.id, name: props.group.name, accepted: true}
   }
 
   const statusButton = (privacy) => {
-    let user_group = props.user_group;
+    let userGroupCopy = user_group;
     let groupIndex = user_group.findIndex(element => element.id === props.group.id);
     //send update to server based on button type
     switch(buttonType) {
@@ -53,11 +67,12 @@ const JoinButton = (props) => {
               <Button onClick={handleClose}>No</Button>
               <Button onClick={() => {
                 handleClose();
-                user_group.splice(groupIndex, 1)
+                userGroupCopy.splice(groupIndex, 1)
                 props.setUser(prevState => ({
                   ...prevState,
-                  user_group: user_group
+                  user_group: userGroupCopy
                 }))
+                setUserGroup(userGroupCopy);
               }}>Yes</Button>
             </DialogActions>
           </Dialog>
@@ -84,11 +99,12 @@ const JoinButton = (props) => {
               <Button onClick={handleClose}>No</Button>
               <Button onClick={() => {
                 handleClose();
-                user_group.splice(groupIndex, 1)
+                userGroupCopy.splice(groupIndex, 1)
                 props.setUser(prevState => ({
                   ...prevState,
-                  user_group: user_group
+                  user_group: userGroupCopy
                 }))
+                setUserGroup(userGroupCopy)
               }}>Yes</Button>
             </DialogActions>
           </Dialog>
@@ -104,12 +120,7 @@ const JoinButton = (props) => {
         return(
           <div>
             <Button size="small" color="primary" onClick={() => {
-              let response = {id: props.group.id, name: props.group.name, accepted: false}
-              user_group.push(response)
-              props.setUser(prevState => ({
-                ...prevState,
-                user_group: user_group
-              }))
+              handleJoin();
             }}>Request to Join</Button>
           </div>
         )
@@ -117,15 +128,8 @@ const JoinButton = (props) => {
         return (
         <div>
           <Button size="small" color="primary" onClick={() => {
-            let response = fakeAxiosPost()
-            console.log(props.user.network_id)
-            // query is correct according to controller/groups.js. errors in postman
-            axios.post(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/join?network_id=${props.user.network_id}&accepted=${true}`)
-            user_group.push(response)
-            props.setUser(prevState => ({
-              ...prevState,
-              user_group: user_group
-            }))
+            handleJoin();
+
           }}>Join</Button>
         </div>)
     }

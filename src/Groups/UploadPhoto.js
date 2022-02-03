@@ -2,7 +2,7 @@ import React, { useState }from 'react';
 import { Button, Typography } from '@mui/material';
 import axios from 'axios';
 
-const UploadPhoto = ({props}) => {
+const UploadPhoto = (props) => {
 
   const [photo, setPhoto] = useState('');
 
