@@ -60,7 +60,7 @@ function LeftBar({ setFilter, filter, user }) {
           </>
         )}
 
-        <div className='mt-4 mb-2 ml-4 text-sm'>Discover Groups</div>
+        <div className='mt-4 mb-2 ml-4 text-sm'>Groups</div>
 
         <NavLink to={`/groups`} style={handleActive} key={uuidv4()}>
           <LeftBarButton text='All Groups' icon={<MdGroups size='20' />} />
