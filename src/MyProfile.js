@@ -5,7 +5,11 @@ import LeftBar from './LeftBar/index';
 import { MdEdit } from 'react-icons/md';
 
 function MyProfile({ user, setUser }) {
+  console.log(user);
   const [username, setUsername] = React.useState(user.username);
+  const [city, setCity] = React.useState(user.city);
+  const [state, setState] = React.useState(user.state);
+  const [zip, setZip] = React.useState(user.zip);
   const [edit, setEdit] = React.useState(false);
 
   function handleSave() {
@@ -13,6 +17,12 @@ function MyProfile({ user, setUser }) {
       `${process.env.REACT_APP_SERVER}/user/${user.network_id}/displayName`,
       { username }
     );
+  }
+
+  function handleCancel() {
+    setUsername(user.username);
+
+    setEdit(false);
   }
 
   return (
@@ -48,14 +58,36 @@ function MyProfile({ user, setUser }) {
           </div>
         </div>
         {edit && (
-          <div className='flex flex-col w-[600px] items-center justify-center mt-8 p-8 border rounded-lg'>
+          <div className='flex flex-col w-[600px] items-center justify-center mt-8 p-8 pb-4 border rounded-lg'>
             <div className='flex w-[500px]'>
-              <div className='w-[100px]'>Name:</div>
+              <div className='w-[100px] font-semibold'>Name:</div>
               <input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
               />
+            </div>
+            <div className='flex w-[500px]'>
+              <div className='w-[100px] font-semibold'>Name:</div>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
+              />
+            </div>
+            <div className='flex pt-4 gap-4 w-full justify-center'>
+              <button
+                className='rounded border border-red-400 hover:bg-red-300 transition-all duration-150 px-2 py-1 font-semibold'
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+              <button
+                className='rounded border border-primary hover:bg-secondary transition-all duration-150 px-2 py-1 font-semibold'
+                onClick={handleSave}
+              >
+                Update
+              </button>
             </div>
           </div>
         )}
