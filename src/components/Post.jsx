@@ -2,27 +2,12 @@ import { Avatar } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
-import {
-  MdChatBubbleOutline,
-  MdFavoriteBorder,
-  MdOutlineShare,
-} from 'react-icons/md';
+import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
-function Post({
-  photos,
-  postId,
-  body,
-  like,
-  time,
-  user,
-  report,
-  getPosts,
-  post,
-}) {
+function Post({ photos, postId, body, like, time, user, report, getPosts, post }) {
   const [liked, setLiked] = React.useState(false);
-  const [likeCount, setLikeCount] = React.useState(like);
 
   const handleComment = () => 'q';
   const handleLike = () => {
@@ -30,7 +15,7 @@ function Post({
       axios
         .put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`)
         .then((res) => {
-          setLikeCount((x) => x + 1);
+          getPosts();
           setLiked(true);
         })
         .catch((err) => console.error(err));
@@ -38,6 +23,12 @@ function Post({
   };
 
   const handleShare = () => 'q';
+
+  function handleTime(timestamp) {
+    return moment().isSame(timestamp, 'day')
+      ? moment(timestamp).fromNow()
+      : moment(timestamp).format('LL');
+  }
 
   return (
     <>
@@ -56,17 +47,9 @@ function Post({
               />
             </Link>
             <div className='w-full'>
-              <div className='flex font-medium align-top w-min'>
-                {user?.username}
-              </div>
+              <div className='flex font-medium align-top'>{post.user_info.username}</div>
               <div className='flex items-center'>
-                <div className='text-xs font-light text-slate-500'>
-                  {user?.city}
-                </div>
-                <div className='ml-2 mr-2'> • </div>
-                <div className='text-xs font-light text-slate-500'>
-                  {moment(time).format('LL')}
-                </div>
+                <div className='text-xs font-light text-slate-500'>{handleTime(time)}</div>
               </div>
 
               <div className='mt-2'>{body}</div>
@@ -84,25 +67,15 @@ function Post({
               <div className='flex items-center justify-between mt-2 mr-2'>
                 {[
                   ['comment', <MdChatBubbleOutline size='15' />, handleComment],
-                  [likeCount, <MdFavoriteBorder size='15' />, handleLike],
+                  [like, <MdFavoriteBorder size='15' />, handleLike],
                   ['share', <MdOutlineShare size='15' />, handleShare],
                 ].map(([title, icon, handleClick], i) => (
-                  <PostButton
-                    icon={icon}
-                    text={title}
-                    handleClick={handleClick}
-                    key={i}
-                  />
+                  <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
                 ))}
               </div>
             </div>
           </div>
-          <MoreMenu
-            postId={postId}
-            getPosts={getPosts}
-            user={user}
-            post={post}
-          />
+          <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} />
         </div>
       )}
     </>

@@ -60,11 +60,7 @@ function App() {
           path='/'
           element={
             user.network_id ? (
-              <Home
-                user={user}
-                setUser={setUser}
-                currentLocation={currentLocation}
-              />
+              <Home user={user} setUser={setUser} currentLocation={currentLocation} />
             ) : (
               <Navigate to='/login' />
             )
@@ -72,45 +68,32 @@ function App() {
         />
         <Route
           path='/login'
-          element={
-            user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />
-          }
+          element={user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />}
         />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/signout' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
+        <Route path='/create-post' element={<MakePost />} />
         <Route
           path='/groups'
-          element={
-            <Groups
-              user={user}
-              currentLocation={currentLocation}
-              setUser={setUser}
-            />
-          }
+          element={<Groups user={user} currentLocation={currentLocation} setUser={setUser} />}
         />
         <Route
           path='/g/:groupId'
-          element={
-            <GroupDetail
-              user={user}
-              setUser={setUser}
-              currentLocation={currentLocation}
-            />
-          }
+          element={<GroupDetail user={user} setUser={setUser} currentLocation={currentLocation} />}
         />
         <Route path='/leaderboard' element={<Leaderboard user={user} />} />
         <Route
           path='/admin'
-          element={
-            user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />
-          }
+          element={user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />}
         />
       </Routes>
-      {user.default_group && (
+
+      {window.location.pathname !== '/signup' || window.location.pathname !== '/login' ? (
         <div>
-          <Footer groupId={user.default_group.id} />
+          <Footer />
         </div>
-      )}
+      ) : null}
     </BrowserRouter>
   );
 }

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import Feed from './components/Feed';
+import MakePost from './components/MakePost';
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
-import axios from 'axios';
-import MakePost from './components/MakePost';
 
 function Home({ user, setUser, currentLocation }) {
   const [posts, setPosts] = useState([]);
@@ -17,9 +17,7 @@ function Home({ user, setUser, currentLocation }) {
 
   function getPosts() {
     axios
-      .get(
-        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`
-      )
+      .get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`)
       .then(({ data }) => {
         setPosts(data.posts);
       });
@@ -49,11 +47,7 @@ function Home({ user, setUser, currentLocation }) {
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
             <div className='hidden sm:block'>
-              <MakePost
-                user={user}
-                currentLocation={currentLocation}
-                refresh={getPosts}
-              />
+              <MakePost user={user} currentLocation={currentLocation} refresh={getPosts} />
             </div>
             <Feed
               filteredPosts={filteredPosts}
