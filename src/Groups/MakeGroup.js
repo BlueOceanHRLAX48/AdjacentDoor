@@ -243,7 +243,7 @@ function MakeGroup(props) {
       case 'p5':
         return (
           <div>
-            <UploadPhoto createAGroup={createAGroup} setSlide={() => {setSlide('p1')}} handleClose={handleClose} />
+            <UploadPhoto createAGroup={createAGroup} setSlide={() => {setSlide('p1')}} handleClose={handleClose} setPhoto={setPhoto}/>
           </div>
         );
       default:
