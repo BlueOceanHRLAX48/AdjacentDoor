@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
   admin_id text NOT NULL,
-  "description" text Not NULL,
   city text NOT NULL,
   "state" text NOT NULL,
   zip text not NULL,
