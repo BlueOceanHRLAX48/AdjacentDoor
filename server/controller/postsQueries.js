@@ -30,6 +30,9 @@ const getAllPostsUsers = `SELECT p.post_id,
 const likePost = `UPDATE posts SET "like" = "like" + 1
                   WHERE post_id = $1;`;
 
+const unlikePost = `UPDATE posts SET "like" = "like" - 1
+                  WHERE post_id = $1;`;
+
 const reportPost = `UPDATE posts SET report = report + 1
                     WHERE post_id = $1;`;
 
@@ -42,5 +45,6 @@ module.exports = {
   getAllPostsUsers,
   likePost,
   reportPost,
-  deletePost
+  deletePost,
+  unlikePost
 };

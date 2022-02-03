@@ -58,6 +58,9 @@ router.route('/posts/usergroup')
 router.route('/posts/like/:post_id')
   .put(controller.posts.likePost)
 
+router.route('/posts/unlike/:post_id')
+  .put(controller.posts.unlikePost)
+
 router.route('/posts/report/:post_id')
   .put(controller.posts.reportPost)
 
