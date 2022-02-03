@@ -50,7 +50,6 @@ const JoinButton = (props) => {
   }
 
   const statusButton = (privacy) => {
-    //send update to server based on button type
     switch(buttonType) {
       case 'joined':
         return (
@@ -113,7 +112,7 @@ const JoinButton = (props) => {
         return (
         <div>
           <Button size="small" color="primary" onClick={() => {
-            alert('You are this admin for this group');
+            alert('You are the admin for this group');
           }}>Admin</Button>
         </div>)
       case 'privateNotJoined':
