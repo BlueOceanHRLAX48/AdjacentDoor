@@ -63,7 +63,7 @@ function MakeGroup(props) {
     p: 4,
   };
 
-  const findNearbyGroups = () => {
+  const createAGroup = () => {
     console.log('posting data', groupName, props.user.network_id, location.city, location.state, location.zip, location.coordinates[1], location.coordinates[0], privacy, photo, description)
 
     axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
@@ -243,12 +243,12 @@ function MakeGroup(props) {
         return (
           <div>
             <Typography variant='h6' component='h2'>
-              Choose a Photo
+              Upload a photo
             </Typography>
             {/* PHOTO FUNCTIONALITY */}
             <Button
               onClick={() => {
-                findNearbyGroups();
+                createAGroup();
                 setSlide('p1');
                 handleClose();
               }}

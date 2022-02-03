@@ -14,15 +14,15 @@ function Groups(props) {
     axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
       params: {
         longitude: props.currentLocation.longitude,
-        latitude: props.currentLocation.latitude
+        latitude: props.currentLocation.latitude,
+        mi: 100
       }
     })
     .then((result) => {
-      console.log('/groups/lists', result.data)
       setGroups(result.data);
     })
     .catch(err => console.log(err));
-  }, [props.currentLocation.longitude, props.currentLocation.latitude])
+  }, [props.currentLocation])
 
   return (
     <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
@@ -40,10 +40,10 @@ function Groups(props) {
             <div id='seeGroups'>
               {groups.map((card, index) => {
                 let joinStatus = '';
-                let groupIndex = user_group.findIndex((element) => element.id === card.id);
-                if (groupIndex !== -1) {
-                  if (user_group[groupIndex].accepted) {
-                    if (card.admin_id === props.user.network_id) {
+                let groupIndex = user_group.findIndex(element => element.id === card.id);
+                if(groupIndex !== -1) {
+                  if(user_group[groupIndex].accepted){
+                    if(parseInt(card.admin_id) === parseInt(props.user.network_id)){
                       joinStatus = 'admin';
                     } else {
                       joinStatus = 'joined';
@@ -58,15 +58,7 @@ function Groups(props) {
                     joinStatus = 'notJoined';
                   }
                 }
-                return (
-                  <GroupCard
-                    key={index}
-                    group={card}
-                    joinStatus={joinStatus}
-                    setUser={props.setUser}
-                    user_group={user_group}
-                  />
-                );
+                return <GroupCard key={index} group={card} user={props.user} joinStatus={joinStatus} setUser={props.setUser} user_group={user_group} />
               })}
             </div>
           </div>
