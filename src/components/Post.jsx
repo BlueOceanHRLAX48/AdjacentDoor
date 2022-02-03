@@ -57,7 +57,10 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
             <Link to='/my-profile'>
               <Avatar
                 alt='avatar'
-                src={user?.profile_img || '/static/images/avatar/1.jpg'}
+                src={
+                  user?.profile_img ||
+                  'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
+                }
                 sx={{ width: 40, height: 40 }}
                 className='mt-1 ml-1 mr-6 ring-2 ring-offset-2 ring-primary'
               />

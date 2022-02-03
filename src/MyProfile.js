@@ -10,8 +10,11 @@ function MyProfile({ user }) {
 
       <div className='flex w-[500px] h-[300px] items-center justify-center p-4'>
         <Avatar
-          alt='Remy Sharp'
-          src={user.profile_img || '/static/images/avatar/1.jpg'}
+          alt='user data'
+          src={
+            user.profile_img ||
+            'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
+          }
           sx={{ width: 100, height: 100 }}
           className='mr-8'
         />

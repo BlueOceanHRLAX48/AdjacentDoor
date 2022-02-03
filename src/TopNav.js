@@ -58,7 +58,10 @@ function TopNav({
         <div className='ml-4 mr-4 cursor-pointer'>
           <Avatar
             alt='Avatar'
-            src={user.profile_img || '/static/images/avatar/1.jpg'}
+            src={
+              user.profile_img ||
+              'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
+            }
             sx={{ width: 35, height: 35 }}
             id='user-profile'
             aria-controls={open ? 'basic-menu' : undefined}
