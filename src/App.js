@@ -71,7 +71,7 @@ function App() {
       })
       .catch((err) => {
         console.error("User doesn't exist");
-        setUser({});
+        // setUser({});
       });
 
     navigator.geolocation.getCurrentPosition((res) =>
