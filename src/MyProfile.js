@@ -10,11 +10,17 @@ function MyProfile({ user, setUser }) {
   const [state, setState] = React.useState(user.state);
   const [zip, setZip] = React.useState(user.zip);
   const [profileImage, setProfileImage] = React.useState(user.profile_img);
+  const [privacy, setPrivacy] = React.useState(user.privacy);
   const [edit, setEdit] = React.useState(false);
   const [uploading, setUploading] = React.useState(false);
   const backupImage = user.profile_img;
 
   function handleSave() {
+    if (privacy !== user.privacy) {
+      axios
+        .put(`${process.env.REACT_APP_SERVER}/user/${user.network_id}/privacy`)
+        .catch((err) => console.error(err));
+    }
     if (username !== user.username) {
       axios
         .put(
@@ -163,6 +169,14 @@ function MyProfile({ user, setUser }) {
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
                 className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
+              />
+            </div>
+            <div className='flex items-center'>
+              <div className='font-semibold pr-2'>Private Profile:</div>
+              <input
+                type='checkbox'
+                checked={privacy}
+                onChange={() => setPrivacy((x) => !x)}
               />
             </div>
             <div className='flex pt-4 gap-4 w-full justify-center'>
