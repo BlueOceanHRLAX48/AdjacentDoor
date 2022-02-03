@@ -61,7 +61,7 @@ function GroupDetail(props) {
             <Feed
               filteredPosts={filteredPosts}
               user={props.user}
-              getPosts={props.getPosts}
+              getPosts={getData}
               currentLocation={props.currentLocation}
             />
           </div>
