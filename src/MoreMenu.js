@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
 import axios from 'axios';
 
-function MoreMenu({ postId }) {
+function MoreMenu({ postId, getPosts }) {
   const [reported, setReported] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -26,6 +26,15 @@ function MoreMenu({ postId }) {
         .catch((err) => console.error(err));
       setAnchorEl(null);
     }
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.REACT_APP_SERVER}/posts/delete/${postId}`)
+      .then((res) => {
+        getPosts();
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -50,7 +59,7 @@ function MoreMenu({ postId }) {
       >
         <MenuItem onClick={handleClose}>Privacy</MenuItem>
         {!reported && <MenuItem onClick={handleReport}>Report</MenuItem>}
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        <MenuItem onClick={handleDelete}>Delete</MenuItem>
       </Menu>
     </div>
   );

@@ -75,7 +75,7 @@ function MakePost(props) {
       .then((res) => {
         axios
           .put(
-            `${process.env.REACT_APP_SERVER}/user/${props.user.user_id}/contribution/add`
+            `${process.env.REACT_APP_SERVER}/user/${props.user.network_id}/contribution/add`
           )
           .catch((err) => console.error(err));
         setBody('');

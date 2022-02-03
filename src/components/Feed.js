@@ -17,6 +17,7 @@ function Feed({ filteredPosts, user, getPosts, currentLocation }) {
             postId={post.post_id}
             time={post.time}
             user={user}
+            getPosts={getPosts}
           />
         ))}
     </div>
