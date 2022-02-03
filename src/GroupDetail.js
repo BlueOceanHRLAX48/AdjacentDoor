@@ -19,7 +19,7 @@ function GroupDetail(props) {
 
   React.useEffect(() => {
     getData();
-  }, []);
+  }, [groupId]);
 
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
