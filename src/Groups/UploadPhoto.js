@@ -15,7 +15,6 @@ const UploadPhoto = (props) => {
       setPhoto(response.data.secure_url);
     })
     .catch((err) => {console.log(err)})
-
   }
 
   return (
@@ -23,7 +22,6 @@ const UploadPhoto = (props) => {
       <Typography variant='h6' component='h2'>
         Would you like to upload a photo?
       </Typography>
-      {/* PHOTO FUNCTIONALITY */}
       <input type="file" id='file' onChange={(e) => {
         storeImages(e.target.files);
       }} />
