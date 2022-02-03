@@ -54,7 +54,7 @@ function MyProfile({ user, setUser }) {
         .catch((err) => {
           console.error(err);
         });
-    }, 1000);
+    }, 500);
     setEdit(false);
   }
 
