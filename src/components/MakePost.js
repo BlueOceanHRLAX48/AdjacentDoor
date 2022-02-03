@@ -47,9 +47,7 @@ function MakePost(props) {
   function handleSubmit() {
     axios
       .post(
-        `${process.env.REACT_APP_SERVER}/posts/${
-          path === '/' ? 'defaultgroup' : 'usergroup'
-        }`,
+        `${process.env.REACT_APP_SERVER}/posts/${path === '/' ? 'defaultgroup' : 'usergroup'}`,
         path === '/'
           ? {
               group_id: props.user.default_group.id,
@@ -74,9 +72,7 @@ function MakePost(props) {
       )
       .then((res) => {
         axios
-          .put(
-            `${process.env.REACT_APP_SERVER}/user/${props.user.network_id}/contribution/add`
-          )
+          .put(`${process.env.REACT_APP_SERVER}/user/${props.user.network_id}/contribution/add`)
           .catch((err) => console.error(err));
         setBody('');
         setType('general');
@@ -89,8 +85,8 @@ function MakePost(props) {
   }
 
   return (
-    <div className='w-[600px] px-4 pt-6'>
-      <div className='w-full border p-4 rounded-lg'>
+    <div className='w-full sm:w-[600px] px-4 pt-6'>
+      <div className='w-full p-4 border rounded-lg'>
         <div className='flex items-center'>
           <Tooltip title='Clear Everything' placement='right' arrow={true}>
             <span>
@@ -100,7 +96,7 @@ function MakePost(props) {
             </span>
           </Tooltip>
           <select
-            className='ml-4 text-primary font-semibold text-xl mb-2 outline-none'
+            className='mb-2 ml-4 text-xl font-semibold outline-none text-primary'
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
@@ -109,7 +105,7 @@ function MakePost(props) {
             <option value='safety'>Safety</option>
           </select>
           <button
-            className='ml-auto disabled:opacity-50 bg-primary font-semibold rounded px-4 py-2'
+            className='px-4 py-2 ml-auto font-semibold rounded disabled:opacity-50 bg-primary'
             disabled={!body}
             onClick={handleSubmit}
           >
@@ -117,7 +113,7 @@ function MakePost(props) {
           </button>
         </div>
         <TextareaAutosize
-          className='h-fit hideResizer hide-scroll-bar w-full mt-4 px-1 outline-none'
+          className='w-full px-1 mt-4 outline-none h-fit hideResizer hide-scroll-bar'
           placeholder='Share something with the group...'
           value={body}
           onChange={(e) => setBody(e.target.value)}
@@ -126,36 +122,26 @@ function MakePost(props) {
         <input
           type='file'
           id='file'
-          className='absolute -z-50 opacity-0'
+          className='absolute opacity-0 -z-50'
           onChange={(e) => handleUpload(e.target.files)}
           multiple
         />
         <div className='flex items-center'>
           <label
             htmlFor='file'
-            className='flex items-center text-primary font-semibold cursor-pointer w-fit gap-1'
+            className='flex items-center gap-1 font-semibold cursor-pointer text-primary w-fit'
           >
             <MdAdd size={25} />
             {files?.length ? 'Change' : 'Add'} Photos
           </label>
-          <div className='pl-4 text-secondary cursor-default'>
-            {files?.length > uploadURLs.length &&
-              `Uploading ${files?.length} Images`}
+          <div className='pl-4 cursor-default text-secondary'>
+            {files?.length > uploadURLs.length && `Uploading ${files?.length} Images`}
             {files?.length === uploadURLs.length
-              ? `${files?.length} Image${
-                  files?.length === 1 ? '' : 's'
-                } Uploaded`
+              ? `${files?.length} Image${files?.length === 1 ? '' : 's'} Uploaded`
               : ''}
           </div>
-          <div
-            className={`ml-auto flex ${
-              privacy ? 'text-primary' : 'text-secondary'
-            }`}
-          >
-            <button
-              className='font-semibold'
-              onClick={() => setPrivacy((x) => !x)}
-            >
+          <div className={`ml-auto flex ${privacy ? 'text-primary' : 'text-secondary'}`}>
+            <button className='font-semibold' onClick={() => setPrivacy((x) => !x)}>
               {privacy ? 'Private' : 'Public'}
             </button>
           </div>
