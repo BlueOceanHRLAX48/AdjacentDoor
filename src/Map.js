@@ -10,7 +10,7 @@ function Map(props) {
   const map = useRef(null);
   const [lng, setLng] = useState(props.group.coordinates.longitude); 
   const [lat, setLat] = useState(props.group.coordinates.latitude); 
-  const [zoom, setZoom] = useState(13); // initial zoom potentially needs to be calculated.
+  const [zoom, setZoom] = useState(13);
   const [markers] = useState([]);
   
   //initialize map //
@@ -63,13 +63,13 @@ function Map(props) {
           }).setHTML(
             `<span style='display:flex;'>
               <img src='${
-                post.user_info.profile_image
+                post.profile_img
               }' style='border-radius:100%; width:40px; height:40px;'/>
               <h1 style='margin-left:10px; font-weight:500;'>${
-                post.user_info.username
+                post.username
               }</h1>
               </span>
-              <h1 style='padding-top:5px;'>${trimBody(post.body)}</h1>`
+              <h1 style='padding-top:5px; word-wrap:break-word;'>${trimBody(post.body)}</h1>`
           )
         )
         .addTo(map.current);
@@ -80,7 +80,10 @@ function Map(props) {
 
   const trimBody = (body) => {
     let trimmed = body.split(' ').slice(0, 20);
-    return trimmed.join(' ') + '...';
+    return body.length === trimmed.join(' ').length 
+    ? trimmed.join(' ') 
+    : trimmed.join(' ') + '...';
+
   };
 
   const selectColor = (post) => {
@@ -116,12 +119,3 @@ function Map(props) {
 }
 
 export default Map;
-
-//future dark mode toggle idea
-// const toggleDark = () => {
-//   if (map.current.getStyle().name === 'Mapbox Light'){
-//       map.current.setStyle('mapbox://styles/mapbox/dark-v10')
-//   }
-//   if (map.current.getStyle().name === 'Mapbox Dark'){
-//       map.current.setStyle('mapbox://styles/mapbox/light-v10')
-//   }
