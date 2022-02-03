@@ -2,28 +2,17 @@ import { Avatar, Modal, Box } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
-import {
-  MdChatBubbleOutline,
-  MdFavoriteBorder,
-  MdOutlineShare,
-} from 'react-icons/md';
+import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
-function Post({
-  photos,
-  postId,
-  body,
-  like,
-  time,
-  user,
-  report,
-  getPosts,
-  post,
-}) {
+function Post({ photos, postId, body, like, time, user, report, getPosts, post }) {
   const [liked, setLiked] = React.useState(false);
+<<<<<<< HEAD
   const [isEnlarged, setEnlarge] = React.useState(false);
 
+=======
+>>>>>>> 0402110 (add detail to post)
   const handleComment = () => 'q';
   const handleLike = () => {
     if (!liked) {
@@ -53,7 +42,7 @@ function Post({
     <>
       {(report < 5 || user.admin) && (
         <div
-          className='relative p-4 my-3 transition-all duration-150 border shadow-sm border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
+          className='relative p-4 my-3 transition-all duration-150 border border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
           style={{ backgroundColor: report > 5 && 'rgba(255, 142, 162, .3)' }}
         >
           <div className='flex'>
@@ -66,13 +55,13 @@ function Post({
               />
             </Link>
             <div className='w-full'>
-              <div className='flex font-medium align-top'>
-                {post.user_info.username}
-              </div>
+              <div className='flex font-medium align-top'>{post.user_info.username}</div>
               <div className='flex items-center'>
-                <div className='text-xs font-light text-slate-500'>
-                  {handleTime(time)}
-                </div>
+                <div className='mr-2 text-xs font-light text-slate-500'>{post.tag}</div>
+                <> · </>
+                <div className='ml-2 mr-2 text-xs font-light text-slate-500'>{user.city}</div>
+                <> · </>
+                <div className='ml-2 text-xs font-light text-slate-500'>{handleTime(time)}</div>
               </div>
 
               <div className='mt-2'>{body}</div>
@@ -116,22 +105,12 @@ function Post({
                   [like, <MdFavoriteBorder size='15' />, handleLike],
                   ['share', <MdOutlineShare size='15' />, handleShare],
                 ].map(([title, icon, handleClick], i) => (
-                  <PostButton
-                    icon={icon}
-                    text={title}
-                    handleClick={handleClick}
-                    key={i}
-                  />
+                  <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
                 ))}
               </div>
             </div>
           </div>
-          <MoreMenu
-            postId={postId}
-            getPosts={getPosts}
-            user={user}
-            post={post}
-          />
+          <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} />
         </div>
       )}
     </>

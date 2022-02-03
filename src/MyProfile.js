@@ -2,7 +2,6 @@ import { Avatar } from '@mui/material';
 import LeftBar from './LeftBar/index';
 
 function MyProfile({ user }) {
-  console.log(user);
   return (
     <div className='flex dark:bg-gray-900 dark:text-white'>
       <div className='hidden sm:flex'>
