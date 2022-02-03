@@ -243,9 +243,16 @@ function MakeGroup(props) {
         return (
           <div>
             <Typography variant='h6' component='h2'>
-              Upload a photo
+              Would you like to upload a photo?
             </Typography>
             {/* PHOTO FUNCTIONALITY */}
+            <Button
+              onClick={() => {
+
+              }}
+            >
+              UPLOAD PHOTO
+            </Button>
             <Button
               onClick={() => {
                 createAGroup();
@@ -253,7 +260,7 @@ function MakeGroup(props) {
                 handleClose();
               }}
             >
-              CREATE
+              CREATE GROUP
             </Button>
           </div>
         );
