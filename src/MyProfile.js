@@ -3,14 +3,17 @@ import axios from 'axios';
 import React from 'react';
 import LeftBar from './LeftBar/index';
 import { MdEdit } from 'react-icons/md';
+import UploadPhoto from './Groups/UploadPhoto';
 
 function MyProfile({ user, setUser }) {
-  console.log(user);
   const [username, setUsername] = React.useState(user.username);
   const [city, setCity] = React.useState(user.city);
   const [state, setState] = React.useState(user.state);
   const [zip, setZip] = React.useState(user.zip);
+  const [profileImage, setProfileImage] = React.useState(user.profile_img);
   const [edit, setEdit] = React.useState(false);
+  const [uploading, setUploading] = React.useState(false);
+  const backupImage = user.profile_img;
 
   function handleSave() {
     axios.put(
@@ -20,9 +23,33 @@ function MyProfile({ user, setUser }) {
   }
 
   function handleCancel() {
+    setProfileImage(user.profile_img);
     setUsername(user.username);
-
+    setCity(user.city);
+    setState(user.state);
+    setZip(user.zip);
     setEdit(false);
+  }
+
+  function handleUpload(newPhoto) {
+    if (!newPhoto[0]) {
+      setProfileImage(backupImage);
+      return;
+    }
+    setUploading(true);
+    let formData = new FormData();
+    formData.append('file', newPhoto[0]);
+    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET);
+    axios
+      .post(
+        `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY}/image/upload`,
+        formData
+      )
+      .then((res) => {
+        setProfileImage(res.data.secure_url);
+        setUploading(false);
+      })
+      .catch((err) => console.error(err));
   }
 
   return (
@@ -32,7 +59,7 @@ function MyProfile({ user, setUser }) {
       </div>
       <div className='grow flex flex-col items-center p-8'>
         <div className='flex w-[600px] items-center justify-center p-8 border rounded-lg relative'>
-          <Tooltip placement='left' title='Edit Information' arrow='true'>
+          <Tooltip placement='left' title='Edit Information' arrow={true}>
             <button
               className='absolute top-4 right-4 hover:text-primary transition-all duration-150'
               onClick={() => setEdit(true)}
@@ -58,7 +85,24 @@ function MyProfile({ user, setUser }) {
           </div>
         </div>
         {edit && (
-          <div className='flex flex-col w-[600px] items-center justify-center mt-8 p-8 pb-4 border rounded-lg'>
+          <div className='flex flex-col w-[600px] gap-4 items-center justify-center mt-8 p-8 pb-4 border rounded-lg'>
+            <div className='flex w-[500px]'>
+              <input
+                type='file'
+                onChange={(e) => handleUpload(e.target.files)}
+              />
+              <div className='ml-auto font-bold'>
+                {uploading ? 'Uploading...' : ''}
+              </div>
+            </div>
+            <div className='flex w-[500px]'>
+              <div className='w-[100px] font-semibold'>Photo:</div>
+              <input
+                value={profileImage}
+                onChange={(e) => setProfileImage(e.target.value)}
+                className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
+              />
+            </div>
             <div className='flex w-[500px]'>
               <div className='w-[100px] font-semibold'>Name:</div>
               <input
@@ -68,10 +112,26 @@ function MyProfile({ user, setUser }) {
               />
             </div>
             <div className='flex w-[500px]'>
-              <div className='w-[100px] font-semibold'>Name:</div>
+              <div className='w-[100px] font-semibold'>City:</div>
               <input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
+              />
+            </div>
+            <div className='flex w-[500px]'>
+              <div className='w-[100px] font-semibold'>State:</div>
+              <input
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
+              />
+            </div>
+            <div className='flex w-[500px]'>
+              <div className='w-[100px] font-semibold'>Zip:</div>
+              <input
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
                 className='w-[400px] outline-1 border border-secondary focus:outline-primary rounded px-2'
               />
             </div>
@@ -83,8 +143,9 @@ function MyProfile({ user, setUser }) {
                 Cancel
               </button>
               <button
-                className='rounded border border-primary hover:bg-secondary transition-all duration-150 px-2 py-1 font-semibold'
+                className='rounded border border-primary hover:bg-secondary transition-all duration-150 px-2 py-1 font-semibold disabled:opacity-50 disabled:hover:bg-transparent'
                 onClick={handleSave}
+                disabled={uploading}
               >
                 Update
               </button>
