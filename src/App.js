@@ -86,11 +86,11 @@ function App() {
         />
       </Routes>
 
-      {window.location.pathname === '/signup' || window.location.pathname === '/login' ? null : (
+      {window.location.pathname !== '/signup' || window.location.pathname !== '/login' ? (
         <div>
-          <Footer groupId={user.default_group.id} />
+          <Footer />
         </div>
-      )}
+      ) : null}
     </BrowserRouter>
   );
 }

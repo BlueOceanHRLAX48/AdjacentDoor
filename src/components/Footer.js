@@ -1,7 +1,7 @@
 import { MdGroups, MdHealthAndSafety, MdHome, MdMenu, MdOutlineAddCircle } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
-function Footer({ groupId }) {
+function Footer() {
   const openLeftBar = () => {
     document.getElementById('left-bar').style.display = 'flex';
   };
