@@ -16,6 +16,19 @@ function LeaderboardUser(props) {
     return '#F8F7FF';
   }
 
+  function randomColor() {
+    let colors = [
+      '#9400D3',
+      '#4B0082',
+      '#0000FF',
+      '#00FF00',
+      '#FFFF00',
+      '#FF7F00',
+      '#FF0000',
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
   return (
     <div className='flex w-full items-center px-4 py-2 gap-4 hover:bg-ghostWhite transition-all duration-150'>
       <div className='flex w-[3%] font-bold'>{props.place}</div>

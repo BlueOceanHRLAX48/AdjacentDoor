@@ -6,6 +6,7 @@ import PostFeed from './components/PostFeed';
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
+import Map from './Map';
 
 function GroupDetail(props) {
   const groupId = useParams().groupId;
@@ -17,7 +18,7 @@ function GroupDetail(props) {
 
   React.useEffect(() => {
     getData();
-  });
+  }, []);
 
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
@@ -30,19 +31,26 @@ function GroupDetail(props) {
       )
       .then((res) => setPosts(res.data.posts))
       .catch((err) => console.error(err));
+
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/groups/user?group_id=${groupId}`)
+      .then((res) => setGroup(res.data[0]))
+      .catch((err) => console.error(err));
   }
   return (
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
       <div className='flex flex-col grow'>
-        <TopNav setSearch={setSearch} search={search} user={props.user} />
+        <TopNav
+          setSearch={setSearch}
+          search={search}
+          user={props.user}
+          setUser={props.setUser}
+        />
         <div className='flex grow'>
           <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
             <div className='w-[600px] px-4 pt-4'>
-              <div className='flex justify-center items-center bg-ghostWhite border rounded h-[400px]'>
-                MAP PLACEHOLDER
-                {/* <Map group={group} posts={filteredPosts} /> */}
-              </div>
+              {group.coordinates && <Map group={group} posts={filteredPosts} />}
             </div>
             <MakePost
               refresh={getData}
