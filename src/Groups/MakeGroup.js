@@ -11,6 +11,7 @@ import {
   FormControl,
   FormLabel,
 } from '@mui/material';
+import UploadPhoto from './UploadPhoto';
 import axios from 'axios';
 import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
 
@@ -242,26 +243,7 @@ function MakeGroup(props) {
       case 'p5':
         return (
           <div>
-            <Typography variant='h6' component='h2'>
-              Would you like to upload a photo?
-            </Typography>
-            {/* PHOTO FUNCTIONALITY */}
-            <Button
-              onClick={() => {
-
-              }}
-            >
-              UPLOAD PHOTO
-            </Button>
-            <Button
-              onClick={() => {
-                createAGroup();
-                setSlide('p1');
-                handleClose();
-              }}
-            >
-              CREATE GROUP
-            </Button>
+            <UploadPhoto createAGroup={createAGroup} setSlide={() => {setSlide('p1')}} handleClose={handleClose} />
           </div>
         );
       default:
