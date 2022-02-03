@@ -65,8 +65,6 @@ function MakeGroup(props) {
   };
 
   const createAGroup = () => {
-    console.log('posting data', groupName, props.user.network_id, location.city, location.state, location.zip, location.coordinates[1], location.coordinates[0], privacy, photo, description)
-
     let privacybool = privacy === 'public' ? false : true;
 
     axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
