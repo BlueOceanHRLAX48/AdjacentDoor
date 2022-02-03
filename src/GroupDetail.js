@@ -50,7 +50,7 @@ function GroupDetail(props) {
         />
         <div className='flex grow'>
           <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
-            <div className='w-[600px] px-4 pt-4'>
+            <div className='w-[600px] px-4 py-4'>
               {group.coordinates && <Map group={group} posts={filteredPosts} />}
             </div>
             <MakePost
