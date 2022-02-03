@@ -158,18 +158,6 @@ function Login() {
 
   return (
     <div className='w-screen flex-1 h-screen justify-content-center text-2xl bg-ghostWhite'>
-      {/* <Button
-        variant='contained'
-        color='primary'
-        onClick={handleResize}
-        style={{
-          height: style().logoSize,
-          fontSize: style().linkSize,
-          marginLeft: '75%',
-          marginTop: '1%',
-          position: 'absolute'
-        }}
-      >{isMobile ? 'Desktop' : 'Mobile'}</Button> */}
       { isMobile && <img src={require('./image/up.jpg')} alt='up' /> }
       <ThemeProvider theme={theme}>
         <Container component='main' maxWidth='md' className='w-20'>

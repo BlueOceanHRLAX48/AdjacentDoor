@@ -115,18 +115,6 @@ function SignUp() {
 
   return (
     <div className='w-screen flex'>
-      {/* <Button
-        variant='contained'
-        color='primary'
-        onClick={handleResize}
-        style={{
-          height: style().logoSize,
-          fontSize: style().linkSize,
-          marginLeft: '90%',
-          marginTop: '1%',
-          position: 'absolute'
-        }}
-      >{isMobile ? 'Desktop' : 'Mobile'}</Button> */}
       <ThemeProvider theme={theme}>
         <Grid container component='main' sx={{ height: '100vh' }}>
           <CssBaseline />
