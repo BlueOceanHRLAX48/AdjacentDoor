@@ -70,6 +70,7 @@ function App() {
           element={user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />}
         />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/signout' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
         <Route
           path='/groups'

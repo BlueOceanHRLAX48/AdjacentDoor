@@ -42,7 +42,7 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
               />
             </Link>
             <div className='w-full'>
-              <div className='flex font-medium align-top w-min'>{user?.username}</div>
+              <div className='flex font-medium align-top'>{user?.username}</div>
               <div className='flex items-center'>
                 <div className='text-xs font-light text-slate-500'>{user?.city}</div>
                 <div className='ml-2 mr-2'> • </div>

@@ -1,4 +1,4 @@
-import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
+import { MdGroups, MdHealthAndSafety, MdHome, MdLogout } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import BackgroundLetterAvatars from '../components/StringAvatar';
@@ -9,9 +9,12 @@ function LeftBar({ setFilter, filter, user }) {
   });
 
   return (
-    <div className='w-screen flex-col sm:w-[250px] px-6 py-4'>
+    <div className='w-screen h-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
+      </NavLink>
+      <NavLink to='/signout' style={handleActive} key={uuidv4()} className='block sm:hidden'>
+        <LeftBarButton icon={<MdLogout size='20' />} text='Sign Out' />
       </NavLink>
       <div className='overflow-y-scroll hide-scroll-bar'>
         <NavLink to='/' style={handleActive} key={uuidv4()} className='hidden sm:block'>
