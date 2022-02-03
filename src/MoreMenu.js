@@ -49,7 +49,7 @@ function MoreMenu({ postId }) {
         }}
       >
         <MenuItem onClick={handleClose}>Privacy</MenuItem>
-        <MenuItem onClick={handleReport}>Report</MenuItem>
+        {!reported && <MenuItem onClick={handleReport}>Report</MenuItem>}
         <MenuItem onClick={handleClose}>Delete</MenuItem>
       </Menu>
     </div>
