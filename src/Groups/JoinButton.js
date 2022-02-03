@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import axios from 'axios';
 
 const JoinButton = (props) => {
   const [buttonType, setType] = useState('');
@@ -117,6 +118,9 @@ const JoinButton = (props) => {
         <div>
           <Button size="small" color="primary" onClick={() => {
             let response = fakeAxiosPost()
+            console.log(props.user.network_id)
+            // query is correct according to controller/groups.js. errors in postman
+            axios.post(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/join?network_id=${props.user.network_id}&accepted=${true}`)
             user_group.push(response)
             props.setUser(prevState => ({
               ...prevState,
