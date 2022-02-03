@@ -10,10 +10,17 @@ function LeftBar({ setFilter, filter, user }) {
   return (
     <div className='h-screen sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/' key={uuidv4()}>
-        <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
+        <div className='px-4 pb-4 text-2xl font-bold text-primary '>
+          Adjacent Door
+        </div>
       </NavLink>
       <div className='overflow-y-scroll hide-scroll-bar'>
-        <NavLink to='/' style={handleActive} key={uuidv4()} className='hidden sm:block'>
+        <NavLink
+          to='/'
+          style={handleActive}
+          key={uuidv4()}
+          className='hidden sm:block'
+        >
           <LeftBarButton icon={<MdHome size='20' />} text='Home' />
         </NavLink>
 
@@ -24,8 +31,8 @@ function LeftBar({ setFilter, filter, user }) {
           ['General', 'general', <MdGroups size='20' />],
           ['Safety', 'safety', <MdHealthAndSafety size='20' />],
           ['For Sale', 'forsale', <MdGroups size='20' />],
-        ].map(([title, value, icon]) => (
-          <button onClick={() => setFilter(value)}>
+        ].map(([title, value, icon], i) => (
+          <button onClick={() => setFilter(value)} key={i}>
             <LeftBarButton icon={icon} text={title} />
           </button>
         ))}

@@ -4,8 +4,9 @@ import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
 import axios from 'axios';
+import MakePost from './components/MakePost';
 
-function Home({ user, setUser }) {
+function Home({ user, setUser, currentLocation }) {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
@@ -16,7 +17,9 @@ function Home({ user, setUser }) {
 
   function getPosts() {
     axios
-      .get(`${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`)
+      .get(
+        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`
+      )
       .then(({ data }) => {
         setPosts(data.posts);
       });
@@ -27,7 +30,7 @@ function Home({ user, setUser }) {
     .filter((post) => post.body.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className='w-screen h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
+    <div className='h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
       <div id='left-bar' className='hidden sm:flex'>
         <LeftBar user={user} filter={filter} setFilter={setFilter} />
       </div>
@@ -45,10 +48,22 @@ function Home({ user, setUser }) {
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
-            <Feed filteredPosts={filteredPosts} user={user} getPosts={getPosts} />
+            <div className='hidden sm:block'>
+              <MakePost
+                user={user}
+                currentLocation={currentLocation}
+                refresh={getPosts}
+              />
+            </div>
+            <Feed
+              filteredPosts={filteredPosts}
+              user={user}
+              getPosts={getPosts}
+              currentLocation={currentLocation}
+            />
           </div>
           <div className='hidden sm:flex'>
-            <RightBar />
+            <RightBar user={user} />
           </div>
         </div>
       </div>
