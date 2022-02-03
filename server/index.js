@@ -17,8 +17,8 @@ app.use('/', router);
 
 //localhost:3002 for group routes
 
-app.get('/loaderio-8ffa3667f6c98aa7fa9d1ff67fbe4f41.txt', (req, res) => {
-  res.status(200).send('loaderio-8ffa3667f6c98aa7fa9d1ff67fbe4f41');
+app.get('/loaderio-e3322f20e4c37ccfb13f9c62393bd71e.txt', (req, res) => {
+  res.status(200).send('loaderio-e3322f20e4c37ccfb13f9c62393bd71e');
 });
 
 app.listen(port, () => {
