@@ -42,23 +42,31 @@ function Post({
 
   const handleLike = () => {
     if (!liked) {
+      setLiked(true);
       axios
         .put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`)
         .then((res) => {
           localStorage.setItem(`adLiked${postId}`, 'true');
           getPosts();
-          setLiked(true);
+          return;
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setLiked(false);
+          console.error(err);
+        });
     } else {
+      setLiked(false);
       axios
         .put(`${process.env.REACT_APP_SERVER}/posts/unlike/${postId}`)
         .then((res) => {
           localStorage.setItem(`adLiked${postId}`, 'false');
           getPosts();
-          setLiked(false);
+          return;
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setLiked(true);
+          console.error(err);
+        });
     }
   };
 
