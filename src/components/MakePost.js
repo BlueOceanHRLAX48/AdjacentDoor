@@ -16,7 +16,7 @@ function MakePost(props) {
 
   function handleClear() {
     setBody('');
-    setType('');
+    setType('general');
     setUploadURLS([]);
     setFiles();
     setPrivacy(false);
@@ -74,7 +74,7 @@ function MakePost(props) {
       )
       .then((res) => {
         setBody('');
-        setType('');
+        setType('general');
         setPrivacy(false);
         setFiles();
         setUploadURLS([]);
@@ -99,7 +99,6 @@ function MakePost(props) {
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
-            <option value=''>Select Post Type</option>
             <option value='general'>General</option>
             <option value='forsale'>For Sale</option>
             <option value='safety'>Safety</option>
