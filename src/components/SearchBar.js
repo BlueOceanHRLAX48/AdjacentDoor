@@ -4,7 +4,7 @@ function SearchBar({ search, setSearch }) {
   };
 
   return (
-    <div className='flex justify-center w-[600px]'>
+    <div className='w-screen flex justify-center sm:w-[600px]'>
       <input
         className='w-11/12 p-1 text-sm text-center transition-all duration-150 rounded-full outline-none focus:outline-primary dark:bg-gray-900'
         placeholder='Search Adjacent Door'

@@ -1,21 +1,25 @@
 import React from 'react';
-import {
-  MdGroups,
-  MdHealthAndSafety,
-  MdHome,
-  MdMenu,
-  MdOutlineAddCircle,
-} from 'react-icons/md';
+import { MdGroups, MdHome, MdMenu, MdOutlineAddCircle, MdSearch } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
 function Footer() {
+  const [search, setSearch] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);
 
   const openLeftBar = () => {
-    document.getElementById('left-bar').style.display = 'flex';
+    document.getElementById('left-bar').style.display = 'block';
   };
   const closeLeftBar = () => {
     document.getElementById('left-bar').style.display = 'none';
+  };
+
+  const toggleSearchBar = () => {
+    if (search) {
+      document.getElementById('search-bar').style.display = 'flex';
+    } else {
+      document.getElementById('search-bar').style.display = 'none';
+    }
+    setSearch(!search);
   };
 
   React.useEffect(() => {
@@ -37,11 +41,9 @@ function Footer() {
       <NavLink to='/'>
         <MdHome className='' size='30' onClick={closeLeftBar} />
       </NavLink>
-      <NavLink to='/safety'>
-        <MdHealthAndSafety className='' size='30' onClick={closeLeftBar} />
-      </NavLink>
+      <MdSearch className='' size='30' onClick={toggleSearchBar} />
       <NavLink to='/create-post'>
-        <MdOutlineAddCircle className='' size='30' onClick={closeLeftBar} />
+        <MdOutlineAddCircle className='cursor-pointer' size='30' onClick={closeLeftBar} />
       </NavLink>
       <NavLink to={`/groups`}>
         <MdGroups className='' size='30' onClick={closeLeftBar} />

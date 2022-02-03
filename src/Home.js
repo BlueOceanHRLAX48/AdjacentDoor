@@ -33,7 +33,7 @@ function Home({ user, setUser, currentLocation }) {
         <LeftBar user={user} filter={filter} setFilter={setFilter} />
       </div>
       <div>
-        <div className='hidden sm:flex'>
+        <div>
           <TopNav
             posts={posts}
             setPosts={setPosts}
