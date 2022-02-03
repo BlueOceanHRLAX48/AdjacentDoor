@@ -1,5 +1,5 @@
 const getAllPosts = `SELECT p.post_id,
-                (SELECT row_to_json(u) FROM (SELECT username, profile_img FROM user_account WHERE user_account.user_id=p.user_id) u ) AS user_info,
+                (SELECT row_to_json(u) FROM (SELECT username, profile_img, network_id, contribution FROM user_account WHERE user_account.user_id=p.user_id) u ) AS user_info,
                 p.body, p.time, p.like, p.report, p.tag, p.privacy,
                 json_build_object('latitude', p.latitude, 'longitude', p.longitude) AS coordinates,
                 coalesce(json_agg(i) FILTER (WHERE i.post_id IS NOT NULL), '[]') AS photos
@@ -17,7 +17,7 @@ const addPostImage = `INSERT INTO post_imgs(post_id, image_url)
                       VALUES ($1, $2);`
 
 const getAllPostsUsers = `SELECT p.post_id,
-                        (SELECT row_to_json(u) FROM (SELECT username, profile_img FROM user_account WHERE user_account.user_id=p.user_id) u ) AS user_info,
+                        (SELECT row_to_json(u) FROM (SELECT username, profile_img, network_id, contribution FROM user_account WHERE user_account.user_id=p.user_id) u ) AS user_info,
                         p.body, p.time, p.like, p.report, p.tag, p.privacy,
                         json_build_object('latitude', p.latitude, 'longitude', p.longitude) AS coordinates,
                         coalesce(json_agg(i) FILTER (WHERE i.post_id IS NOT NULL), '[]') AS photos

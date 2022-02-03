@@ -1,16 +1,20 @@
-import { MdGroups, MdHealthAndSafety, MdHome } from 'react-icons/md';
+import { MdGroups, MdHealthAndSafety, MdHome, MdLogout } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import BackgroundLetterAvatars from '../components/StringAvatar';
 
 function LeftBar({ setFilter, filter, user }) {
   const handleActive = ({ isActive }) => ({
-    fontWeight: isActive ? 'bold' : '',
+    color: isActive ? '#9381FF' : '',
   });
 
   return (
-    <div className='h-screen sm:h-screen w-screen flex-col sm:w-[250px] px-6 py-4'>
+    <div className='w-screen h-screen flex-col sm:w-[250px] px-6 py-4'>
       <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>Adjacent Door</div>
+      </NavLink>
+      <NavLink to='/signout' style={handleActive} key={uuidv4()} className='block sm:hidden'>
+        <LeftBarButton icon={<MdLogout size='20' />} text='Sign Out' />
       </NavLink>
       <div className='overflow-y-scroll hide-scroll-bar'>
         <NavLink to='/' style={handleActive} key={uuidv4()} className='hidden sm:block'>
@@ -25,16 +29,20 @@ function LeftBar({ setFilter, filter, user }) {
           ['Safety', 'safety', <MdHealthAndSafety size='20' />],
           ['For Sale', 'forsale', <MdGroups size='20' />],
         ].map(([title, value, icon]) => (
-          <button onClick={() => setFilter(value)}>
+          <div onClick={() => setFilter(value)} key={uuidv4()}>
             <LeftBarButton icon={icon} text={title} />
-          </button>
+          </div>
         ))}
 
-        <div className='mt-4 mb-2 ml-4 text-sm'>All Groups</div>
+        <div className='mt-4 mb-2 ml-4 text-sm'>Discover Groups</div>
+
+        <NavLink to={`/groups`} style={handleActive} key={uuidv4()}>
+          <LeftBarButton text='All Groups' icon={<MdGroups size='20' />} />
+        </NavLink>
 
         {user?.user_group?.map(({ id, name }) => (
           <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
-            <LeftBarButton text={name} />
+            <LeftBarButton text={name} icon={BackgroundLetterAvatars(name)} />
           </NavLink>
         ))}
       </div>

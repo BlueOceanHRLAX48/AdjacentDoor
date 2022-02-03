@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
 import axios from 'axios';
 
-function MoreMenu({ postId }) {
+function MoreMenu({ postId, getPosts, user, post }) {
+  const [reported, setReported] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -15,8 +16,25 @@ function MoreMenu({ postId }) {
   };
 
   const handleReport = () => {
-    axios.put(`${process.env.REACT_APP_SERVER}/posts/report/${postId}`);
-    setAnchorEl(null);
+    if (!reported) {
+      axios
+        .put(`${process.env.REACT_APP_SERVER}/posts/report/${postId}`)
+        .then(() => {
+          setReported(true);
+          alert('Thank you for your report');
+        })
+        .catch((err) => console.error(err));
+      setAnchorEl(null);
+    }
+  };
+
+  const handleDelete = () => {
+    axios
+      .delete(`${process.env.REACT_APP_SERVER}/posts/delete/${postId}`)
+      .then((res) => {
+        getPosts();
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -39,9 +57,10 @@ function MoreMenu({ postId }) {
           'aria-labelledby': 'basic-more',
         }}
       >
-        <MenuItem onClick={handleClose}>Privacy</MenuItem>
-        <MenuItem onClick={handleReport}>Report</MenuItem>
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        {!reported && <MenuItem onClick={handleReport}>Report</MenuItem>}
+        {(user.admin || post.user_info.username === user.username) && (
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        )}
       </Menu>
     </div>
   );

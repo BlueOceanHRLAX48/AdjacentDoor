@@ -21,17 +21,12 @@ function SignUp() {
   const [address, setAddress] = useState('');
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
     getLocation();
   })
 
   const handleResize = () => {
-    if (window.innerWidth < 720) {
-        setIsMobile(true)
-    } else {
-        setIsMobile(false)
-    }
-  }
+    setIsMobile(!isMobile);
+  };
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -80,17 +75,43 @@ function SignUp() {
       setNotice(false);
       setValidated(true);
       setFillIn(true);
-
-      axios.post('/user/signup', submitData)
-      .then(response => {
-        console.log('New user signed up');
-      })
-      .catch(err => {
-        console.error(err);
-      })
-      document.location.href = '/';
+      if (JSON.parse(localStorage.getItem('loginData')).email === submitData.email) {
+        alert('This email address has been taken. Do you already have an account?');
+        document.location.href = '/login';
+      } else {
+        axios.post('/user/signup', submitData)
+        .then(response => {
+          console.log('New user signed up');
+        })
+        .catch(err => {
+          console.error(err);
+        })
+        document.location.href = '/';
+      }
     }
   };
+
+  const style = () => {
+    let fontStyle = {};
+    if (isMobile) {
+      fontStyle = {
+        variant1: 'h2',
+        variant2: 'h3',
+        fontSize: 40,
+        linkSize: 33,
+        pt: '10%',
+        pd: '1%'
+      };
+    } else {
+      fontStyle = {
+        variant1: 'h4',
+        variant2: 'h5',
+        fontSize: 18,
+        linkSize: 18
+      };
+    }
+    return fontStyle;
+  }
 
   return (
     <div className='w-screen flex'>
@@ -100,7 +121,7 @@ function SignUp() {
           <Grid
             item
             xs={false}
-            sm={4}
+            sm={3}
             md={7}
             sx={{
               backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -113,14 +134,20 @@ function SignUp() {
               backgroundPosition: 'center',
             }}
           />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={9} md={5} component={Paper} elevation={6} square>
             <Box className='flex items-center my-10 mx-10'
               sx={{ flexDirection: 'column' }}
             >
-              <Typography component='h1' variant='h4' color='secondary' align='center' mb='6px'>
+              <Typography
+                component='h1'
+                variant={ style().variant1 }
+                color='secondary'
+                fontFamily='Dancing Script'
+                align='center'
+              >
               ADJACENT DOOR
               </Typography>
-              <Typography component='h1' variant='h5' sx={{mt: 5}}>
+              <Typography component='h1' variant={ style().variant2 } sx={{ mt: 2, mb: 1 }}>
                 Sign Up
               </Typography>
               <Box
@@ -137,6 +164,8 @@ function SignUp() {
                   label='First Name'
                   name='firstName'
                   autoComplete='firstName'
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 <TextField
                   margin='dense'
@@ -146,6 +175,8 @@ function SignUp() {
                   label='Last Name'
                   name='lastName'
                   autoComplete='lastName'
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 <TextField
                   margin='dense'
@@ -154,6 +185,8 @@ function SignUp() {
                   id='username'
                   label='Username'
                   name='username'
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 <TextField
                   margin='dense'
@@ -163,25 +196,36 @@ function SignUp() {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
+                  inputProps={{ style: {fontSize: style().fontSize} }}
+                  InputLabelProps={{ style: {fontSize: style().fontSize} }}
                 />
                 {(!validated && noticeValidEmail) && <Alert className='flex items-center mt-5'
-                  severity='error'>Please enter valid email address
+                  severity='error'
+                  sx={{ fontSize: style().fontSize }}
+                >Please enter valid email address
                 </Alert> }
                 {(!fillIn && notice) && <Alert className='flex items-center mt-5'
-                  severity='error'>Please fill out all the required fields
+                  severity='error'
+                  sx={{ fontSize: style().fontSize }}
+                >Please fill out all the required fields
                 </Alert> }
                 <Button
                   type='submit'
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
+                  style={{ fontSize: style().fontSize }}
                 >
                   Sign Up
                 </Button>
                 <Grid container>
-                  <Grid item>
-                    <Link href='/login' variant='body2'>
-                      {'Already a member? Log In'}
+                  <Grid item sx={{ mt: 2, mb: 2 }}>
+                    <Link
+                      href='/login'
+                      variant='body3'
+                      style={{ fontSize: style().linkSize }}
+                    >
+                      {'Already a member? Log In or Sign Up through Google!'}
                     </Link>
                   </Grid>
                 </Grid>
