@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { MdMoreHoriz } from 'react-icons/md';
 import axios from 'axios';
 
-function MoreMenu({ postId, getPosts }) {
+function MoreMenu({ postId, getPosts, user, post }) {
   const [reported, setReported] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -59,7 +59,7 @@ function MoreMenu({ postId, getPosts }) {
       >
         <MenuItem onClick={handleClose}>Privacy</MenuItem>
         {!reported && <MenuItem onClick={handleReport}>Report</MenuItem>}
-        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        {user.admin && <MenuItem onClick={handleDelete}>Delete</MenuItem>}
       </Menu>
     </div>
   );

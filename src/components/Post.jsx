@@ -10,7 +10,17 @@ import {
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
-function Post({ photos, postId, body, like, time, user, report, getPosts }) {
+function Post({
+  photos,
+  postId,
+  body,
+  like,
+  time,
+  user,
+  report,
+  getPosts,
+  post,
+}) {
   const [liked, setLiked] = React.useState(false);
   const [likeCount, setLikeCount] = React.useState(like);
 
@@ -87,7 +97,12 @@ function Post({ photos, postId, body, like, time, user, report, getPosts }) {
               </div>
             </div>
           </div>
-          <MoreMenu postId={postId} getPosts={getPosts} user={user} />
+          <MoreMenu
+            postId={postId}
+            getPosts={getPosts}
+            user={user}
+            post={post}
+          />
         </div>
       )}
     </>

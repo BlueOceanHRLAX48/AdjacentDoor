@@ -7,6 +7,7 @@ function Feed({ filteredPosts, user, getPosts, currentLocation }) {
         filteredPosts.map((post, i) => (
           <Post
             key={i}
+            post={post}
             photos={post.photos}
             body={post.body}
             privacy={post.privacy}
