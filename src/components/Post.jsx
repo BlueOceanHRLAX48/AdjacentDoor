@@ -2,50 +2,6 @@ import { Avatar } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
-<<<<<<< HEAD
-import {
-  MdChatBubbleOutline,
-  MdFavoriteBorder,
-  MdOutlineShare,
-} from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import MoreMenu from '../MoreMenu';
-
-<<<<<<< HEAD
-function Post({
-  photos,
-  postId,
-  body,
-  like,
-  time,
-  user,
-  report,
-  getPosts,
-  post,
-}) {
-  const [liked, setLiked] = React.useState(false);
-  const [likeCount, setLikeCount] = React.useState(like);
-
-  const handleComment = () => 'q';
-  const handleLike = () => {
-    if (!liked) {
-      axios
-        .put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`)
-        .then((res) => {
-          setLikeCount((x) => x + 1);
-          setLiked(true);
-        })
-        .catch((err) => console.error(err));
-    }
-=======
-function Post({ photos, postId, body, like, time, user, getPosts }) {
-  const handleComment = () => 'q';
-  const handleLike = () => {
-    axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`).then(() => {
-      getPosts();
-    });
->>>>>>> f7cabca (like button update)
-=======
 import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
@@ -65,7 +21,6 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
         })
         .catch((err) => console.error(err));
     }
->>>>>>> 5da3193 (bug)
   };
 
   const handleShare = () => 'q';
@@ -87,25 +42,11 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
               />
             </Link>
             <div className='w-full'>
-<<<<<<< HEAD
-              <div className='flex font-medium align-top w-min'>
-                {user?.username}
-              </div>
-              <div className='flex items-center'>
-                <div className='text-xs font-light text-slate-500'>
-                  {user?.city}
-                </div>
-                <div className='ml-2 mr-2'> • </div>
-                <div className='text-xs font-light text-slate-500'>
-                  {moment(time).format('LL')}
-                </div>
-=======
               <div className='flex font-medium align-top w-min'>{user?.username}</div>
               <div className='flex items-center'>
                 <div className='text-xs font-light text-slate-500'>{user?.city}</div>
                 <div className='ml-2 mr-2'> • </div>
                 <div className='text-xs font-light text-slate-500'>{moment(time).format('LL')}</div>
->>>>>>> 5da3193 (bug)
               </div>
 
               <div className='mt-2'>{body}</div>
@@ -126,42 +67,15 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
                   [likeCount, <MdFavoriteBorder size='15' />, handleLike],
                   ['share', <MdOutlineShare size='15' />, handleShare],
                 ].map(([title, icon, handleClick], i) => (
-<<<<<<< HEAD
-                  <PostButton
-                    icon={icon}
-                    text={title}
-                    handleClick={handleClick}
-                    key={i}
-                  />
-=======
                   <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
->>>>>>> 5da3193 (bug)
                 ))}
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <MoreMenu
-            postId={postId}
-            getPosts={getPosts}
-            user={user}
-            post={post}
-          />
-        </div>
-<<<<<<< HEAD
-      )}
-    </>
-=======
-      </div>
-      <MoreMenu postId={postId} getPosts={getPosts} />
-    </div>
->>>>>>> f7cabca (like button update)
-=======
           <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} />
         </div>
       )}
     </>
->>>>>>> 5da3193 (bug)
   );
 }
 
