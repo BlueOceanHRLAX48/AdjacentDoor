@@ -9,6 +9,17 @@ import MoreMenu from '../MoreMenu';
 function Post({ photos, postId, body, like, time, user, report, getPosts, post }) {
   const [liked, setLiked] = React.useState(false);
   const [isEnlarged, setEnlarge] = React.useState(false);
+  const [city, setCity] = React.useState('');
+
+  React.useEffect(() => {
+    axios
+      .get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${post.coordinates.longitude},${post.coordinates.latitude}.json?types=place&access_token=${process.env.REACT_APP_MAPBOX_APP_TOKEN}`
+      )
+      .then(({ data }) => {
+        setCity(data.features[0].text);
+      });
+  }, []);
 
   const handleComment = () => 'q';
   const handleLike = () => {
@@ -55,6 +66,8 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
               <div className='flex font-medium align-top'>{post.user_info.username}</div>
               <div className='flex items-center'>
                 <div className='mr-2 text-xs font-light text-slate-500'>{post.tag}</div>
+                <> · </>
+                <div className='ml-2 mr-2 text-xs font-light text-slate-500'>{city && city}</div>
                 <> · </>
                 <div className='ml-2 text-xs font-light text-slate-500'>{handleTime(time)}</div>
               </div>
