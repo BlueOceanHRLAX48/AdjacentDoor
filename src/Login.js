@@ -16,16 +16,11 @@ import GoogleLogin from 'react-google-login';
 import theme from './components/muiTheme';
 import axios from 'axios';
 
-function Login() {
+function Login(props) {
   const [isMobile, setIsMobile] = useState(false);
   const [notice, setNotice] = useState(false);
   const [fillIn, setFillIn] = useState(false);
   const [address, setAddress] = useState('');
-  const [loginData, setLoginData] = useState(
-    localStorage.getItem('loginData')
-      ? JSON.parse(localStorage.getItem('loginData'))
-      : null
-  );
 
   useEffect(() => {
     getLocation();
@@ -57,7 +52,6 @@ function Login() {
       .then((response) => {
         const currentAddress = response.data.features[0].place_name;
         setAddress(currentAddress);
-        console.log(address);
       })
       .catch((err) => {
         console.error(err);
@@ -69,7 +63,7 @@ function Login() {
     const data = new FormData(event.currentTarget);
     const submitData = {
       username: data.get('username'),
-      email: data.get('email')
+      email: data.get('email'),
     };
 
     if (!submitData.username || !submitData.email) {
@@ -78,11 +72,15 @@ function Login() {
     } else {
       setNotice(false);
       setFillIn(true);
-      if (JSON.parse(localStorage.getItem('loginData')).email !== submitData.email) {
-        alert('We couldn\'t find your account. Want to try another or create one?');
+      if (
+        JSON.parse(localStorage.getItem('loginData')).email !== submitData.email
+      ) {
+        alert(
+          "We couldn't find your account. Want to try another or create one?"
+        );
         document.location.href = '/signup';
       } else {
-      document.location.href = '/';
+        document.location.href = '/';
       }
     }
   };
@@ -95,7 +93,10 @@ function Login() {
     const userAddress = address.split(', ');
     const city = userAddress[1];
     const state = userAddress[2].substring(0, userAddress[2].length - 6);
-    const zipcode = userAddress[2].substring(userAddress[2].length - 5, userAddress[2].length);
+    const zipcode = userAddress[2].substring(
+      userAddress[2].length - 5,
+      userAddress[2].length
+    );
 
     const userInfo = {
       firstName: data.Du.VX,
@@ -107,26 +108,25 @@ function Login() {
       city: city,
       state: state,
       zip: zipcode,
-      privacy: false
+      privacy: false,
     };
 
-    setLoginData(userInfo);
-    localStorage.setItem('loginData', JSON.stringify(userInfo));
-
     axios
-      .get(`http://localhost:3001/user/${userInfo.network_id}`)
+      .get(`${process.env.REACT_APP_SERVER}/user/${userInfo.network_id}`)
       .then((res) => {
-        document.location.href = '/';
+        props.setUser({ network_id: res.data.network_id });
+        return;
       })
       .catch((err) => {
-        axios.post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
-          .then(response => {
+        axios
+          .post(`${process.env.REACT_APP_SERVER}/user/signup`, userInfo)
+          .then((response) => {
             console.log('New user signed up');
-            document.location.href = '/';
+            props.setUser({ network_id: userInfo.network_id });
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err);
-          })
+          });
       });
   };
 
@@ -140,7 +140,7 @@ function Login() {
         logoSize: 60,
         linkSize: 33,
         pt: '10%',
-        pd: '1%'
+        pd: '1%',
       };
     } else {
       fontStyle = {
@@ -150,21 +150,21 @@ function Login() {
         logoSize: 30,
         linkSize: 18,
         pt: '5%',
-        pb: '1%'
+        pb: '1%',
       };
     }
     return fontStyle;
-  }
+  };
 
   return (
     <div className='w-screen flex-1 h-screen justify-content-center text-2xl bg-ghostWhite'>
-      { isMobile && <img src={require('./image/up.jpg')} alt='up' /> }
+      {isMobile && <img src={require('./image/up.jpg')} alt='up' />}
       <ThemeProvider theme={theme}>
         <Container component='main' maxWidth='md' className='w-20'>
           <CssBaseline />
           <Typography
             component='h1'
-            variant={ style().variant1 }
+            variant={style().variant1}
             color='secondary'
             fontFamily='Dancing Script'
             align='center'
@@ -178,7 +178,7 @@ function Login() {
             sx={{ flexDirection: 'column' }}
           >
             <RiLoginCircleFill />
-            <Typography component='h1' variant={ style().variant2 } >
+            <Typography component='h1' variant={style().variant2}>
               Login
             </Typography>
             <Box
@@ -194,8 +194,8 @@ function Login() {
                 id='username'
                 label='Username'
                 name='username'
-                inputProps={{ style: {fontSize: style().fontSize} }}
-                InputLabelProps={{ style: {fontSize: style().fontSize} }}
+                inputProps={{ style: { fontSize: style().fontSize } }}
+                InputLabelProps={{ style: { fontSize: style().fontSize } }}
               />
               <TextField
                 margin='normal'
@@ -205,17 +205,19 @@ function Login() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
-                inputProps={{ style: {fontSize: style().fontSize} }}
-                InputLabelProps={{ style: {fontSize: style().fontSize} }}
+                inputProps={{ style: { fontSize: style().fontSize } }}
+                InputLabelProps={{ style: { fontSize: style().fontSize } }}
               />
               {!fillIn && notice && (
-                <Alert className='flex items-center mt-5 font-bold'  severity='error'
+                <Alert
+                  className='flex items-center mt-5 font-bold'
+                  severity='error'
                   sx={{ fontSize: style().fontSize }}
                 >
                   Please fill out all the required fields
                 </Alert>
               )}
-              { address ?
+              {address ? (
                 <Button
                   type='submit'
                   fullWidth
@@ -227,12 +229,12 @@ function Login() {
                 >
                   Continue
                 </Button>
-                :
+              ) : (
                 <CircularProgress />
-              }
+              )}
               <div className='text-center pt-3'>Or</div>
               <br />
-              { address ?
+              {address ? (
                 <GoogleLogin
                   clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                   render={(renderProps) => (
@@ -256,16 +258,18 @@ function Login() {
                         size={style().logoSize}
                         style={{ marginRight: 60 }}
                       />
-                      <span style={{ marginRight: 40 }}>Log in With Google</span>
+                      <span style={{ marginRight: 40 }}>
+                        Log in With Google
+                      </span>
                     </button>
                   )}
                   onSuccess={handleLogin}
                   onFailure={handleFailure}
                   cookiePolicy={'single_host_origin'}
                 ></GoogleLogin>
-                :
+              ) : (
                 <CircularProgress />
-              }
+              )}
               <Grid container sx={{ mt: 3, mb: 10 }}>
                 <Grid item>
                   <Link
@@ -281,7 +285,11 @@ function Login() {
           </Box>
         </Container>
       </ThemeProvider>
-      { isMobile ? <img src={require('./image/down.jpg')} alt='down' /> : <img src={require('./image/friend.jpg')} alt='friend' />}
+      {isMobile ? (
+        <img src={require('./image/down.jpg')} alt='down' />
+      ) : (
+        <img src={require('./image/friend.jpg')} alt='friend' />
+      )}
     </div>
   );
 }
