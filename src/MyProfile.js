@@ -9,7 +9,7 @@ function MyProfile({ user }) {
         <LeftBar />
       </div>
 
-      <div className='w-[600px] min-h-screen p-4 flex items-center justify-center'>
+      <div className='flex w-[500px] h-[300px] items-center justify-center p-4'>
         <Avatar
           alt='Remy Sharp'
           src={user.profile_img || '/static/images/avatar/1.jpg'}
@@ -17,9 +17,9 @@ function MyProfile({ user }) {
           className='mr-8'
         />
         <div className='text-base'>
-          <div className='font-semibold'>{user.username}</div>
-          <div className='font-light'>{user.email}</div>
-          <div className='font-light'>{user.city + ', ' + user.state + ', ' + user.zip}</div>
+          <div>{'Name:  ' + user.username}</div>
+          <div>{'Email:  ' + user.email}</div>
+          <div>{'Location:  ' + user.city + ', ' + user.state + ', ' + user.zip}</div>
         </div>
       </div>
     </div>
