@@ -3,7 +3,6 @@ import axios from 'axios';
 import React from 'react';
 import LeftBar from './LeftBar/index';
 import { MdEdit } from 'react-icons/md';
-import UploadPhoto from './Groups/UploadPhoto';
 
 function MyProfile({ user, setUser }) {
   const [username, setUsername] = React.useState(user.username);
@@ -16,10 +15,41 @@ function MyProfile({ user, setUser }) {
   const backupImage = user.profile_img;
 
   function handleSave() {
-    axios.put(
-      `${process.env.REACT_APP_SERVER}/user/${user.network_id}/displayName`,
-      { username }
-    );
+    if (username !== user.username) {
+      axios
+        .put(
+          `${process.env.REACT_APP_SERVER}/user/${user.network_id}/displayName`,
+          { username }
+        )
+        .catch((err) => console.error(err));
+    }
+    if (city !== user.city || zip !== user.zip || state !== user.state) {
+      axios
+        .put(
+          `${process.env.REACT_APP_SERVER}/user/${user.network_id}/updateLocation`,
+          { city, state, zip }
+        )
+        .catch((err) => console.error(err));
+    }
+    if (profileImage !== user.profile_img) {
+      axios
+        .put(`${process.env.REACT_APP_SERVER}/user/${user.network_id}/photo`, {
+          photo: profileImage,
+        })
+        .catch((err) => console.error(err));
+    }
+    setTimeout(() => {
+      axios
+        .get(`${process.env.REACT_APP_SERVER}/user/${user.network_id}`)
+        .then((res) => {
+          setUser(res.data);
+          localStorage.setItem('AdjacentDoorUser', JSON.stringify(res.data));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }, 1000);
+    setEdit(false);
   }
 
   function handleCancel() {
@@ -91,7 +121,7 @@ function MyProfile({ user, setUser }) {
                 type='file'
                 onChange={(e) => handleUpload(e.target.files)}
               />
-              <div className='ml-auto font-bold'>
+              <div className='ml-auto font-bold animate-pulse'>
                 {uploading ? 'Uploading...' : ''}
               </div>
             </div>
