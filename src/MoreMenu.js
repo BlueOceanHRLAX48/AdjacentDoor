@@ -5,7 +5,9 @@ import { MdMoreHoriz } from 'react-icons/md';
 import axios from 'axios';
 
 function MoreMenu({ postId, getPosts, user, post }) {
-  const [reported, setReported] = useState(false);
+  const [reported, setReported] = useState(() =>
+    JSON.parse(localStorage.getItem(`adReported${postId}`))
+  );
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -17,13 +19,18 @@ function MoreMenu({ postId, getPosts, user, post }) {
 
   const handleReport = () => {
     if (!reported) {
+      setReported(true);
       axios
         .put(`${process.env.REACT_APP_SERVER}/posts/report/${postId}`)
         .then(() => {
-          setReported(true);
+          localStorage.setItem(`adReported${postId}`, 'true');
           alert('Thank you for your report');
+          return;
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setReported(false);
+          console.error(err);
+        });
       setAnchorEl(null);
     }
   };
