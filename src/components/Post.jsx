@@ -22,7 +22,6 @@ function Post({
   post,
 }) {
   const [liked, setLiked] = React.useState(false);
-  const [likeCount, setLikeCount] = React.useState(like);
 
   const handleComment = () => 'q';
   const handleLike = () => {
@@ -30,7 +29,7 @@ function Post({
       axios
         .put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`)
         .then((res) => {
-          setLikeCount((x) => x + 1);
+          getPosts();
           setLiked(true);
         })
         .catch((err) => console.error(err));
@@ -84,7 +83,7 @@ function Post({
               <div className='flex items-center justify-between mt-2 mr-2'>
                 {[
                   ['comment', <MdChatBubbleOutline size='15' />, handleComment],
-                  [likeCount, <MdFavoriteBorder size='15' />, handleLike],
+                  [like, <MdFavoriteBorder size='15' />, handleLike],
                   ['share', <MdOutlineShare size='15' />, handleShare],
                 ].map(([title, icon, handleClick], i) => (
                   <PostButton
