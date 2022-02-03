@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const router = require('./router/route')
+const path = require('path')
 
 const port = process.env.PORT || 3001;
 
@@ -16,18 +17,9 @@ app.use('/', router);
 
 //localhost:3002 for group routes
 
-/**
- *
- * user -> everything user info in user_account + what groups they are apart of -> component that shows all their groups
- * user selects a specific group -> get request on that group_id -> all the information from users_groups + all the users in that group
- * {
- * users....
- * groups: {groupId: groupName, groupID: groupName} -> [...groupIds] or [...groupNames]
- * }
- *
- *
- */
-
+app.get('/loaderio-8ffa3667f6c98aa7fa9d1ff67fbe4f41.txt', (req, res) => {
+  res.status(200).send('loaderio-8ffa3667f6c98aa7fa9d1ff67fbe4f41');
+})
 
 app.listen(port, () => {
   console.log('listening on ', port)
