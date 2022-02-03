@@ -8,11 +8,8 @@ import MoreMenu from '../MoreMenu';
 
 function Post({ photos, postId, body, like, time, user, report, getPosts, post }) {
   const [liked, setLiked] = React.useState(false);
-<<<<<<< HEAD
   const [isEnlarged, setEnlarge] = React.useState(false);
 
-=======
->>>>>>> 0402110 (add detail to post)
   const handleComment = () => 'q';
   const handleLike = () => {
     if (!liked) {
