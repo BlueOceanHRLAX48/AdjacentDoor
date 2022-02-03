@@ -16,7 +16,7 @@ function App() {
   const [user, setUser] = useState(
     () => JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {}
   );
-  // FOR DEMO PURPOSES, IF YOU KEEP GETTING REDIRECTED TO /LOGIN, ADD THIS TO THE ABOVE USER STATE OBJECT: network_id: '1124asfas'
+  // DEMO: IF YOU KEEP GETTING REDIRECTED TO /LOGIN, ADD THIS TO THE ABOVE USER STATE OBJECT (MAKE SURE YOURE USING DEPLOYED DB): network_id: '116946549505913178009'
 
   const [currentLocation, setCurrentLocation] = React.useState({});
 
@@ -59,7 +59,11 @@ function App() {
         <Route
           path='/'
           element={
-            user.network_id ? <Home user={user} /> : <Navigate to='/login' />
+            user.network_id ? (
+              <Home user={user} setUser={setUser} />
+            ) : (
+              <Navigate to='/login' />
+            )
           }
         />
         <Route
@@ -81,7 +85,11 @@ function App() {
         <Route
           path='/g/:groupId'
           element={
-            <GroupDetail user={user} currentLocation={currentLocation} />
+            <GroupDetail
+              user={user}
+              setUser={setUser}
+              currentLocation={currentLocation}
+            />
           }
         />
         <Route path='/leaderboard' element={<Leaderboard user={user} />} />
@@ -92,9 +100,7 @@ function App() {
           }
         />
       </Routes>
-      <div>
-        <Footer groupId={user.default_group.id} />
-      </div>
+      <div>{/* <Footer groupId={user.default_group.id} /> */}</div>
     </BrowserRouter>
   );
 }

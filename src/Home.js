@@ -17,7 +17,7 @@ function Home({ user, setUser }) {
   function getPosts() {
     axios
       .get(
-        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user.default_group.id}`
+        `${process.env.REACT_APP_SERVER}/posts/defaultgroup?group_id=${user?.default_group?.id}`
       )
       .then(({ data }) => {
         setPosts(data.posts);
