@@ -57,6 +57,13 @@ module.exports = {
       .then(() => res.sendStatus(204))
       .catch((err) => res.status(500).send(err))
   },
+  unlikePost: (req, res) => {
+    const { post_id } = req.params;
+    pool
+      .query(queries.unlikePost,[post_id])
+      .then(() => res.sendStatus(204))
+      .catch((err) => res.status(500).send(err))
+  },
   reportPost: (req, res) => {
     const { post_id } = req.params;
     pool
