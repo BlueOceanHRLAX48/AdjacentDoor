@@ -16,6 +16,7 @@ function App() {
   const [user, setUser] = useState(
     () => JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {}
   );
+  // DEMO: IF YOU KEEP GETTING REDIRECTED TO /LOGIN, ADD THIS TO THE ABOVE USER STATE OBJECT (MAKE SURE YOURE USING DEPLOYED DB): network_id: '116946549505913178009'
 
   const [currentLocation, setCurrentLocation] = React.useState({});
 
@@ -28,16 +29,19 @@ function App() {
       })
       .catch((err) => {
         console.error("User doesn't exist");
+        localStorage.removeItem('AdjacentDoorUser');
         setUser({});
       });
+  }, [user.network_id]);
 
+  React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) =>
       setCurrentLocation({
         latitude: res.coords.latitude,
         longitude: res.coords.longitude,
       })
     );
-  }, [user.network_id]);
+  }, []);
 
   setInterval(() => {
     navigator.geolocation.getCurrentPosition((res) =>
@@ -56,7 +60,7 @@ function App() {
           path='/'
           element={
             user.network_id ? (
-              <Home user={user} setUser={setUser} />
+              <Home user={user} setUser={setUser} currentLocation={currentLocation} />
             ) : (
               <Navigate to='/login' />
             )
@@ -64,33 +68,32 @@ function App() {
         />
         <Route
           path='/login'
-          element={
-            user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />
-          }
+          element={user.network_id ? <Navigate to='/' /> : <Login setUser={setUser} />}
         />
         <Route path='/signup' element={<SignUp />} />
+        <Route path='/signout' element={<SignUp />} />
         <Route path='/my-profile' element={<MyProfile />} />
-        <Route
-          path='/groups'
-          element={
-            <Groups
-              user={user}
-              currentLocation={currentLocation}
-              setUser={setUser}
-            />
-          }
-        />
-        <Route path='/g/:groupId' element={<GroupDetail user={user} />} />
-        <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/create-post' element={<MakePost />} />
         <Route
+          path='/groups'
+          element={<Groups user={user} currentLocation={currentLocation} setUser={setUser} />}
+        />
+        <Route
+          path='/g/:groupId'
+          element={<GroupDetail user={user} setUser={setUser} currentLocation={currentLocation} />}
+        />
+        <Route path='/leaderboard' element={<Leaderboard user={user} />} />
+        <Route
           path='/admin'
-          element={
-            user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />
-          }
+          element={user.admin ? <AdminPanel user={user} /> : <Navigate to='/' />}
         />
       </Routes>
-      <div>{/* <Footer groupId={user.default_group.id} /> */}</div>
+
+      {window.location.pathname !== '/signup' || window.location.pathname !== '/login' ? (
+        <div>
+          <Footer />
+        </div>
+      ) : null}
     </BrowserRouter>
   );
 }

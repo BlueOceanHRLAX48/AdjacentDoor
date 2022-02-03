@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 function SearchBar({ search, setSearch }) {
   const handleSearchInput = (e) => {
     setSearch(e.target.value);

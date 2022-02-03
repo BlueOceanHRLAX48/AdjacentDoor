@@ -1,53 +1,13 @@
-import axios from 'axios';
-import { useRef } from 'react';
 import Post from './Post';
-import MakePost from './MakePost';
 
-function Feed({ filteredPosts, user, getPosts }) {
-  const postInput = useRef(null);
-
-  const handleSubmit = (e) => {
-    let postContent = {
-      group_id: user.default_group.id,
-      user_id: user.user_id,
-      body: postInput.current.value,
-      tag: 'forsale',
-      privacy: false,
-      latitude: 123,
-      longitude: -456.5,
-    };
-    axios
-      .post(`${process.env.REACT_APP_SERVER}/posts/defaultgroup`, postContent)
-      .then((response) => {
-        getPosts();
-      });
-    // setFilteredPosts([postContent, ...filteredPosts]);
-    postInput.current.value = '';
-    e.preventDefault();
-  };
-
+function Feed({ filteredPosts, user, getPosts, currentLocation }) {
   return (
-    <div className='w-full sm:w-[600px] px-4 mb-12 sm:mb-20'>
-      <div className='hidden sm:block'>
-        {/* <form className='relative flex justify-center'>
-          <textarea
-            className='w-full h-10 p-1 px-3 text-sm border shadow-sm rounded-xl border-slate-100 focus:outline-none focus:ring-secondary focus:ring-2 focus:m-1 dark:bg-gray-900'
-            placeholder='Write something...'
-            ref={postInput}
-          ></textarea>
-          <button
-            onClick={handleSubmit}
-            className='absolute px-2 text-xs font-medium text-white rounded-full bg-primary bottom-2 right-4'
-          >
-            submit
-          </button>
-        </form> */}
-        <MakePost />
-      </div>
+    <div className='w-full sm:w-[600px] p-4 mb-12 sm:mb-20'>
       {filteredPosts &&
         filteredPosts.map((post, i) => (
           <Post
             key={i}
+            post={post}
             photos={post.photos}
             body={post.body}
             privacy={post.privacy}
@@ -58,6 +18,7 @@ function Feed({ filteredPosts, user, getPosts }) {
             postId={post.post_id}
             time={post.time}
             user={user}
+            getPosts={getPosts}
           />
         ))}
     </div>

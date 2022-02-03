@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import MakePost from './components/MakePost';
@@ -5,98 +6,60 @@ import PostFeed from './components/PostFeed';
 import LeftBar from './LeftBar';
 import RightBar from './RightBar';
 import TopNav from './TopNav';
+import Map from './Map';
 
 function GroupDetail(props) {
   const groupId = useParams().groupId;
 
   const [filter, setFilter] = React.useState('');
+  const [search, setSearch] = React.useState('');
+  const [posts, setPosts] = React.useState([]);
+  const [group, setGroup] = React.useState({});
 
-  const samplePosts = [
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'general',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'forsale',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'forsale',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'safety',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-    {
-      avatar: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-      name: 'name',
-      date: '1-2-2022',
-      type: 'general',
-      post_text:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim',
-      report: 0,
-      likes: 0,
-      latitude: '40.741895',
-      longitude: '-73.989308',
-    },
-  ];
+  React.useEffect(() => {
+    getData();
+  }, []);
 
-  const filteredPosts = samplePosts.filter((post) =>
-    post.type.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredPosts = posts
+    .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
+    .filter((post) => post.body.toLowerCase().includes(search.toLowerCase()));
 
   function getData() {
-    //axios request for data using groupId
+    axios
+      .get(
+        `${process.env.REACT_APP_SERVER}/posts/usergroup?user_group_id=${groupId}`
+      )
+      .then((res) => setPosts(res.data.posts))
+      .catch((err) => console.error(err));
+
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/groups/user?group_id=${groupId}`)
+      .then((res) => setGroup(res.data[0]))
+      .catch((err) => console.error(err));
   }
   return (
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
       <div className='flex flex-col grow'>
-        <TopNav user={props.user} />
+        <TopNav
+          setSearch={setSearch}
+          search={search}
+          user={props.user}
+          setUser={props.setUser}
+        />
         <div className='flex grow'>
           <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
             <div className='w-[600px] px-4 pt-4'>
-              <div className='flex justify-center items-center bg-ghostWhite border rounded h-[400px]'>
-                MAP PLACEHOLDER
-              </div>
+              {group.coordinates && <Map group={group} posts={filteredPosts} />}
             </div>
-            <MakePost refresh={getData} />
+            <MakePost
+              refresh={getData}
+              user={props.user}
+              currentLocation={props.currentLocation}
+            />
             <PostFeed posts={filteredPosts} />
           </div>
-          <RightBar />
+          <RightBar user={props.user} />
         </div>
       </div>
     </div>

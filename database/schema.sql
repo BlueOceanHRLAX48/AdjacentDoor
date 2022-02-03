@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS user_groups(
   id SERIAL NOT NULL PRIMARY KEY,
   "name" text NOT NULL,
   admin_id text NOT NULL,
-  "description" text Not NULL,
   city text NOT NULL,
   "state" text NOT NULL,
   zip text not NULL,
@@ -185,6 +184,5 @@ CREATE INDEX post_img_id on post_imgs(id);
 CREATE INDEX group_rating_id on groups_rating(id);
 CREATE INDEX user_group_list_accepted on user_group_list(accepted);
 CREATE INDEX posts_deleted on posts(deleted);
-
 CREATE INDEX posts_group_id on posts(group_id);
 CREATE INDEX posts_user_groups_id on posts(user_group_id);
