@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import UploadPhoto from './UploadPhoto';
 import axios from 'axios';
-import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
+import { validGroupNameInputs, validDescriptionInputs } from '../Regex';
 
 function MakeGroup(props) {
   const [open, setOpen] = useState(false);

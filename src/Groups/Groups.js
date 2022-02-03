@@ -43,7 +43,6 @@ function Groups(props) {
               <Button variant="outlined" onClick={() => {
                 let newRadius = document.getElementById('radiusInput').value;
                 setRadius(newRadius);
-                console.log(newRadius);
               }}>FIND</Button>
             </div>
             <div>Groups near you</div>
