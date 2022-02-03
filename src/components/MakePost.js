@@ -7,7 +7,7 @@ import { flushSync } from 'react-dom';
 
 function MakePost(props) {
   const [body, setBody] = React.useState('');
-  const [type, setType] = React.useState('');
+  const [type, setType] = React.useState('general');
   const [privacy, setPrivacy] = React.useState(false);
   const [files, setFiles] = React.useState();
   const [uploadURLs, setUploadURLS] = React.useState([]);
@@ -105,7 +105,7 @@ function MakePost(props) {
           </select>
           <button
             className='ml-auto disabled:opacity-50 bg-primary font-semibold rounded px-4 py-2'
-            disabled={!body || !type}
+            disabled={!body}
             onClick={handleSubmit}
           >
             Post

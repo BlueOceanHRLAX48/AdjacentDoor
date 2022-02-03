@@ -1,6 +1,7 @@
 import { Avatar } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
+import React from 'react';
 import {
   MdChatBubbleOutline,
   MdFavoriteBorder,
@@ -10,9 +11,21 @@ import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
 function Post({ photos, postId, body, like, time, user }) {
+  const [liked, setLiked] = React.useState(false);
+  const [reported, setReported] = React.useState(false);
+  const [likeCount, setLikeCount] = React.useState(like);
+
   const handleComment = () => 'q';
   const handleLike = () => {
-    axios.put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`);
+    if (!liked) {
+      axios
+        .put(`${process.env.REACT_APP_SERVER}/posts/like/${postId}`)
+        .then((res) => {
+          setLikeCount((x) => x + 1);
+          setLiked(true);
+        })
+        .catch((err) => console.error(err));
+    }
   };
   const handleShare = () => 'q';
 
@@ -43,8 +56,9 @@ function Post({ photos, postId, body, like, time, user }) {
 
           <div className='mt-2'>{body}</div>
           <div className='flex gap-2 py-2'>
-            {photos.map((photo) => (
+            {photos.map((photo, i) => (
               <img
+                key={i}
                 src={photo.image_url}
                 alt='upload'
                 width='75px'
@@ -55,7 +69,7 @@ function Post({ photos, postId, body, like, time, user }) {
           <div className='flex items-center justify-between mt-2 mr-2'>
             {[
               ['comment', <MdChatBubbleOutline size='15' />, handleComment],
-              [like, <MdFavoriteBorder size='15' />, handleLike],
+              [likeCount, <MdFavoriteBorder size='15' />, handleLike],
               ['share', <MdOutlineShare size='15' />, handleShare],
             ].map(([title, icon, handleClick], i) => (
               <PostButton
