@@ -27,7 +27,7 @@ function MakeGroup(props) {
   const [description, setDescription] = useState('');
   const [privacy, setPrivacy] = useState('public');
   const [local, setLocal] = useState('global');
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState('http://placecorgi.com/260/180');
   const [localRadius, setRadius] = useState(5);
 
   const [location, setLocation] = useState({
