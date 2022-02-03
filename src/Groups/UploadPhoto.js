@@ -19,6 +19,21 @@ const UploadPhoto = (props) => {
 
   }
 
+  const [photo, setPhoto] = useState('');
+
+  const storeImages = (imageInput) => {
+    const formData = new FormData();
+    formData.append('file', imageInput);
+    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET);
+    axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY}/image/upload`, formData)
+    .then((response) => {
+      console.log(response.data.secure_url)
+      setPhoto(response.data.secure_url);
+    })
+    .catch((err) => {console.log(err)})
+
+  }
+
   return (
     <div>
       <Typography variant='h6' component='h2'>
