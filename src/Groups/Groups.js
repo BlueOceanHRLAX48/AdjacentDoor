@@ -5,27 +5,24 @@ import TopNav from '../TopNav';
 import LeftBar from '../LeftBar';
 import RightBar from '../RightBar';
 import axios from 'axios';
-import GroupsNearby from './sampledata';
 
 function Groups(props) {
   const [groups, setGroups] = useState([]);
   const { user_group } = props.user;
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
-        params: {
-          longitude: props.currentLocation.longitude,
-          latitude: props.currentLocation.latitude,
-          r: 5000,
-        },
-      })
-      .then((result) => {
-        console.log(result.data);
-        setGroups(result.data);
-      })
-      .catch((err) => console.log(err));
-  }, [props.currentLocation.longitude, props.currentLocation.latitude]);
+    axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
+      params: {
+        longitude: props.currentLocation.longitude,
+        latitude: props.currentLocation.latitude
+      }
+    })
+    .then((result) => {
+      console.log('/groups/lists', result.data)
+      setGroups(result.data);
+    })
+    .catch(err => console.log(err));
+  }, [props.currentLocation.longitude, props.currentLocation.latitude])
 
   return (
     <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
