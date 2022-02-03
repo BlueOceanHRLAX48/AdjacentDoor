@@ -56,8 +56,6 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post }
               <div className='flex items-center'>
                 <div className='mr-2 text-xs font-light text-slate-500'>{post.tag}</div>
                 <> · </>
-                <div className='ml-2 mr-2 text-xs font-light text-slate-500'>{user.city}</div>
-                <> · </>
                 <div className='ml-2 text-xs font-light text-slate-500'>{handleTime(time)}</div>
               </div>
 
