@@ -72,16 +72,6 @@ function Login(props) {
     } else {
       setNotice(false);
       setFillIn(true);
-      if (
-        JSON.parse(localStorage.getItem('loginData')).email !== submitData.email
-      ) {
-        alert(
-          "We couldn't find your account. Want to try another or create one?"
-        );
-        document.location.href = '/signup';
-      } else {
-        document.location.href = '/';
-      }
     }
   };
 
