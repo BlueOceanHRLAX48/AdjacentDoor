@@ -59,7 +59,9 @@ function MoreMenu({ postId, getPosts, user, post }) {
       >
         <MenuItem onClick={handleClose}>Privacy</MenuItem>
         {!reported && <MenuItem onClick={handleReport}>Report</MenuItem>}
-        {user.admin && <MenuItem onClick={handleDelete}>Delete</MenuItem>}
+        {(user.admin || post.user_info.username === user.username) && (
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        )}
       </Menu>
     </div>
   );
