@@ -2,10 +2,10 @@ const { Pool } = require('pg');
 const config = require('../config')
 
 const connection = {
-  host: config.host || 'localhost',
+  host: config.host,
   user: config.user,
   password: config.password,
-  database: config.database || 'blueocean',
+  database: config.database,
   port: config.port,
 };
 
