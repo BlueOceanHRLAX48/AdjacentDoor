@@ -50,6 +50,7 @@ module.exports = {
       .query(createGroup, values)
       .then((results) => {
         const group_id = results.rows[0].id;
+        
         if(group_id) {
           pool
             .query(addAdmin, [network_id, group_id])
