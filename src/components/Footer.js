@@ -24,10 +24,11 @@ function Footer() {
     }
 
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (width > 630) {
+  if (document.getElementById('left-bar') && width > 630) {
     document.getElementById('left-bar').style.display = 'flex';
   }
 
