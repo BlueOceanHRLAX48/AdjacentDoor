@@ -28,7 +28,7 @@ function MakePost(props) {
     for (let i = 0; i < inputFiles.length; i++) {
       let formData = new FormData();
       formData.append('file', inputFiles[i]);
-      formData.append('upload_preset', 'milespreset');
+      formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET);
       await axios
         .post(
           `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY}/image/upload`,
