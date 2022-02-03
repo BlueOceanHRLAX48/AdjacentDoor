@@ -5,7 +5,6 @@ import LeftBar from './LeftBar/index';
 import { MdEdit } from 'react-icons/md';
 
 function MyProfile({ user, setUser }) {
-  console.log(user);
   const [username, setUsername] = React.useState(user.username);
   const [city, setCity] = React.useState(user.city);
   const [state, setState] = React.useState(user.state);
