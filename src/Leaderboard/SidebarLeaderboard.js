@@ -19,7 +19,7 @@ function SidebarLeaderboard(props) {
   React.useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_SERVER}/${props.user.zip}/leaderboard?count=5`
+        `${process.env.REACT_APP_SERVER}/leaderboard/${props.user.zip}?count=5`
       )
       .then((res) => {
         setLocal(res.data);
