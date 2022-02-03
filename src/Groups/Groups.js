@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button, TextField } from '@mui/material';
 import MakeGroup from './MakeGroup';
 import GroupCard from './GroupCard';
 import TopNav from '../TopNav';
@@ -9,20 +10,21 @@ import axios from 'axios';
 function Groups(props) {
   const [groups, setGroups] = useState([]);
   const { user_group } = props.user;
+  const [radius, setRadius] = useState(50);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
       params: {
         longitude: props.currentLocation.longitude,
         latitude: props.currentLocation.latitude,
-        mi: 100
+        mi: radius
       }
     })
     .then((result) => {
       setGroups(result.data);
     })
     .catch(err => console.log(err));
-  }, [props.currentLocation])
+  }, [props.currentLocation, radius])
 
   return (
     <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
@@ -36,6 +38,13 @@ function Groups(props) {
         <div className='flex-col'>
           <div>
             <MakeGroup currentLocation={props.currentLocation} user={props.user} />
+            <div>
+              <TextField id='radiusInput' variant='outlined' placeholder='search radius in miles' type='number' min='0' max='500'></TextField>
+              <Button variant="outlined" onClick={() => {
+                let newRadius = document.getElementById('radiusInput').value;
+                setRadius(newRadius);
+              }}>FIND</Button>
+            </div>
             <div>Groups near you</div>
             <div id='seeGroups'>
               {groups.map((card, index) => {

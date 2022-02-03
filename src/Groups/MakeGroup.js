@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import UploadPhoto from './UploadPhoto';
 import axios from 'axios';
-import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
+import { validGroupNameInputs, validDescriptionInputs } from '../Regex';
 
 function MakeGroup(props) {
   const [open, setOpen] = useState(false);
@@ -26,9 +26,7 @@ function MakeGroup(props) {
   const [groupName, setGname] = useState('');
   const [description, setDescription] = useState('');
   const [privacy, setPrivacy] = useState('public');
-  const [local, setLocal] = useState('global');
   const [photo, setPhoto] = useState('http://placecorgi.com/260/180');
-  const [localRadius, setRadius] = useState(5);
 
   const [location, setLocation] = useState({
     place: '',
@@ -86,7 +84,6 @@ function MakeGroup(props) {
     setGname('');
     setDescription('');
     setPrivacy('public');
-    setLocal('global');
     setPhoto('');
   };
 
@@ -169,41 +166,6 @@ function MakeGroup(props) {
         return (
           <div>
             <FormControl>
-              <FormLabel id='local-or-global-radios'>Settings</FormLabel>
-              <RadioGroup
-                aria-labelledby='local-or-global-radios'
-                defaultValue='global'
-                name='radio-butt'
-              >
-                <FormControlLabel
-                  value='global'
-                  control={<Radio />}
-                  label='Global'
-                  onClick={() => {
-                    setLocal('global');
-                  }}
-                ></FormControlLabel>
-                <FormControlLabel
-                  value='local'
-                  control={<Radio />}
-                  label='Local'
-                  onClick={() => {
-                    setLocal('local');
-                  }}
-                ></FormControlLabel>
-                {local === 'local' ? (
-                  <TextField
-                    type='number'
-                    placeholder='preferred mile radius'
-                    value={localRadius || ''}
-                    onChange={(e) => {
-                      setRadius(e.target.value);
-                    }}
-                  ></TextField>
-                ) : (
-                  ''
-                )}
-              </RadioGroup>
               <FormLabel id='local-or-global-radios'>Privacy</FormLabel>
               <RadioGroup aria-labelledby='privacy-radios' defaultValue='public' name='radio-butt'>
                 <FormControlLabel
@@ -226,11 +188,7 @@ function MakeGroup(props) {
             </FormControl>
             <Button
               onClick={() => {
-                if (validIntegerInputs.test(localRadius)) {
                   setSlide('p5');
-                } else {
-                  alert('Please provide a valid integer radius');
-                }
               }}
             >
               NEXT
