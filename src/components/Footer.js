@@ -3,7 +3,7 @@ import { MdGroups, MdHome, MdMenu, MdOutlineAddCircle, MdSearch } from 'react-ic
 import { NavLink } from 'react-router-dom';
 
 function Footer() {
-  const [search, setSearch] = React.useState(false);
+  const [create, setCreate] = React.useState(true);
   const [width, setWidth] = React.useState(window.innerWidth);
 
   const openLeftBar = () => {
@@ -13,13 +13,13 @@ function Footer() {
     document.getElementById('left-bar').style.display = 'none';
   };
 
-  const toggleSearchBar = () => {
-    if (search) {
-      document.getElementById('search-bar').style.display = 'flex';
+  const toggleCreatePost = () => {
+    if (create) {
+      document.getElementById('create-post').style.display = 'flex';
     } else {
-      document.getElementById('search-bar').style.display = 'none';
+      document.getElementById('create-post').style.display = 'none';
     }
-    setSearch(!search);
+    setCreate(!create);
   };
 
   React.useEffect(() => {
@@ -41,13 +41,9 @@ function Footer() {
       <NavLink to='/'>
         <MdHome className='' size='30' onClick={closeLeftBar} />
       </NavLink>
-      <MdSearch className='' size='30' onClick={toggleSearchBar} />
-      <NavLink to='/create-post'>
-        <MdOutlineAddCircle className='cursor-pointer' size='30' onClick={closeLeftBar} />
-      </NavLink>
-      <NavLink to={`/groups`}>
-        <MdGroups className='' size='30' onClick={closeLeftBar} />
-      </NavLink>
+
+      <MdOutlineAddCircle className='cursor-pointer' size='30' onClick={toggleCreatePost} />
+
       <MdMenu className='cursor-pointer' size='30' onClick={openLeftBar} />
     </div>
   );

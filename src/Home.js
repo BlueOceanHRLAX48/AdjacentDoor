@@ -46,9 +46,10 @@ function Home({ user, setUser, currentLocation }) {
         </div>
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
-            <div className='hidden sm:block'>
+            <div className='hidden sm:flex' id='create-post'>
               <MakePost user={user} currentLocation={currentLocation} refresh={getPosts} />
             </div>
+
             <Feed
               filteredPosts={filteredPosts}
               user={user}

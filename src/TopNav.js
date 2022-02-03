@@ -38,7 +38,7 @@ function TopNav({
 
   return (
     <div className='flex items-center justify-between w-full mt-4 mb-4 '>
-      <div id='search-bar'>
+      <div>
         <SearchBar
           posts={posts}
           setPosts={setPosts}
