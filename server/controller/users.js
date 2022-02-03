@@ -247,7 +247,7 @@ module.exports = {
   updatePhoto: (req, res) => {
     let photo = req.body.photo
     let { id } = req.params
-    
+
     let photoStr = `
       update user_account set profile_img = $1
       where network_id = $2;
@@ -340,7 +340,7 @@ module.exports = {
     `update user_account set username = $1
       where network_id = $2;
     `
-    pool.query(nicknameStr , [id, username ])
+    pool.query(nicknameStr , [username, id ])
       .then(result => res.status(201).send('Display name has been updated'))
       .catch(err => res.status(500).send('Error updating nickname'))
   },
