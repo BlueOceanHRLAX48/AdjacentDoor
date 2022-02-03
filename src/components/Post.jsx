@@ -1,7 +1,11 @@
 import { Avatar } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
-import { MdChatBubbleOutline, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
+import {
+  MdChatBubbleOutline,
+  MdFavoriteBorder,
+  MdOutlineShare,
+} from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import MoreMenu from '../MoreMenu';
 
@@ -24,21 +28,42 @@ function Post({ photos, postId, body, like, time, user }) {
           />
         </Link>
         <div className='w-full'>
-          <div className='flex font-medium align-top w-min'>{user?.username}</div>
+          <div className='flex font-medium align-top w-min'>
+            {user?.username}
+          </div>
           <div className='flex items-center'>
-            <div className='text-xs font-light text-slate-500'>{user?.city}</div>
+            <div className='text-xs font-light text-slate-500'>
+              {user?.city}
+            </div>
             <div className='ml-2 mr-2'> • </div>
-            <div className='text-xs font-light text-slate-500'>{moment(time).format('LL')}</div>
+            <div className='text-xs font-light text-slate-500'>
+              {moment(time).format('LL')}
+            </div>
           </div>
 
           <div className='mt-2'>{body}</div>
+          <div className='flex gap-2 py-2'>
+            {photos.map((photo) => (
+              <img
+                src={photo.image_url}
+                alt='upload'
+                width='75px'
+                className='border border-black'
+              />
+            ))}
+          </div>
           <div className='flex items-center justify-between mt-2 mr-2'>
             {[
               ['comment', <MdChatBubbleOutline size='15' />, handleComment],
               [like, <MdFavoriteBorder size='15' />, handleLike],
               ['share', <MdOutlineShare size='15' />, handleShare],
             ].map(([title, icon, handleClick], i) => (
-              <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
+              <PostButton
+                icon={icon}
+                text={title}
+                handleClick={handleClick}
+                key={i}
+              />
             ))}
           </div>
         </div>
