@@ -12,7 +12,6 @@ import MoreMenu from '../MoreMenu';
 
 function Post({ photos, postId, body, like, time, user }) {
   const [liked, setLiked] = React.useState(false);
-  const [reported, setReported] = React.useState(false);
   const [likeCount, setLikeCount] = React.useState(like);
 
   const handleComment = () => 'q';
@@ -27,6 +26,7 @@ function Post({ photos, postId, body, like, time, user }) {
         .catch((err) => console.error(err));
     }
   };
+
   const handleShare = () => 'q';
 
   return (
