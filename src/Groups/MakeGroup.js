@@ -208,7 +208,7 @@ function MakeGroup(props) {
 
   return (
     <div className='makeGroupSection'>
-      <Button sx={{width: '70%', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}} variant='outlined' onClick={handleOpen}>
+      <Button sx={{width: '100%', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}} variant='outlined' onClick={handleOpen}>
         Create New Group
       </Button>
       <Modal

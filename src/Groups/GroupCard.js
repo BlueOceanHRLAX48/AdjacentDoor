@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const GroupCard = (props) => {
 
-  return (<Card sx={{maxWidth: 400, border: 2, borderColor: '#F0F0F0', marginBottom: '0.2rem', '&:hover': {backgroundColor: '#FFEEDD', borderColor: '#B8B8FF'}}} variant='outlined'>
+  return (<Card sx={{maxWidth: '90%', border: 2, borderColor: '#F0F0F0', margin: 'auto', marginBottom: '0.2rem', '&:hover': {backgroundColor: 'ghostWhite', borderColor: '#B8B8FF'}}} variant='outlined'>
     <CardActionArea component={Link} to={`/g/${props.group.id}`} >
       <CardMedia sx={{maxHeight: 200}}
         component="img"
