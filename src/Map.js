@@ -3,16 +3,16 @@ import Legend from './components/legend';
 import 'mapbox-gl/dist/mapbox-gl.css';
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_APP_TOKEN
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_APP_TOKEN;
 
 function Map(props) {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(props.group.coordinates.longitude); 
-  const [lat, setLat] = useState(props.group.coordinates.latitude); 
+  const [lng, setLng] = useState(props.group.coordinates.longitude);
+  const [lat, setLat] = useState(props.group.coordinates.latitude);
   const [zoom, setZoom] = useState(13);
   const [markers] = useState([]);
-  
+
   useEffect(() => {
     if (map.current) return;
     map.current = new mapboxgl.Map({
@@ -51,11 +51,11 @@ function Map(props) {
   useEffect(() => {
     setLng(props.group.coordinates.longitude);
     setLat(props.group.coordinates.latitude);
+    map.current.setCenter([
+      props.group.coordinates.longitude,
+      props.group.coordinates.latitude,
+    ]);
   }, [props.group]);
-
-  useEffect(() => {
-    map.current.setCenter([lng, lat]);
-  }, [lat, lng]);
 
 
   const addMarkers = (postList) => {
@@ -77,7 +77,9 @@ function Map(props) {
                 post.user_info.username
               }</h1>
               </span>
-              <h1 style='padding-top:5px; word-wrap:break-word;'>${trimBody(post.body)}</h1>`
+              <h1 style='padding-top:5px; word-wrap:break-word;'>${trimBody(
+                post.body
+              )}</h1>`
           )
         )
         .addTo(map.current);
@@ -88,10 +90,9 @@ function Map(props) {
 
   const trimBody = (body) => {
     let trimmed = body.split(' ').slice(0, 20);
-    return body.length === trimmed.join(' ').length 
-    ? trimmed.join(' ') 
-    : trimmed.join(' ') + '...';
-
+    return body.length === trimmed.join(' ').length
+      ? trimmed.join(' ')
+      : trimmed.join(' ') + '...';
   };
 
   const selectColor = (post) => {
@@ -113,15 +114,15 @@ function Map(props) {
     addMarkers(props.posts);
   }, [props.posts]);
 
-
-
   return (
     <div className='flex grow relative z-0'>
       <div className='flex justify-left absolute z-10 m-2 opacity-95'>
-      <Legend />
+        <Legend />
       </div>
-      <div ref={mapContainer}
-        className='flex grow min-h-[400px] justify-center rounded border-2 border-secondary'/>
+      <div
+        ref={mapContainer}
+        className='flex grow min-h-[400px] justify-center rounded border-2 border-secondary'
+      />
     </div>
   );
 }
