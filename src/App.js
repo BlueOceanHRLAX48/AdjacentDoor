@@ -20,6 +20,10 @@ function App() {
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
+    getUserData();
+  }, [user.network_id]);
+
+  function getUserData() {
     axios
       .get(`${process.env.REACT_APP_SERVER}/user/${user.network_id}`)
       .then((res) => {
@@ -31,7 +35,7 @@ function App() {
         localStorage.removeItem('AdjacentDoorUser');
         setUser({});
       });
-  }, [user.network_id]);
+  }
 
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) =>
@@ -112,6 +116,7 @@ function App() {
                 user={user}
                 setUser={setUser}
                 currentLocation={currentLocation}
+                getUserData={getUserData}
               />
             ) : (
               <Navigate to='/login' />

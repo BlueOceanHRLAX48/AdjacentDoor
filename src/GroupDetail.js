@@ -16,6 +16,7 @@ function GroupDetail(props) {
   const [posts, setPosts] = React.useState([]);
   const [group, setGroup] = React.useState({});
   const [privacy, setPrivacy] = React.useState(false);
+  const [adminPanel, setAdminPanel] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -31,10 +32,6 @@ function GroupDetail(props) {
       navigate('/groups');
     }
   }, [group]);
-
-  React.useEffect(() => {
-    togglePrivacy();
-  }, [privacy]);
 
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
@@ -58,10 +55,42 @@ function GroupDetail(props) {
   }
 
   function togglePrivacy() {
+    setPrivacy((x) => !x);
     axios
       .put(`${process.env.REACT_APP_SERVER}/groups/user/${groupId}/privacy`)
+      .catch((err) => {
+        setPrivacy((x) => !x);
+        console.error(err);
+      });
+  }
+
+  function handlePending(networkId, response) {
+    axios
+      .put(
+        `${process.env.REACT_APP_SERVER}/groups/user/${groupId}/accept?network_id=${networkId}&accepted=${response}`
+      )
+      .then((res) => getData())
       .catch((err) => console.error(err));
   }
+
+  function handleLeave() {
+    if (
+      window.confirm(
+        "Are you sure? If this group is private you'll have to request to join again"
+      )
+    ) {
+      axios
+        .delete(
+          `${process.env.REACT_APP_SERVER}/groups/user/${groupId}/left?network_id=${props.user.network_id}`
+        )
+        .then(() => {
+          props.getUserData();
+          getData();
+        })
+        .catch((err) => console.error(err));
+    }
+  }
+  console.log(group);
   return (
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
@@ -74,8 +103,18 @@ function GroupDetail(props) {
         />
         <div className='flex grow'>
           <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
-            <div className='w-screen sm:w-[600px] px-4 pt-4 mb-2 sm:mb-4'>
-              {group.coordinates && <Map group={group} posts={filteredPosts} />}
+            <div className='w-screen sm:w-[600px] px-4 mb-2 sm:mb-4 relative'>
+              {group?.coordinates && (
+                <Map group={group} posts={filteredPosts} />
+              )}
+              {group?.userjoined?.indexOf(props.user.network_id) !== -1 && (
+                <button
+                  className='absolute -bottom-8 right-4 px-2 rounded font-semibold bg-ghostWhite hover:bg-secondary border border-primary transition-all duration-150'
+                  onClick={handleLeave}
+                >
+                  Leave Group
+                </button>
+              )}
             </div>
             <div className='text-center text-sm text-secondary'>
               {group.city}, {group.state}
@@ -84,10 +123,18 @@ function GroupDetail(props) {
               {group.name}
             </div>
             <div className='text-center pb-4 text-sm'>{group.description}</div>
-            {group?.admin_id === props.user.network_id && (
+            {(group?.admin_id === props.user.network_id ||
+              props.user.admin) && (
               <div className='w-screen sm:w-[600px] px-4 pb-4'>
                 <div className='flex font-semibold items-center'>
-                  <div>{group?.userpenging.length} Users Pending</div>
+                  <button
+                    className={`font-semibold ${
+                      group?.userpenging?.length > 0 && 'animate-pulse'
+                    }`}
+                    onClick={() => setAdminPanel((x) => !x)}
+                  >
+                    {group?.userpenging?.length} Users Pending
+                  </button>
                   <div className='ml-auto'>Private Group</div>
                   <input
                     type='checkbox'
@@ -96,6 +143,32 @@ function GroupDetail(props) {
                     className='ml-2'
                   />
                 </div>
+                {adminPanel && (
+                  <div className='py-2'>
+                    {group?.userpenging.map((user, i) => (
+                      <div
+                        key={user}
+                        className='w-full border rounded px-2 py-1 flex'
+                      >
+                        {user}
+                        <div className='ml-auto'>
+                          <button
+                            className='rounded border border-primary hover:bg-secondary px-2 transition-all duration-150'
+                            onClick={() => handlePending(user, true)}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            className='ml-2 rounded border border-red-400 hover:bg-red-300 px-2 transition-all duration-150'
+                            onClick={() => handlePending(user, false)}
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
             {group?.userjoined?.indexOf(props.user.network_id) !== -1 && (
