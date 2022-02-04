@@ -41,7 +41,7 @@ function Groups(props) {
             <div>
               <MakeGroup currentLocation={props.currentLocation} user={props.user} />
               <div>
-                <TextField
+                <TextField sx={{width: '40%', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}}
                   id='radiusInput'
                   variant='outlined'
                   placeholder='search radius in miles'
@@ -49,7 +49,7 @@ function Groups(props) {
                   min='0'
                   max='500'
                 ></TextField>
-                <Button
+                <Button sx={{width: '30%', height: '56px', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}}
                   variant='outlined'
                   onClick={() => {
                     let newRadius = document.getElementById('radiusInput').value;
