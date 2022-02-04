@@ -50,11 +50,10 @@ module.exports = {
       .query(createGroup, values)
       .then((results) => {
         const group_id = results.rows[0].id;
-        if(group_id) {
-          pool
-            .query(addAdmin, [network_id, group_id])
-            .then(() => res.status(201).send('create a new group'))
-        }
+        pool
+          .query(addAdmin, [network_id, group_id])
+          .then(() => res.status(201).send('create a new group'))
+          .catch((err) => res.status(500).send(err))
       })
       .catch(err => res.status(500).send(err))
   },
@@ -109,11 +108,12 @@ module.exports = {
   },
   getGroupsByLocation: (req, res) => {
     const { longitude, latitude, mi} = req.query;
-    const r = parseFloat(mi/69) || parseFloat(0.07);
-    const lat_min = parseInt(latitude) - r;
-    const lat_max = parseInt(latitude) + r;
-    const long_min = parseInt(longitude) - r;
-    const long_max = parseInt(longitude) + r;
+    const rlat = parseFloat(mi/69) || parseFloat(0.15);
+    const rlon = parseFloat(mi/55) || parseFloat(0.18);
+    const lat_min = parseInt(latitude) - rlat;
+    const lat_max = parseInt(latitude) + rlat;
+    const long_min = parseInt(longitude) - rlon;
+    const long_max = parseInt(longitude) + rlon;
     const values = [lat_min, lat_max, long_min, long_max];
     const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo,
     COALESCE((
@@ -146,11 +146,20 @@ module.exports = {
   changePrivacy: (req, res) => {
     const { group_id } = req.params;
     const { privacy } = req.body;
+
+    let queryArr = [];
+
     const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
-    pool
-      .query(query, [privacy, group_id])
-      .then(() => res.sendStatus(204))
-      .catch((err) => res.status(500).send(err))
+    queryArr.push(pool.query(query, [privacy, group_id]))
+
+    if (!privacy) {
+      const publicStr = `UPDATE user_group_list set accepted = true WHERE user_group_id = $1`
+      queryArr.push(pool.query(publicStr, [group_id]))
+    }
+
+    Promise.all(queryArr)
+      .then(result => res.status(204).send('Group Privacy Setting has changed'))
+      .catch(err  => console.log(err))
   },
   voteForRating: (req, res) => {
     const { group_id, default_group_id, network_id, safety, friendliness} = req.body;

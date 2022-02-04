@@ -58,6 +58,9 @@ router.route('/posts/usergroup')
 router.route('/posts/like/:post_id')
   .put(controller.posts.likePost)
 
+router.route('/posts/unlike/:post_id')
+  .put(controller.posts.unlikePost)
+
 router.route('/posts/report/:post_id')
   .put(controller.posts.reportPost)
 
@@ -107,11 +110,17 @@ router.route('/posts/:post_id/replies')
 router.route('/reply/:reply_id/like')
   .put(controller.replies.likeReply)
 
+router.route('/reply/:reply_id/unlike')
+  .put(controller.replies.unlikeReply)
+
 router.route('/reply/:reply_id/report')
   .put(controller.replies.reportReply)
 
 router.route('/reply/:reply_id/delete')
   .delete(controller.replies.deleteReply)
+
+router.route('/posts/:post_id/reset')
+  .put(controller.posts.resetReport)
 
 module.exports= router
 

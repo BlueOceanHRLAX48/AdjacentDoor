@@ -16,15 +16,15 @@ app.use(cors());
 app.use('/', router);
 
 //localhost:3002 for group routes
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+});
 
-app.get('/loaderio-8ffa3667f6c98aa7fa9d1ff67fbe4f41.txt', (req, res) => {
-  res.status(200).send('loaderio-8ffa3667f6c98aa7fa9d1ff67fbe4f41');
+app.get('/loaderio-e3322f20e4c37ccfb13f9c62393bd71e.txt', (req, res) => {
+  res.status(200).send('loaderio-e3322f20e4c37ccfb13f9c62393bd71e');
 });
 
 app.listen(port, () => {
   console.log('listening on ', port);
 });
 
-// app2.listen(port + 1, () => {
-//   console.log('listening on ', port + 1)
-// })

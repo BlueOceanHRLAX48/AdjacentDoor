@@ -246,7 +246,8 @@ module.exports = {
 
   updatePhoto: (req, res) => {
     let photo = req.body.photo
-    let id = req.params.network_id
+    let { id } = req.params
+
     let photoStr = `
       update user_account set profile_img = $1
       where network_id = $2;
@@ -276,10 +277,8 @@ module.exports = {
       city,
       state,
       zip,
-      photo,
-      safety,
-      friendliness
-      ) values($1, $2, $3, $4, '1245.com' , default, default)
+      photo
+      ) values($1, $2, $3, $4, 'https://www.placebear.com/200/300')
       returning id;`
 
     let groupRes = await pool.query(findDefault, [req.body.zip])
@@ -338,11 +337,11 @@ module.exports = {
     let { username } = req.body
 
     let nicknameStr =
-    `update user_account set nickname = $1
+    `update user_account set username = $1
       where network_id = $2;
     `
-    pool.query(nicknameStr , [id, username ])
-      .then(result => res.status(201).send('Nickname has been updated'))
+    pool.query(nicknameStr , [username, id ])
+      .then(result => res.status(201).send('Display name has been updated'))
       .catch(err => res.status(500).send('Error updating nickname'))
   },
 
