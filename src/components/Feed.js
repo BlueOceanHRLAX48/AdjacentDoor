@@ -6,6 +6,7 @@ function Feed(props) {
     <div className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'>
       {props.filteredPosts.map((post, i) => (
         <Post
+          group={props.group}
           key={i}
           post={post}
           photos={post.photos}

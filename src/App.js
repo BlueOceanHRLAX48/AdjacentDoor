@@ -81,30 +81,53 @@ function App() {
         <Route path='/signout' element={<SignUp />} />
         <Route
           path='/my-profile'
-          element={<MyProfile user={user} setUser={setUser} />}
+          element={
+            user.network_id ? (
+              <MyProfile user={user} setUser={setUser} />
+            ) : (
+              <Navigate to='/login' />
+            )
+          }
         />
         <Route path='/create-post' element={<MakePost />} />
         <Route
           path='/groups'
           element={
-            <Groups
-              user={user}
-              currentLocation={currentLocation}
-              setUser={setUser}
-            />
+            user.network_id ? (
+              <Groups
+                user={user}
+                currentLocation={currentLocation}
+                setUser={setUser}
+              />
+            ) : (
+              <Navigate to='/login' />
+            )
           }
         />
         <Route
           path='/g/:groupId'
           element={
-            <GroupDetail
-              user={user}
-              setUser={setUser}
-              currentLocation={currentLocation}
-            />
+            user.network_id ? (
+              <GroupDetail
+                user={user}
+                setUser={setUser}
+                currentLocation={currentLocation}
+              />
+            ) : (
+              <Navigate to='/login' />
+            )
           }
         />
-        <Route path='/leaderboard' element={<Leaderboard user={user} />} />
+        <Route
+          path='/leaderboard'
+          element={
+            user.network_id ? (
+              <Leaderboard user={user} />
+            ) : (
+              <Navigate to='/login' />
+            )
+          }
+        />
         <Route
           path='/admin'
           element={
