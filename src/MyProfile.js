@@ -25,7 +25,7 @@ function MyProfile({ user, setUser }) {
       axios
         .put(
           `${process.env.REACT_APP_SERVER}/user/${user.network_id}/displayName`,
-          { username }
+          { username: username.trim() }
         )
         .catch((err) => console.error(err));
     }
@@ -33,14 +33,14 @@ function MyProfile({ user, setUser }) {
       axios
         .put(
           `${process.env.REACT_APP_SERVER}/user/${user.network_id}/updateLocation`,
-          { city, state, zip }
+          { city: city.trim(), state: state.trim(), zip: zip.trim() }
         )
         .catch((err) => console.error(err));
     }
     if (profileImage !== user.profile_img) {
       axios
         .put(`${process.env.REACT_APP_SERVER}/user/${user.network_id}/photo`, {
-          photo: profileImage,
+          photo: profileImage.trim(),
         })
         .catch((err) => console.error(err));
     }
