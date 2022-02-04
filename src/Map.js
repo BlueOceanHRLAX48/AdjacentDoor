@@ -90,7 +90,7 @@ function Map(props) {
   };
 
   const trimBody = (body) => {
-    let trimmed = body.split(' ').slice(0, 20);
+    let trimmed = body.split(' ').slice(0, 40);
     return body.length === trimmed.join(' ').length
       ? trimmed.join(' ')
       : trimmed.join(' ') + '...';
