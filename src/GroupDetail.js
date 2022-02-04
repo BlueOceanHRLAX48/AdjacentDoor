@@ -33,6 +33,10 @@ function GroupDetail(props) {
     }
   }, [group]);
 
+  React.useEffect(() => {
+    togglePrivacy();
+  }, [privacy]);
+
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
     .filter((post) => post.body.toLowerCase().includes(search.toLowerCase()));
@@ -90,7 +94,7 @@ function GroupDetail(props) {
         .catch((err) => console.error(err));
     }
   }
-  console.log(group);
+
   return (
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
