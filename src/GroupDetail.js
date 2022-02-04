@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Feed from './components/Feed';
 import MakePost from './components/MakePost';
+import PendingUser from './components/PendingUser';
 import LeftBar from './LeftBar';
 import Map from './Map';
 import RightBar from './RightBar';
@@ -33,10 +34,6 @@ function GroupDetail(props) {
     }
   }, [group]);
 
-  // React.useEffect(() => {
-  //   togglePrivacy();
-  // }, [privacy]);
-
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
     .filter((post) => post.body.toLowerCase().includes(search.toLowerCase()));
@@ -58,23 +55,16 @@ function GroupDetail(props) {
       .catch((err) => console.error(err));
   }
 
-  function togglePrivacy() {
-    setPrivacy((x) => !x);
+  function handlePrivacy() {
     axios
-      .put(`${process.env.REACT_APP_SERVER}/groups/user/${groupId}/privacy`)
+      .put(`${process.env.REACT_APP_SERVER}/groups/user/${groupId}/privacy`, {
+        privacy: !privacy,
+      })
+      .then(() => setPrivacy((x) => !x))
       .catch((err) => {
         setPrivacy((x) => !x);
         console.error(err);
       });
-  }
-
-  function handlePending(networkId, response) {
-    axios
-      .put(
-        `${process.env.REACT_APP_SERVER}/groups/user/${groupId}/accept?network_id=${networkId}&accepted=${response}`
-      )
-      .then((res) => getData())
-      .catch((err) => console.error(err));
   }
 
   function handleLeave() {
@@ -143,33 +133,20 @@ function GroupDetail(props) {
                   <input
                     type='checkbox'
                     checked={privacy}
-                    onChange={() => setPrivacy((x) => !x)}
+                    onChange={handlePrivacy}
                     className='ml-2'
                   />
                 </div>
                 {adminPanel && (
                   <div className='py-2'>
                     {group?.userpenging.map((user, i) => (
-                      <div
+                      <PendingUser
                         key={user}
-                        className='w-full border rounded px-2 py-1 flex'
-                      >
-                        {user}
-                        <div className='ml-auto'>
-                          <button
-                            className='rounded border border-primary hover:bg-secondary px-2 transition-all duration-150'
-                            onClick={() => handlePending(user, true)}
-                          >
-                            Accept
-                          </button>
-                          <button
-                            className='ml-2 rounded border border-red-400 hover:bg-red-300 px-2 transition-all duration-150'
-                            onClick={() => handlePending(user, false)}
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      </div>
+                        user={user}
+                        groupId={groupId}
+                        getData={getData}
+                        getUserData={props.getUserData}
+                      />
                     ))}
                   </div>
                 )}
