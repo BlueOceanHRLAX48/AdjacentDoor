@@ -13,7 +13,6 @@ function Map(props) {
   const [zoom, setZoom] = useState(13);
   const [markers] = useState([]);
   
-  //initialize map //
   useEffect(() => {
     if (map.current) return;
     map.current = new mapboxgl.Map({
@@ -40,7 +39,6 @@ function Map(props) {
     );
   });
 
-  //update map on move
   useEffect(() => {
     if (!map.current) return;
     map.current.on('move', () => {
@@ -49,6 +47,16 @@ function Map(props) {
       setZoom(map.current.getZoom().toFixed(2));
     });
   });
+
+  useEffect(() => {
+    setLng(props.group.coordinates.longitude);
+    setLat(props.group.coordinates.latitude);
+  }, [props.group]);
+
+  useEffect(() => {
+    map.current.setCenter([lng, lat]);
+  }, [lat, lng]);
+
 
   const addMarkers = (postList) => {
     postList.map((post) => {
