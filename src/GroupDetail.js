@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Feed from './components/Feed';
 import MakePost from './components/MakePost';
 import LeftBar from './LeftBar';
@@ -16,9 +16,20 @@ function GroupDetail(props) {
   const [posts, setPosts] = React.useState([]);
   const [group, setGroup] = React.useState({});
 
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     getData();
   }, [groupId]);
+
+  React.useEffect(() => {
+    if (
+      group?.privacy &&
+      group?.userjoined?.indexOf(props.user.network_id) === -1
+    ) {
+      navigate('/groups');
+    }
+  }, [group]);
 
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
@@ -37,6 +48,7 @@ function GroupDetail(props) {
       .then((res) => setGroup(res.data[0]))
       .catch((err) => console.error(err));
   }
+
   return (
     <div className='flex h-screen overflow-y-clip'>
       <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
@@ -52,11 +64,13 @@ function GroupDetail(props) {
             <div className='w-screen sm:w-[600px] px-4 pt-4 mb-2 sm:mb-4'>
               {group.coordinates && <Map group={group} posts={filteredPosts} />}
             </div>
-            <MakePost
-              refresh={getData}
-              user={props.user}
-              currentLocation={props.currentLocation}
-            />
+            {group?.userjoined?.indexOf(props.user.network_id) !== -1 && (
+              <MakePost
+                refresh={getData}
+                user={props.user}
+                currentLocation={props.currentLocation}
+              />
+            )}
             <Feed
               group={group}
               filteredPosts={filteredPosts}
