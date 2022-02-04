@@ -7,6 +7,7 @@ import {
   MdFavorite,
   MdFavoriteBorder,
   MdOutlineShare,
+  MdStar,
 } from 'react-icons/md';
 import {
   FacebookIcon,
@@ -42,6 +43,7 @@ function Post({
   const [city, setCity] = React.useState('');
   const [share, setShare] = React.useState(false);
   const [toggleComment, setToggleComment] = React.useState(false);
+  const [userColor, setUserColor] = React.useState('silk');
 
   const [allComments, setAllComments] = React.useState([]);
 
@@ -69,6 +71,7 @@ function Post({
 
   React.useEffect(() => {
     getAllComments();
+    handleDecoration();
   }, [postId]);
 
   const handleToggleComment = () => {
@@ -131,6 +134,19 @@ function Post({
     }
   }
 
+  function handleDecoration() {
+    if (post.user_info.contribution > 50) {
+      setUserColor('primary');
+      return;
+    }
+    if (post.user_info.contribution > 20) {
+      setUserColor('secondary');
+      return;
+    }
+    setUserColor('silk');
+    return;
+  }
+
   return (
     <>
       {(report < 5 || user.admin || user.network_id === group.admin_id) && (
@@ -152,11 +168,18 @@ function Post({
                     'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
                   }
                   sx={{ width: 40, height: 40 }}
-                  className='mt-1 ml-1 mr-6 ring-2 ring-offset-2 ring-primary'
+                  className={`mt-1 ml-1 mr-6 ring-offset-2 ring-2 ring-${userColor}`}
                 />
                 <div className='w-full'>
-                  <div className='flex font-medium align-top'>
-                    {post.user_info.username}
+                  <div
+                    className={`flex font-medium items-center gap-2 align-top`}
+                  >
+                    {post.user_info.username}{' '}
+                    {post.user_info.contribution > 20 && (
+                      <div className={`text-${userColor}`}>
+                        <MdStar size='20px' />
+                      </div>
+                    )}
                   </div>
                   <div className='flex items-center'>
                     <div className='mr-2 text-xs font-light text-slate-500'>
