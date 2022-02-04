@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdGroups, MdHome, MdMenu, MdOutlineAddCircle, MdSearch } from 'react-icons/md';
+import { MdHome, MdMenu, MdOutlineAddCircle } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
 function Footer() {
@@ -37,7 +37,7 @@ function Footer() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (document.getElementById('left-bar') && width > 630) {
+  if (document.getElementById('left-bar') && width > 640) {
     document.getElementById('left-bar').style.display = 'flex';
   }
 
@@ -47,7 +47,11 @@ function Footer() {
         <MdHome className='' size='30' onClick={closeLeftBar} />
       </NavLink>
 
-      <MdOutlineAddCircle className='cursor-pointer' size='30' onClick={toggleCreatePost} />
+      <MdOutlineAddCircle
+        className='cursor-pointer'
+        size='30'
+        onClick={toggleCreatePost}
+      />
 
       <MdMenu className='cursor-pointer' size='30' onClick={openLeftBar} />
     </div>

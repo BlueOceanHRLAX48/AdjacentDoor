@@ -26,10 +26,7 @@ function GroupDetail(props) {
   }, [groupId]);
 
   React.useEffect(() => {
-    if (
-      group?.privacy &&
-      group?.userjoined?.indexOf(props.user.network_id) === -1
-    ) {
+    if (group?.privacy && group?.userjoined?.indexOf(props.user.network_id) === -1) {
       navigate('/groups');
     }
   }, [group]);
@@ -40,9 +37,7 @@ function GroupDetail(props) {
 
   function getData() {
     axios
-      .get(
-        `${process.env.REACT_APP_SERVER}/posts/usergroup?user_group_id=${groupId}`
-      )
+      .get(`${process.env.REACT_APP_SERVER}/posts/usergroup?user_group_id=${groupId}`)
       .then((res) => setPosts(res.data.posts))
       .catch((err) => console.error(err));
 
@@ -69,9 +64,7 @@ function GroupDetail(props) {
 
   function handleLeave() {
     if (
-      window.confirm(
-        "Are you sure? If this group is private you'll have to request to join again"
-      )
+      window.confirm("Are you sure? If this group is private you'll have to request to join again")
     ) {
       axios
         .delete(
@@ -87,20 +80,16 @@ function GroupDetail(props) {
 
   return (
     <div className='flex h-screen overflow-y-clip'>
-      <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
+      <div>
+        <LeftBar setFilter={setFilter} filter={filter} user={props.user} />
+      </div>
+
       <div className='flex flex-col grow'>
-        <TopNav
-          setSearch={setSearch}
-          search={search}
-          user={props.user}
-          setUser={props.setUser}
-        />
+        <TopNav setSearch={setSearch} search={search} user={props.user} setUser={props.setUser} />
         <div className='flex grow'>
           <div className='flex flex-col h-screen pb-12 overflow-y-scroll hide-scroll-bar'>
             <div className='w-screen sm:w-[600px] px-4 mb-2 sm:mb-4 relative'>
-              {group?.coordinates && (
-                <Map group={group} posts={filteredPosts} />
-              )}
+              {group?.coordinates && <Map group={group} posts={filteredPosts} />}
               {group?.userjoined?.indexOf(props.user.network_id) !== -1 && (
                 <button
                   className='absolute -bottom-8 right-4 px-2 rounded font-semibold bg-ghostWhite hover:bg-secondary border border-primary transition-all duration-150'
@@ -113,18 +102,13 @@ function GroupDetail(props) {
             <div className='text-center text-sm text-secondary'>
               {group.city}, {group.state}
             </div>
-            <div className='text-center text-2xl font-semibold'>
-              {group.name}
-            </div>
+            <div className='text-center text-2xl font-semibold'>{group.name}</div>
             <div className='text-center pb-4 text-sm'>{group.description}</div>
-            {(group?.admin_id === props.user.network_id ||
-              props.user.admin) && (
+            {(group?.admin_id === props.user.network_id || props.user.admin) && (
               <div className='w-screen sm:w-[600px] px-4 pb-4'>
                 <div className='flex font-semibold items-center'>
                   <button
-                    className={`font-semibold ${
-                      group?.userpenging?.length > 0 && 'animate-pulse'
-                    }`}
+                    className={`font-semibold ${group?.userpenging?.length > 0 && 'animate-pulse'}`}
                     onClick={() => setAdminPanel((x) => !x)}
                   >
                     {group?.userpenging?.length} Users Pending

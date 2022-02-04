@@ -1,4 +1,4 @@
-import { Avatar, Modal, Box, Typography, Grid } from '@mui/material';
+import { Avatar, Box, Grid, Modal, Typography } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
@@ -8,19 +8,19 @@ import {
   MdFavoriteBorder,
   MdOutlineShare,
 } from 'react-icons/md';
-import MoreMenu from '../MoreMenu';
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  PinterestShareButton,
-  LineShareButton,
-} from 'react-share';
 import {
   FacebookIcon,
-  TwitterIcon,
-  PinterestIcon,
+  FacebookShareButton,
   LineIcon,
+  LineShareButton,
+  PinterestIcon,
+  PinterestShareButton,
+  TwitterIcon,
+  TwitterShareButton,
 } from 'react-share';
+import MoreMenu from '../MoreMenu';
+import Comment from './Comment';
+import MakeComments from './MakeComments';
 
 function Post({
   photos,
@@ -38,8 +38,12 @@ function Post({
     JSON.parse(localStorage.getItem(`adLiked${user.network_id}${postId}`))
   );
   const [isEnlarged, setEnlarge] = React.useState(false);
+  const [photoIndex, setPhoto] = React.useState('0');
   const [city, setCity] = React.useState('');
   const [share, setShare] = React.useState(false);
+  const [toggleComment, setToggleComment] = React.useState(false);
+
+  const [allComments, setAllComments] = React.useState([]);
 
   React.useEffect(() => {
     axios
@@ -51,7 +55,25 @@ function Post({
       });
   }, []);
 
-  const handleComment = () => {};
+  const getAllComments = () => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`)
+      .then(({ data }) => {
+        if (data.length > 0) {
+          setAllComments(data[0].replies);
+        } else {
+          setAllComments([]);
+        }
+      });
+  };
+
+  React.useEffect(() => {
+    getAllComments();
+  }, [postId]);
+
+  const handleToggleComment = () => {
+    setToggleComment(!toggleComment);
+  };
 
   const handleLike = () => {
     if (!liked) {
@@ -117,7 +139,7 @@ function Post({
             user.admin ||
             group?.userjoined?.indexOf(user.network_id) !== -1) && (
             <div
-              className='relative p-4 my-3 transition-all duration-150 border border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
+              className='relative p-4 my-3 transition-all duration-150 border rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
               style={{
                 backgroundColor: report > 5 && 'rgba(255, 142, 162, .3)',
               }}
@@ -154,7 +176,10 @@ function Post({
                     {photos.map((photo, i) => (
                       <div key={i}>
                         <img
-                          onClick={handleModal}
+                          onClick={() => {
+                            setPhoto(i);
+                            handleModal();
+                          }}
                           src={photo.image_url}
                           alt='upload'
                           width='75px'
@@ -173,9 +198,9 @@ function Post({
                             <img
                               key={i}
                               onClick={handleModal}
-                              src={photo.image_url}
+                              src={photos[photoIndex].image_url}
                               alt='upload'
-                              width='800px'
+                              width='400px'
                               className='border border-black'
                             />
                           </Box>
@@ -188,11 +213,15 @@ function Post({
                       [
                         'comment',
                         <MdChatBubbleOutline size='15' />,
-                        handleComment,
+                        handleToggleComment,
                       ],
                       [
                         like,
-                        JSON.parse(localStorage.getItem(`adLiked${postId}`)) ? (
+                        JSON.parse(
+                          localStorage.getItem(
+                            `adLiked${user.network_id}${postId}`
+                          )
+                        ) ? (
                           <MdFavorite size='15' color='red' />
                         ) : (
                           <MdFavoriteBorder size='15' />
@@ -302,6 +331,22 @@ function Post({
                 post={post}
                 group={group}
               />
+              {toggleComment && (
+                <MakeComments
+                  setAllComments={setAllComments}
+                  allComments={allComments}
+                  getAllComments={getAllComments}
+                  post={post}
+                  user={user}
+                />
+              )}
+
+              {allComments &&
+                allComments.map((comment, i) => (
+                  <div className='mt-4' key={i}>
+                    <Comment comment={comment} />
+                  </div>
+                ))}
             </div>
           )}
         </>
