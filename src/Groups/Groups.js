@@ -29,7 +29,7 @@ function Groups(props) {
   }, [props.currentLocation, radius]);
 
   return (
-    <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
+    <div className='h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
       <div>
         <LeftBar user={props.user} />
       </div>
@@ -42,59 +42,64 @@ function Groups(props) {
             setUser={props.setUser}
           />
         </div>
-        <div className='flex'>
-          <div className='flex-col w-screen sm:w-[600px] px-4 mb-32 sm:mb-20'>
+        <div className='sm:flex'>
+          <div className='h-screen overflow-y-scroll hide-scroll-bar'>
             <div>
-              <MakeGroup
-                currentLocation={props.currentLocation}
-                user={props.user}
-              />
-              <div>
-                <TextField
-                  sx={{
-                    width: '40%',
-                    borderColor: '#B8B8FF',
-                    color: '#B8B8FF',
-                    '&:hover': {
-                      color: '#9381FF',
-                      borderColor: '#9381FF',
-                      backgroundColor: 'ghostWhite',
-                    },
-                  }}
-                  id='radiusInput'
-                  variant='outlined'
-                  placeholder='search radius in miles'
-                  type='number'
-                  min='0'
-                  max='500'
-                ></TextField>
-                <Button
-                  sx={{
-                    width: '30%',
-                    height: '56px',
-                    borderColor: '#B8B8FF',
-                    color: '#B8B8FF',
-                    '&:hover': {
-                      color: '#9381FF',
-                      borderColor: '#9381FF',
-                      backgroundColor: 'ghostWhite',
-                    },
-                  }}
-                  variant='outlined'
-                  onClick={() => {
-                    let newRadius =
+              <div id='groupsTop' className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'>
+                <MakeGroup
+                  currentLocation={props.currentLocation}
+                  user={props.user}
+                  />
+                <div>
+                  <TextField
+                    sx={{
+                      width: '50%',
+                      marginTop: '1%',
+                      borderColor: '#B8B8FF',
+                      color: '#B8B8FF',
+                      '&:hover': {
+                        color: '#9381FF',
+                        borderColor: '#9381FF',
+                        backgroundColor: 'ghostWhite',
+                      },
+                    }}
+                    id='radiusInput'
+                    variant='outlined'
+                    placeholder='search radius in miles'
+                    type='number'
+                    min='0'
+                    max='500'
+                    ></TextField>
+                  <Button
+                    sx={{
+                      width: '49%',
+                      marginTop: '1%',
+                      marginLeft: '1%',
+                      height: '56px',
+                      borderColor: '#B8B8FF',
+                      color: '#B8B8FF',
+                      '&:hover': {
+                        color: '#9381FF',
+                        borderColor: '#9381FF',
+                        backgroundColor: 'ghostWhite',
+                      },
+                    }}
+                    variant='outlined'
+                    onClick={() => {
+                      let newRadius =
                       document.getElementById('radiusInput').value;
-                    setRadius(newRadius);
-                  }}
-                >
-                  FIND
-                </Button>
+                      setRadius(newRadius);
+                    }}
+                    >
+                    FIND
+                  </Button>
+                </div>
               </div>
-              <div>Groups near you</div>
-              <div id='seeGroups'>
+              <div id='seeGroups' className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'>
+              <div style={{color: '#B8B8FF'}}>GROUPS NEAR YOU</div>
                 {groups
                   ?.filter((group) =>
-                    group?.name?.toLowerCase().includes(search.toLowerCase())
+                  group?.name?.toLowerCase().includes(search.toLowerCase())
                   )
                   .map((card, index) => {
                     let joinStatus = '';
