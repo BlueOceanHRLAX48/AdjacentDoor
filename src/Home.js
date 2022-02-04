@@ -28,7 +28,7 @@ function Home({ user, setUser, currentLocation }) {
     .filter((post) => post.body.toLowerCase().includes(search.toLowerCase()));
 
   return (
-    <div className='h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
+    <div className='flex h-screen overflow-y-clip dark:bg-gray-900 dark:text-white'>
       <div>
         <LeftBar user={user} filter={filter} setFilter={setFilter} />
       </div>

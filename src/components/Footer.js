@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdGroups, MdHome, MdMenu, MdOutlineAddCircle, MdSearch } from 'react-icons/md';
+import { MdHome, MdMenu, MdOutlineAddCircle } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 
 function Footer() {
@@ -39,6 +39,8 @@ function Footer() {
 
   if (document.getElementById('left-bar') && width > 630) {
     document.getElementById('left-bar').style.display = 'flex';
+  } else {
+    document.getElementById('left-bar').style.display = 'none';
   }
 
   return (
