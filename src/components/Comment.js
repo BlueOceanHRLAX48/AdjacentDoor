@@ -9,8 +9,6 @@ function Comment({ comment }) {
       : moment(timestamp).format('LL');
   }
 
-  console.log(comment);
-
   return (
     <div className='flex pt-4 border-t'>
       <Avatar
