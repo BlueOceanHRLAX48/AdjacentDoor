@@ -234,7 +234,7 @@ function Post({
                   <div className='flex items-center justify-between mt-2 mr-2'>
                     {[
                       [
-                        'comment',
+                        'Comment',
                         <MdChatBubbleOutline size='15' />,
                         handleToggleComment,
                       ],
@@ -251,7 +251,7 @@ function Post({
                         ),
                         handleLike,
                       ],
-                      ['share', <MdOutlineShare size='15' />, handleShare],
+                      ['Share', <MdOutlineShare size='15' />, handleShare],
                     ].map(([title, icon, handleClick], i) => (
                       <PostButton
                         icon={icon}
