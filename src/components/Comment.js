@@ -32,7 +32,7 @@ function Comment({ comment }) {
             {handleTime(comment?.time)}
           </div>
         </div>
-        <div className='mt-2'>{comment?.body}</div>
+        <div className='mt-2 wrap max-w-[460px]'>{comment?.body}</div>
       </div>
     </div>
   );
