@@ -66,8 +66,8 @@ function LeftBar({ setFilter, filter, user }) {
           <LeftBarButton text='All Groups' icon={<MdGroups size='20' />} />
         </NavLink>
 
-        {user?.user_group?.map(({ id, name }) => (
-          <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
+        {user?.user_group?.map(({ id, name }, i) => (
+          <NavLink to={`/g/${id}`} style={handleActive} key={i}>
             <LeftBarButton text={name} icon={BackgroundLetterAvatars(name)} />
           </NavLink>
         ))}

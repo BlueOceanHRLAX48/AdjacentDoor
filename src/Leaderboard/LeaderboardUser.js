@@ -29,6 +29,8 @@ function LeaderboardUser(props) {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
+  console.log(props.user);
+
   return (
     <div className='flex w-full items-center px-4 py-2 gap-4 hover:bg-ghostWhite transition-all duration-150'>
       <div className='flex w-[3%] font-bold'>{props.place}</div>
@@ -46,9 +48,7 @@ function LeaderboardUser(props) {
         {props.user.lastname[0].toUpperCase()}
       </Avatar>
       <div className='flex flex-col font-semibold'>
-        {props.user.privacy
-          ? 'Private Neighbor'
-          : `${props.user.firstname} ${props.user.lastname}`}
+        {props.user.privacy ? 'Private Neighbor' : `${props.user.username}`}
         <div className='text-xs text-gray-400 font-normal'>
           {props.user.city}, {props.user.state}
         </div>
