@@ -37,10 +37,8 @@ function Footer() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (document.getElementById('left-bar') && width > 630) {
+  if (document.getElementById('left-bar') && width > 640) {
     document.getElementById('left-bar').style.display = 'flex';
-  } else {
-    document.getElementById('left-bar').style.display = 'none';
   }
 
   return (
@@ -49,7 +47,11 @@ function Footer() {
         <MdHome className='' size='30' onClick={closeLeftBar} />
       </NavLink>
 
-      <MdOutlineAddCircle className='cursor-pointer' size='30' onClick={toggleCreatePost} />
+      <MdOutlineAddCircle
+        className='cursor-pointer'
+        size='30'
+        onClick={toggleCreatePost}
+      />
 
       <MdMenu className='cursor-pointer' size='30' onClick={openLeftBar} />
     </div>
