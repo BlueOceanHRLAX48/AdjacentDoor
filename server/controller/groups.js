@@ -148,12 +148,13 @@ module.exports = {
 
     let queryArr = [];
 
-    if (!privacy) {
+    const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
+    queryArr.push(pool.query(query, [privacy, group_id]))
+
+    if (privacy) {
       const publicStr = `UPDATE user_group_list set accepted = true WHERE user_group_id = $1`
       queryArr.push(pool.query(publicStr, [group_id]))
     }
-    const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
-    queryArr.push(pool.query(query, [privacy, group_id]))
 
     Promise.all(queryArr)
       .then(result => res.status(204).send('Group Privacy Setting has changed'))

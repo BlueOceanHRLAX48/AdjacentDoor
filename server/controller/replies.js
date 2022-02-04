@@ -35,7 +35,7 @@ module.exports = {
     `
     pool.query(replyStr, replyParams)
       .then(result=> res.status(201).send('Comment has been posted'))
-      .catch(err => console.log(err))
+      .catch(err => res.status(500))
   },
 
   likeReply: (req, res) => {
