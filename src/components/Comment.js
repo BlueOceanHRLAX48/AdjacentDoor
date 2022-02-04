@@ -3,7 +3,7 @@ import moment from 'moment';
 
 function Comment({ comment }) {
   return (
-    <div className='flex pt-4'>
+    <div className='flex pt-4 border-t'>
       <Avatar
         alt='avatar'
         src={
@@ -15,7 +15,7 @@ function Comment({ comment }) {
       />
       <div className='w-full'>
         <div className='flex items-center'>
-          <div className='flex mr-2 font-medium align-top'>{comment?.username}</div>
+          <div className='flex mr-2 font-medium text-xs align-top'>{comment?.username}</div>
 
           <> · </>
 

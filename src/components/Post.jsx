@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { Avatar, Modal, Box, Typography, Grid } from '@mui/material';
-=======
-import { Avatar, Box, Modal } from '@mui/material';
->>>>>>> 1170fdf (comment in progress)
-=======
 import { Avatar, Box, Grid, Modal, Typography } from '@mui/material';
->>>>>>> 4126fa7 (comments in progress)
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
@@ -22,27 +14,8 @@ import {
   TwitterShareButton,
 } from 'react-share';
 import MoreMenu from '../MoreMenu';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  PinterestShareButton,
-  LineShareButton,
-} from 'react-share';
-import {
-  FacebookIcon,
-  TwitterIcon,
-  PinterestIcon,
-  LineIcon,
-} from 'react-share';
-=======
-import Comments from './Comments';
->>>>>>> c08a43b (post comments in progress)
-=======
-import MakeComments from './MakeComments';
 import Comment from './Comment';
->>>>>>> a012e13 (stuck on making post and new comments)
+import MakeComments from './MakeComments';
 
 function Post({ photos, postId, body, like, time, user, report, getPosts, post, group }) {
   const [liked, setLiked] = React.useState(() =>
@@ -50,37 +23,10 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
   );
   const [isEnlarged, setEnlarge] = React.useState(false);
   const [city, setCity] = React.useState('');
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   const [share, setShare] = React.useState(false);
-=======
-  const [comment, setComment] = React.useState(false);
-  const [commentValue, setCommentValue] = React.useState('');
-
-  const handleCommentValue = (e) => {
-    console.log(e.target.value);
-    setCommentValue(e.target.value);
-  };
->>>>>>> 1170fdf (comment in progress)
-=======
-=======
-  const [share, setShare] = React.useState(false);
->>>>>>> 4126fa7 (comments in progress)
   const [toggleComment, setToggleComment] = React.useState(false);
 
   const [allComments, setAllComments] = React.useState([]);
->>>>>>> c08a43b (post comments in progress)
-
-  React.useEffect(() => {
-    axios
-      .get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${post.coordinates.longitude},${post.coordinates.latitude}.json?types=place&access_token=${process.env.REACT_APP_MAPBOX_APP_TOKEN}`
-      )
-      .then(({ data }) => {
-        setCity(data.features[0].text);
-      });
-  }, []);
 
   React.useEffect(() => {
     axios
@@ -96,7 +42,6 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
   const getAllComments = () => {
     axios.get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`).then(({ data }) => {
       setAllComments(data[0].replies);
-      console.log(data[0].replies);
     });
   };
 
@@ -166,7 +111,7 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
         <>
           {(!post.privacy || user.admin || group?.userjoined?.indexOf(user.network_id) !== -1) && (
             <div
-              className='relative p-4 my-3 transition-all duration-150 border border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
+              className='relative p-4 my-3 transition-all duration-150 border rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
               style={{
                 backgroundColor: report > 5 && 'rgba(255, 142, 162, .3)',
               }}
@@ -341,9 +286,13 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                   user={user}
                 />
               )}
-              <div className='mt-4 border-t'>
-                {allComments && allComments.map((comment) => <Comment comment={comment} />)}
-              </div>
+
+              {allComments &&
+                allComments.map((comment) => (
+                  <div className='mt-4'>
+                    <Comment comment={comment} />
+                  </div>
+                ))}
             </div>
           )}
         </>
