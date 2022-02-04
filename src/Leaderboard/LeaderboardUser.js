@@ -46,9 +46,7 @@ function LeaderboardUser(props) {
         {props.user.lastname[0].toUpperCase()}
       </Avatar>
       <div className='flex flex-col font-semibold'>
-        {props.user.privacy
-          ? 'Private Neighbor'
-          : `${props.user.firstname} ${props.user.lastname}`}
+        {props.user.privacy ? 'Private Neighbor' : `${props.user.username}`}
         <div className='text-xs text-gray-400 font-normal'>
           {props.user.city}, {props.user.state}
         </div>

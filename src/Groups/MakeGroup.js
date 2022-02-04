@@ -11,8 +11,9 @@ import {
   FormControl,
   FormLabel,
 } from '@mui/material';
+import UploadPhoto from './UploadPhoto';
 import axios from 'axios';
-import { validGroupNameInputs, validDescriptionInputs, validIntegerInputs } from '../Regex';
+import { validGroupNameInputs, validDescriptionInputs } from '../Regex';
 
 function MakeGroup(props) {
   const [open, setOpen] = useState(false);
@@ -25,9 +26,7 @@ function MakeGroup(props) {
   const [groupName, setGname] = useState('');
   const [description, setDescription] = useState('');
   const [privacy, setPrivacy] = useState('public');
-  const [local, setLocal] = useState('global');
-  const [photo, setPhoto] = useState('');
-  const [localRadius, setRadius] = useState(5);
+  const [photo, setPhoto] = useState('http://placecorgi.com/260/180');
 
   const [location, setLocation] = useState({
     place: '',
@@ -63,33 +62,28 @@ function MakeGroup(props) {
     p: 4,
   };
 
-  const fakeAxiosPost = () => {
-    console.log('POSTING, ', groupName, description, location.coordinates, location.city, location.zip, privacy, local, photo, localRadius);
-    // axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
-    //   params: {
-    //     name: groupName,
-    //     network_id: props.user.network_id,
-    //     address: '',
-    //     city: location.city,
-    //     state: location.state,
-    //     zip: location.zip,
-    //     latitude: location.coordinates[1],
-    //     longitude: location.coordinates[0],
-    //     privacy: privacy,
-    //     photo: photo
-    //   }
-    // })
-    // .then((result) => {
-    //   console.log('success', result)
-    // })
-    // .catch(err => console.log(err))
+  const createAGroup = () => {
+    let privacybool = privacy === 'public' ? false : true;
+
+    axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
+      name: groupName,
+      network_id: props.user.network_id,
+      city: location.city,
+      state: location.state,
+      zip: location.zip,
+      latitude: location.coordinates[1],
+      longitude: location.coordinates[0],
+      privacy: privacybool,
+      photo: photo,
+      description: description
+    })
+    .catch(err => console.log(err))
   }
 
   const resetInputs = () => {
     setGname('');
     setDescription('');
     setPrivacy('public');
-    setLocal('global');
     setPhoto('');
   };
 
@@ -172,41 +166,6 @@ function MakeGroup(props) {
         return (
           <div>
             <FormControl>
-              <FormLabel id='local-or-global-radios'>Settings</FormLabel>
-              <RadioGroup
-                aria-labelledby='local-or-global-radios'
-                defaultValue='global'
-                name='radio-butt'
-              >
-                <FormControlLabel
-                  value='global'
-                  control={<Radio />}
-                  label='Global'
-                  onClick={() => {
-                    setLocal('global');
-                  }}
-                ></FormControlLabel>
-                <FormControlLabel
-                  value='local'
-                  control={<Radio />}
-                  label='Local'
-                  onClick={() => {
-                    setLocal('local');
-                  }}
-                ></FormControlLabel>
-                {local === 'local' ? (
-                  <TextField
-                    type='number'
-                    placeholder='preferred mile radius'
-                    value={localRadius || ''}
-                    onChange={(e) => {
-                      setRadius(e.target.value);
-                    }}
-                  ></TextField>
-                ) : (
-                  ''
-                )}
-              </RadioGroup>
               <FormLabel id='local-or-global-radios'>Privacy</FormLabel>
               <RadioGroup aria-labelledby='privacy-radios' defaultValue='public' name='radio-butt'>
                 <FormControlLabel
@@ -229,11 +188,7 @@ function MakeGroup(props) {
             </FormControl>
             <Button
               onClick={() => {
-                if (validIntegerInputs.test(localRadius)) {
                   setSlide('p5');
-                } else {
-                  alert('Please provide a valid integer radius');
-                }
               }}
             >
               NEXT
@@ -243,19 +198,7 @@ function MakeGroup(props) {
       case 'p5':
         return (
           <div>
-            <Typography variant='h6' component='h2'>
-              Choose a Photo
-            </Typography>
-            {/* PHOTO FUNCTIONALITY */}
-            <Button
-              onClick={() => {
-                fakeAxiosPost();
-                setSlide('p1');
-                handleClose();
-              }}
-            >
-              CREATE
-            </Button>
+            <UploadPhoto createAGroup={createAGroup} setSlide={() => {setSlide('p1')}} handleClose={handleClose} setPhoto={setPhoto}/>
           </div>
         );
       default:
@@ -264,9 +207,9 @@ function MakeGroup(props) {
   };
 
   return (
-    <div className='makeGroupModal'>
-      <Button variant='outlined' onClick={handleOpen}>
-        Create
+    <div className='makeGroupSection'>
+      <Button sx={{width: '70%', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}} variant='outlined' onClick={handleOpen}>
+        Create New Group
       </Button>
       <Modal
         open={open}

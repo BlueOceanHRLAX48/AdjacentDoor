@@ -3,7 +3,6 @@ import { MdClose, MdAdd } from 'react-icons/md';
 import { TextareaAutosize, Tooltip } from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { flushSync } from 'react-dom';
 
 function MakePost(props) {
   const [body, setBody] = React.useState('');
@@ -47,7 +46,9 @@ function MakePost(props) {
   function handleSubmit() {
     axios
       .post(
-        `${process.env.REACT_APP_SERVER}/posts/${path === '/' ? 'defaultgroup' : 'usergroup'}`,
+        `${process.env.REACT_APP_SERVER}/posts/${
+          path === '/' ? 'defaultgroup' : 'usergroup'
+        }`,
         path === '/'
           ? {
               group_id: props.user.default_group.id,
@@ -72,7 +73,9 @@ function MakePost(props) {
       )
       .then((res) => {
         axios
-          .put(`${process.env.REACT_APP_SERVER}/user/${props.user.network_id}/contribution/add`)
+          .put(
+            `${process.env.REACT_APP_SERVER}/user/${props.user.network_id}/contribution/add`
+          )
           .catch((err) => console.error(err));
         setBody('');
         setType('general');
@@ -85,7 +88,7 @@ function MakePost(props) {
   }
 
   return (
-    <div className='w-full sm:w-[600px] px-4 pt-6'>
+    <div className='hidden sm:flex pt-4 sm:pt-0 w-screen sm:w-[600px] px-4' id='create-post'>
       <div className='w-full p-4 border rounded-lg'>
         <div className='flex items-center'>
           <Tooltip title='Clear Everything' placement='right' arrow={true}>
@@ -135,13 +138,23 @@ function MakePost(props) {
             {files?.length ? 'Change' : 'Add'} Photos
           </label>
           <div className='pl-4 cursor-default text-secondary'>
-            {files?.length > uploadURLs.length && `Uploading ${files?.length} Images`}
+            {files?.length > uploadURLs.length &&
+              `Uploading ${files?.length} Images`}
             {files?.length === uploadURLs.length
-              ? `${files?.length} Image${files?.length === 1 ? '' : 's'} Uploaded`
+              ? `${files?.length} Image${
+                  files?.length === 1 ? '' : 's'
+                } Uploaded`
               : ''}
           </div>
-          <div className={`ml-auto flex ${privacy ? 'text-primary' : 'text-secondary'}`}>
-            <button className='font-semibold' onClick={() => setPrivacy((x) => !x)}>
+          <div
+            className={`ml-auto flex ${
+              privacy ? 'text-primary' : 'text-secondary'
+            }`}
+          >
+            <button
+              className='font-semibold'
+              onClick={() => setPrivacy((x) => !x)}
+            >
               {privacy ? 'Private' : 'Public'}
             </button>
           </div>

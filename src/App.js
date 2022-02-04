@@ -16,11 +16,14 @@ function App() {
   const [user, setUser] = useState(
     () => JSON.parse(localStorage.getItem('AdjacentDoorUser')) || {}
   );
-  // DEMO: IF YOU KEEP GETTING REDIRECTED TO /LOGIN, ADD THIS TO THE ABOVE USER STATE OBJECT (MAKE SURE YOURE USING DEPLOYED DB): network_id: '116946549505913178009'
 
   const [currentLocation, setCurrentLocation] = React.useState({});
 
   React.useEffect(() => {
+    getUserData();
+  }, [user.network_id]);
+
+  function getUserData() {
     axios
       .get(`${process.env.REACT_APP_SERVER}/user/${user.network_id}`)
       .then((res) => {
@@ -32,7 +35,7 @@ function App() {
         localStorage.removeItem('AdjacentDoorUser');
         setUser({});
       });
-  }, [user.network_id]);
+  }
 
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((res) =>
@@ -80,29 +83,56 @@ function App() {
         />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/signout' element={<SignUp />} />
-        <Route path='/my-profile' element={<MyProfile />} />
+        <Route
+          path='/my-profile'
+          element={
+            user.network_id ? (
+              <MyProfile user={user} setUser={setUser} />
+            ) : (
+              <Navigate to='/login' />
+            )
+          }
+        />
         <Route path='/create-post' element={<MakePost />} />
         <Route
           path='/groups'
           element={
-            <Groups
-              user={user}
-              currentLocation={currentLocation}
-              setUser={setUser}
-            />
+            user.network_id ? (
+              <Groups
+                user={user}
+                currentLocation={currentLocation}
+                setUser={setUser}
+              />
+            ) : (
+              <Navigate to='/login' />
+            )
           }
         />
         <Route
           path='/g/:groupId'
           element={
-            <GroupDetail
-              user={user}
-              setUser={setUser}
-              currentLocation={currentLocation}
-            />
+            user.network_id ? (
+              <GroupDetail
+                user={user}
+                setUser={setUser}
+                currentLocation={currentLocation}
+                getUserData={getUserData}
+              />
+            ) : (
+              <Navigate to='/login' />
+            )
           }
         />
-        <Route path='/leaderboard' element={<Leaderboard user={user} />} />
+        <Route
+          path='/leaderboard'
+          element={
+            user.network_id ? (
+              <Leaderboard user={user} />
+            ) : (
+              <Navigate to='/login' />
+            )
+          }
+        />
         <Route
           path='/admin'
           element={

@@ -16,7 +16,10 @@ function LeftBar({ setFilter, filter, user }) {
   };
 
   return (
-    <div className='w-screen h-screen flex-col sm:w-[250px] px-6 py-4'>
+    <div
+      id='left-bar'
+      className='hidden sm:flex w-screen h-screen flex-col sm:w-[250px] px-6 py-4'
+    >
       <NavLink to='/' key={uuidv4()}>
         <div className='px-4 pb-4 text-2xl font-bold text-primary '>
           Adjacent Door
@@ -66,11 +69,13 @@ function LeftBar({ setFilter, filter, user }) {
           <LeftBarButton text='All Groups' icon={<MdGroups size='20' />} />
         </NavLink>
 
-        {user?.user_group?.map(({ id, name }) => (
-          <NavLink to={`/g/${id}`} style={handleActive} key={uuidv4()}>
-            <LeftBarButton text={name} icon={BackgroundLetterAvatars(name)} />
-          </NavLink>
-        ))}
+        {user?.user_group
+          ?.filter((group) => group?.accepted)
+          .map(({ id, name }, i) => (
+            <NavLink to={`/g/${id}`} style={handleActive} key={i}>
+              <LeftBarButton text={name} icon={BackgroundLetterAvatars(name)} />
+            </NavLink>
+          ))}
       </div>
     </div>
   );

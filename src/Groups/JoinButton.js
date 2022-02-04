@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import axios from 'axios';
 
 const JoinButton = (props) => {
   const [buttonType, setType] = useState('');
   const [open, setOpen] = useState(false);
+  const [user_group, setUserGroup] = useState(props.user_group);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -16,21 +18,49 @@ const JoinButton = (props) => {
     setType(props.joinStatus)
   })
 
-  const fakeAxiosPost =() => {
-    //let database know user joined this group
-    //get back joined group object {id:<num>, name:<name>, joinStatus:<joined>}
-    return {id: props.group.id, name: props.group.name, accepted: true}
+  const handleJoin = () => {
+    let userGroupCopy = user_group;
+    let accepted = props.group.privacy ? false : true;
+    axios.post(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/join?network_id=${props.user.network_id}&accepted=${accepted}`)
+    .then(() => {
+      let response = {id: props.group.id, name: props.group.name, accepted: accepted}
+      userGroupCopy.push(response);
+      props.setUser(prevState => ({
+        ...prevState,
+        user_group: userGroupCopy
+      }))
+      setUserGroup(userGroupCopy);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const handleLeave = () => {
+    let userGroupCopy = user_group;
+    let groupIndex = user_group.findIndex(element => element.id === props.group.id);
+    axios.delete(`${process.env.REACT_APP_SERVER}/groups/user/${props.group.id}/left?network_id=${props.user.network_id}`)
+    .then(() => {
+      userGroupCopy.splice(groupIndex, 1);
+      props.setUser(prevState => ({
+        ...prevState,
+        user_group: userGroupCopy
+      }))
+      setUserGroup(userGroupCopy);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const onHover = {
+    '&:hover': {
+      color: 'ghostWhite'
+    }
   }
 
   const statusButton = (privacy) => {
-    let user_group = props.user_group;
-    let groupIndex = user_group.findIndex(element => element.id === props.group.id);
-    //send update to server based on button type
     switch(buttonType) {
       case 'joined':
         return (
         <div>
-          <Button size="small" color="primary" onClick={() => {
+          <Button size="small" color='secondary' sx={onHover} onClick={() => {
             handleClickOpen()
           }
             }>Joined</Button>
@@ -49,14 +79,10 @@ const JoinButton = (props) => {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>No</Button>
-              <Button onClick={() => {
+              <Button color='secondary' onClick={handleClose}>No</Button>
+              <Button color='secondary' onClick={() => {
                 handleClose();
-                user_group.splice(groupIndex, 1)
-                props.setUser(prevState => ({
-                  ...prevState,
-                  user_group: user_group
-                }))
+                handleLeave();
               }}>Yes</Button>
             </DialogActions>
           </Dialog>
@@ -64,7 +90,7 @@ const JoinButton = (props) => {
       case 'pending':
         return (
         <div>
-          <Button size="small" color="primary" onClick={handleClickOpen}>Pending</Button>
+          <Button size="small" color="secondary" sx={onHover} onClick={handleClickOpen}>Pending</Button>
           <Dialog
             open={open}
             onClose={handleClose}
@@ -83,11 +109,7 @@ const JoinButton = (props) => {
               <Button onClick={handleClose}>No</Button>
               <Button onClick={() => {
                 handleClose();
-                user_group.splice(groupIndex, 1)
-                props.setUser(prevState => ({
-                  ...prevState,
-                  user_group: user_group
-                }))
+                handleLeave()
               }}>Yes</Button>
             </DialogActions>
           </Dialog>
@@ -96,32 +118,22 @@ const JoinButton = (props) => {
         return (
         <div>
           <Button size="small" color="primary" onClick={() => {
-            alert('You are this admin for this group');
+            alert('You are the admin for this group');
           }}>Admin</Button>
         </div>)
       case 'privateNotJoined':
         return(
           <div>
-            <Button size="small" color="primary" onClick={() => {
-              let response = {id: props.group.id, name: props.group.name, accepted: false}
-              user_group.push(response)
-              props.setUser(prevState => ({
-                ...prevState,
-                user_group: user_group
-              }))
+            <Button size="small" color="primary" sx={onHover} onClick={() => {
+              handleJoin();
             }}>Request to Join</Button>
           </div>
         )
       default:
         return (
         <div>
-          <Button size="small" color="primary" onClick={() => {
-            let response = fakeAxiosPost()
-            user_group.push(response)
-            props.setUser(prevState => ({
-              ...prevState,
-              user_group: user_group
-            }))
+          <Button size="small" color="primary" sx={onHover} onClick={() => {
+            handleJoin();
           }}>Join</Button>
         </div>)
     }

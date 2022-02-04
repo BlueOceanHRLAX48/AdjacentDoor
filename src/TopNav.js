@@ -37,7 +37,7 @@ function TopNav({
   };
 
   return (
-    <div className='flex items-center justify-between w-full mt-4 mb-4 '>
+    <div className='flex items-center justify-between w-full mt-4 mb-2 sm:mt-4 sm:mb-4 '>
       <div>
         <SearchBar
           posts={posts}
@@ -50,15 +50,18 @@ function TopNav({
           setSearch={setSearch}
         />
       </div>
-      <div className='flex justify-end'>
-        <button className='text-sm' onClick={() => setTheme(nextTheme)}>
+      <div className='justify-end hidden sm:flex'>
+        {/* <button className='text-sm' onClick={() => setTheme(nextTheme)}>
           darkmode
-        </button>
+        </button> */}
 
         <div className='ml-4 mr-4 cursor-pointer'>
           <Avatar
             alt='Avatar'
-            src='/static/images/avatar/1.jpg'
+            src={
+              user.profile_img ||
+              'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
+            }
             sx={{ width: 35, height: 35 }}
             id='user-profile'
             aria-controls={open ? 'basic-menu' : undefined}

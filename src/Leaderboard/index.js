@@ -38,7 +38,7 @@ function Leaderboard(props) {
 
   return (
     <div className='flex h-screen'>
-      <LeftBar />
+      <LeftBar user={props.user} />
       <div className='flex grow overflow-y-scroll hide-scroll-bar justify-center gap-8 p-10'>
         <div className='w-1/2 h-fit flex flex-col rounded border'>
           <div className='font-bold text-2xl text-center py-2 decoration-secondary underline underline-offset-1'>
