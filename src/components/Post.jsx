@@ -178,7 +178,7 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                       ['comment', <MdChatBubbleOutline size='15' />, handleToggleComment],
                       [
                         like,
-                        JSON.parse(localStorage.getItem(`adLiked${postId}`)) ? (
+                        JSON.parse(localStorage.getItem(`adLiked${user.network_id}${postId}`)) ? (
                           <MdFavorite size='15' color='red' />
                         ) : (
                           <MdFavoriteBorder size='15' />
@@ -288,9 +288,9 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
               )}
 
               {allComments &&
-                allComments.map((comment) => (
+                allComments.map((comment, i) => (
                   <div className='mt-4'>
-                    <Comment comment={comment} />
+                    <Comment comment={comment} key={i} />
                   </div>
                 ))}
             </div>
