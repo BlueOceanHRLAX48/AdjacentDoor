@@ -33,9 +33,9 @@ function GroupDetail(props) {
     }
   }, [group]);
 
-  React.useEffect(() => {
-    togglePrivacy();
-  }, [privacy]);
+  // React.useEffect(() => {
+  //   togglePrivacy();
+  // }, [privacy]);
 
   const filteredPosts = posts
     .filter((post) => post.tag.toLowerCase().includes(filter.toLowerCase()))
