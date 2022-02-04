@@ -11,6 +11,7 @@ function Groups(props) {
   const [groups, setGroups] = useState([]);
   const { user_group } = props.user;
   const [radius, setRadius] = useState(50);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     axios
@@ -34,14 +35,32 @@ function Groups(props) {
       </div>
       <div>
         <div>
-          <TopNav user={props.user} />
+          <TopNav
+            setSearch={setSearch}
+            search={search}
+            user={props.user}
+            setUser={props.setUser}
+          />
         </div>
         <div className='flex'>
           <div className='flex-col w-screen sm:w-[600px] px-4 mb-32 sm:mb-20'>
             <div>
-              <MakeGroup currentLocation={props.currentLocation} user={props.user} />
+              <MakeGroup
+                currentLocation={props.currentLocation}
+                user={props.user}
+              />
               <div>
-                <TextField sx={{width: '40%', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}}
+                <TextField
+                  sx={{
+                    width: '40%',
+                    borderColor: '#B8B8FF',
+                    color: '#B8B8FF',
+                    '&:hover': {
+                      color: '#9381FF',
+                      borderColor: '#9381FF',
+                      backgroundColor: 'ghostWhite',
+                    },
+                  }}
                   id='radiusInput'
                   variant='outlined'
                   placeholder='search radius in miles'
@@ -49,10 +68,22 @@ function Groups(props) {
                   min='0'
                   max='500'
                 ></TextField>
-                <Button sx={{width: '30%', height: '56px', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}}
+                <Button
+                  sx={{
+                    width: '30%',
+                    height: '56px',
+                    borderColor: '#B8B8FF',
+                    color: '#B8B8FF',
+                    '&:hover': {
+                      color: '#9381FF',
+                      borderColor: '#9381FF',
+                      backgroundColor: 'ghostWhite',
+                    },
+                  }}
                   variant='outlined'
                   onClick={() => {
-                    let newRadius = document.getElementById('radiusInput').value;
+                    let newRadius =
+                      document.getElementById('radiusInput').value;
                     setRadius(newRadius);
                   }}
                 >
@@ -61,37 +92,46 @@ function Groups(props) {
               </div>
               <div>Groups near you</div>
               <div id='seeGroups'>
-                {groups.map((card, index) => {
-                  let joinStatus = '';
-                  let groupIndex = user_group.findIndex((element) => element.id === card.id);
-                  if (groupIndex !== -1) {
-                    if (user_group[groupIndex].accepted) {
-                      if (parseInt(card.admin_id) === parseInt(props.user.network_id)) {
-                        joinStatus = 'admin';
+                {groups
+                  .filter((group) =>
+                    group.name.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((card, index) => {
+                    let joinStatus = '';
+                    let groupIndex = user_group.findIndex(
+                      (element) => element.id === card.id
+                    );
+                    if (groupIndex !== -1) {
+                      if (user_group[groupIndex].accepted) {
+                        if (
+                          parseInt(card.admin_id) ===
+                          parseInt(props.user.network_id)
+                        ) {
+                          joinStatus = 'admin';
+                        } else {
+                          joinStatus = 'joined';
+                        }
                       } else {
-                        joinStatus = 'joined';
+                        joinStatus = 'pending';
                       }
                     } else {
-                      joinStatus = 'pending';
+                      if (card.privacy) {
+                        joinStatus = 'privateNotJoined';
+                      } else {
+                        joinStatus = 'notJoined';
+                      }
                     }
-                  } else {
-                    if (card.privacy) {
-                      joinStatus = 'privateNotJoined';
-                    } else {
-                      joinStatus = 'notJoined';
-                    }
-                  }
-                  return (
-                    <GroupCard
-                      key={index}
-                      group={card}
-                      user={props.user}
-                      joinStatus={joinStatus}
-                      setUser={props.setUser}
-                      user_group={user_group}
-                    />
-                  );
-                })}
+                    return (
+                      <GroupCard
+                        key={index}
+                        group={card}
+                        user={props.user}
+                        joinStatus={joinStatus}
+                        setUser={props.setUser}
+                        user_group={user_group}
+                      />
+                    );
+                  })}
               </div>
             </div>
           </div>
