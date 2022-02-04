@@ -39,6 +39,8 @@ function Footer() {
 
   if (document.getElementById('left-bar') && width > 640) {
     document.getElementById('left-bar').style.display = 'flex';
+  } else if (document.getElementById('left-bar')) {
+    document.getElementById('left-bar').style.display = 'none';
   }
 
   return (
