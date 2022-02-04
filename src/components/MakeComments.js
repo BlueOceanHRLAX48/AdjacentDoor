@@ -2,7 +2,7 @@ import React from 'react';
 import { MdSend } from 'react-icons/md';
 import axios from 'axios';
 
-function Comments({ getAllComments, post, user }) {
+function MakeComments({ getAllComments, post, user }) {
   const [commentValue, setCommentValue] = React.useState('');
 
   const handleCommentValue = (e) => {
@@ -43,4 +43,4 @@ function Comments({ getAllComments, post, user }) {
   );
 }
 
-export default Comments;
+export default MakeComments;

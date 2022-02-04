@@ -23,6 +23,7 @@ import {
 } from 'react-share';
 import MoreMenu from '../MoreMenu';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -38,6 +39,10 @@ import {
 =======
 import Comments from './Comments';
 >>>>>>> c08a43b (post comments in progress)
+=======
+import MakeComments from './MakeComments';
+import Comment from './Comment';
+>>>>>>> a012e13 (stuck on making post and new comments)
 
 function Post({ photos, postId, body, like, time, user, report, getPosts, post, group }) {
   const [liked, setLiked] = React.useState(() =>
@@ -90,8 +95,8 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
 
   const getAllComments = () => {
     axios.get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`).then(({ data }) => {
-      setAllComments(data.replies);
-      console.log(data.replies);
+      setAllComments(data[0].replies);
+      console.log(data[0].replies);
     });
   };
 
@@ -328,7 +333,7 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
               </div>
               <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} group={group} />
               {toggleComment && (
-                <Comments
+                <MakeComments
                   setAllComments={setAllComments}
                   allComments={allComments}
                   getAllComments={getAllComments}
@@ -336,7 +341,9 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                   user={user}
                 />
               )}
-              <div>{allComments && allComments.map((comment) => <div>{comment.body}</div>)}</div>
+              <div className='mt-4 border-t'>
+                {allComments && allComments.map((comment) => <Comment comment={comment} />)}
+              </div>
             </div>
           )}
         </>
