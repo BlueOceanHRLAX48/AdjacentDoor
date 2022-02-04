@@ -2,7 +2,12 @@ import { Avatar, Box, Grid, Modal, Typography } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
-import { MdChatBubbleOutline, MdFavorite, MdFavoriteBorder, MdOutlineShare } from 'react-icons/md';
+import {
+  MdChatBubbleOutline,
+  MdFavorite,
+  MdFavoriteBorder,
+  MdOutlineShare,
+} from 'react-icons/md';
 import {
   FacebookIcon,
   FacebookShareButton,
@@ -17,7 +22,18 @@ import MoreMenu from '../MoreMenu';
 import Comment from './Comment';
 import MakeComments from './MakeComments';
 
-function Post({ photos, postId, body, like, time, user, report, getPosts, post, group }) {
+function Post({
+  photos,
+  postId,
+  body,
+  like,
+  time,
+  user,
+  report,
+  getPosts,
+  post,
+  group,
+}) {
   const [liked, setLiked] = React.useState(() =>
     JSON.parse(localStorage.getItem(`adLiked${user.network_id}${postId}`))
   );
@@ -40,9 +56,11 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
   }, []);
 
   const getAllComments = () => {
-    axios.get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`).then(({ data }) => {
-      setAllComments(data[0].replies);
-    });
+    axios
+      .get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`)
+      .then(({ data }) => {
+        setAllComments(data[0].replies);
+      });
   };
 
   const handleToggleComment = () => {
@@ -109,7 +127,9 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
     <>
       {(report < 5 || user.admin || user.network_id === group.admin_id) && (
         <>
-          {(!post.privacy || user.admin || group?.userjoined?.indexOf(user.network_id) !== -1) && (
+          {(!post.privacy ||
+            user.admin ||
+            group?.userjoined?.indexOf(user.network_id) !== -1) && (
             <div
               className='relative p-4 my-3 transition-all duration-150 border rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
               style={{
@@ -127,7 +147,9 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                   className='mt-1 ml-1 mr-6 ring-2 ring-offset-2 ring-primary'
                 />
                 <div className='w-full'>
-                  <div className='flex font-medium align-top'>{post.user_info.username}</div>
+                  <div className='flex font-medium align-top'>
+                    {post.user_info.username}
+                  </div>
                   <div className='flex items-center'>
                     <div className='mr-2 text-xs font-light text-slate-500'>
                       {translateCategory(post.tag)}
@@ -137,7 +159,9 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                       {city && city}
                     </div>
                     <> · </>
-                    <div className='ml-2 text-xs font-light text-slate-500'>{handleTime(time)}</div>
+                    <div className='ml-2 text-xs font-light text-slate-500'>
+                      {handleTime(time)}
+                    </div>
                   </div>
                   <div className='mt-2'>{body}</div>
                   <div className='flex gap-2 py-2'>
@@ -175,10 +199,18 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                   </div>
                   <div className='flex items-center justify-between mt-2 mr-2'>
                     {[
-                      ['comment', <MdChatBubbleOutline size='15' />, handleToggleComment],
+                      [
+                        'comment',
+                        <MdChatBubbleOutline size='15' />,
+                        handleToggleComment,
+                      ],
                       [
                         like,
-                        JSON.parse(localStorage.getItem(`adLiked${user.network_id}${postId}`)) ? (
+                        JSON.parse(
+                          localStorage.getItem(
+                            `adLiked${user.network_id}${postId}`
+                          )
+                        ) ? (
                           <MdFavorite size='15' color='red' />
                         ) : (
                           <MdFavoriteBorder size='15' />
@@ -187,7 +219,12 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                       ],
                       ['share', <MdOutlineShare size='15' />, handleShare],
                     ].map(([title, icon, handleClick], i) => (
-                      <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
+                      <PostButton
+                        icon={icon}
+                        text={title}
+                        handleClick={handleClick}
+                        key={i}
+                      />
                     ))}
                     <Modal
                       open={share}
@@ -276,7 +313,13 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
                   </div>
                 </div>
               </div>
-              <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} group={group} />
+              <MoreMenu
+                postId={postId}
+                getPosts={getPosts}
+                user={user}
+                post={post}
+                group={group}
+              />
               {toggleComment && (
                 <MakeComments
                   setAllComments={setAllComments}
@@ -289,8 +332,8 @@ function Post({ photos, postId, body, like, time, user, report, getPosts, post, 
 
               {allComments &&
                 allComments.map((comment, i) => (
-                  <div className='mt-4'>
-                    <Comment comment={comment} key={i} />
+                  <div className='mt-4' key={i}>
+                    <Comment comment={comment} />
                   </div>
                 ))}
             </div>
