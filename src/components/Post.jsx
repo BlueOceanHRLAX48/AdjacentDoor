@@ -14,6 +14,7 @@ import {
   MdSend,
 } from 'react-icons/md';
 import MoreMenu from '../MoreMenu';
+<<<<<<< HEAD
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -26,6 +27,9 @@ import {
   PinterestIcon,
   LineIcon,
 } from 'react-share';
+=======
+import Comments from './Comments';
+>>>>>>> c08a43b (post comments in progress)
 
 function Post({
   photos,
@@ -45,6 +49,7 @@ function Post({
   const [isEnlarged, setEnlarge] = React.useState(false);
   const [city, setCity] = React.useState('');
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [share, setShare] = React.useState(false);
 =======
   const [comment, setComment] = React.useState(false);
@@ -55,6 +60,11 @@ function Post({
     setCommentValue(e.target.value);
   };
 >>>>>>> 1170fdf (comment in progress)
+=======
+  const [toggleComment, setToggleComment] = React.useState(false);
+
+  const [allComments, setAllComments] = React.useState([]);
+>>>>>>> c08a43b (post comments in progress)
 
   React.useEffect(() => {
     axios
@@ -64,10 +74,17 @@ function Post({
       .then(({ data }) => {
         setCity(data.features[0].text);
       });
+    getAllComments();
   }, []);
 
-  const handleComment = () => {
-    setComment(!comment);
+  const getAllComments = () => {
+    axios.get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`).then(({ data }) => {
+      setAllComments(data.posts);
+    });
+  };
+
+  const handleToggleComment = () => {
+    setToggleComment(!toggleComment);
   };
 
   const handleLike = () => {
@@ -200,6 +217,7 @@ function Post({
                       </div>
                     ))}
                   </div>
+<<<<<<< HEAD
                   <div className='flex items-center justify-between mt-2 mr-2'>
                     {[
                       [
@@ -311,6 +329,26 @@ function Post({
                     </Modal>
                   </div>
                 </div>
+=======
+                ))}
+              </div>
+              <div className='flex items-center justify-between mt-2 mr-2'>
+                {[
+                  ['comment', <MdChatBubbleOutline size='15' />, handleToggleComment],
+                  [
+                    like,
+                    JSON.parse(localStorage.getItem(`adLiked${postId}`)) ? (
+                      <MdFavorite size='15' color='red' />
+                    ) : (
+                      <MdFavoriteBorder size='15' />
+                    ),
+                    handleLike,
+                  ],
+                  ['share', <MdOutlineShare size='15' />, handleShare],
+                ].map(([title, icon, handleClick], i) => (
+                  <PostButton icon={icon} text={title} handleClick={handleClick} key={i} />
+                ))}
+>>>>>>> 6af2c97 (post comments in progress)
               </div>
               <MoreMenu
                 postId={postId}
@@ -322,19 +360,20 @@ function Post({
             </div>
           </div>
           <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} />
-          {comment && (
-            <div className='flex items-center justify-center w-full mt-4'>
-              <input
-                className='relative w-full p-1 pl-2 pr-8 text-sm transition-all duration-150 rounded-full outline-none focus:outline-primary dark:bg-gray-900'
-                placeholder='Write a Comment..'
-                onChange={handleCommentValue}
-                onFocus={(e) => (e.target.placeholder = '')}
-                onBlur={(e) => (e.target.placeholder = 'Write a Comment..')}
-              ></input>
-
-              <MdSend className='absolute right-6 text-slate-500' size='15' />
-            </div>
+          {toggleComment && (
+            <Comments
+              setAllComments={setAllComments}
+              allComments={allComments}
+              getAllComments={getAllComments}
+              post={post}
+              user={user}
+            />
           )}
+          <div>
+            {allComments?.map((comment) => (
+              <div>{comment}</div>
+            ))}
+          </div>
         </div>
       )}
     </>
