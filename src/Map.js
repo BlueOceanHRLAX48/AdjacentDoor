@@ -57,7 +57,6 @@ function Map(props) {
     ]);
   }, [props.group]);
 
-
   const addMarkers = (postList) => {
     postList.map((post) => {
       const marker = new mapboxgl.Marker({
@@ -116,18 +115,18 @@ function Map(props) {
   }, [props.posts]);
 
   const toggleDark = () => {
-      if (map.current.getStyle().name === 'Mapbox Light'){
-          map.current.setStyle('mapbox://styles/mapbox/dark-v10')
-      }
-      if (map.current.getStyle().name === 'Mapbox Dark'){
-          map.current.setStyle('mapbox://styles/mapbox/light-v10')
-      }
-  }
+    if (map.current.getStyle().name === 'Mapbox Light') {
+      map.current.setStyle('mapbox://styles/mapbox/dark-v10');
+    }
+    if (map.current.getStyle().name === 'Mapbox Dark') {
+      map.current.setStyle('mapbox://styles/mapbox/light-v10');
+    }
+  };
 
   return (
     <div className='flex grow relative z-0'>
       <div className='flex justify-left absolute z-10 m-2 opacity-95'>
-        <Legend toggleDark={toggleDark}/>
+        <Legend toggleDark={toggleDark} />
       </div>
       <div
         ref={mapContainer}
