@@ -13,34 +13,19 @@ function Groups(props) {
   const [radius, setRadius] = useState(50);
 
   useEffect(() => {
-<<<<<<< HEAD
-    axios.get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
-      params: {
-        longitude: props.currentLocation.longitude,
-        latitude: props.currentLocation.latitude,
-        mi: radius
-      }
-    })
-    .then((result) => {
-      setGroups(result.data);
-    })
-    .catch(err => console.log(err));
-  }, [props.currentLocation, radius])
-=======
     axios
       .get(`${process.env.REACT_APP_SERVER}/groups/lists`, {
         params: {
           longitude: props.currentLocation.longitude,
           latitude: props.currentLocation.latitude,
-          mi: 100,
+          mi: radius,
         },
       })
       .then((result) => {
         setGroups(result.data);
       })
       .catch((err) => console.log(err));
-  }, [props.currentLocation]);
->>>>>>> 3a7ef5a (mobile layout adjustment)
+  }, [props.currentLocation, radius]);
 
   return (
     <div className='flex w-screen dark:bg-gray-900 dark:text-white'>
@@ -55,11 +40,23 @@ function Groups(props) {
           <div>
             <MakeGroup currentLocation={props.currentLocation} user={props.user} />
             <div>
-              <TextField id='radiusInput' variant='outlined' placeholder='search radius in miles' type='number' min='0' max='500'></TextField>
-              <Button variant="outlined" onClick={() => {
-                let newRadius = document.getElementById('radiusInput').value;
-                setRadius(newRadius);
-              }}>FIND</Button>
+              <TextField
+                id='radiusInput'
+                variant='outlined'
+                placeholder='search radius in miles'
+                type='number'
+                min='0'
+                max='500'
+              ></TextField>
+              <Button
+                variant='outlined'
+                onClick={() => {
+                  let newRadius = document.getElementById('radiusInput').value;
+                  setRadius(newRadius);
+                }}
+              >
+                FIND
+              </Button>
             </div>
             <div>Groups near you</div>
             <div id='seeGroups'>
