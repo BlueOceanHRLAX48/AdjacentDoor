@@ -38,6 +38,7 @@ function Post({
     JSON.parse(localStorage.getItem(`adLiked${user.network_id}${postId}`))
   );
   const [isEnlarged, setEnlarge] = React.useState(false);
+  const [photoIndex, setPhoto] = React.useState('0');
   const [city, setCity] = React.useState('');
   const [share, setShare] = React.useState(false);
   const [toggleComment, setToggleComment] = React.useState(false);
@@ -168,7 +169,10 @@ function Post({
                     {photos.map((photo, i) => (
                       <div key={i}>
                         <img
-                          onClick={handleModal}
+                          onClick={() => {
+                            setPhoto(i);
+                            handleModal();
+                          }}
                           src={photo.image_url}
                           alt='upload'
                           width='75px'
@@ -187,9 +191,9 @@ function Post({
                             <img
                               key={i}
                               onClick={handleModal}
-                              src={photo.image_url}
+                              src={photos[photoIndex].image_url}
                               alt='upload'
-                              width='800px'
+                              width='400px'
                               className='border border-black'
                             />
                           </Box>
