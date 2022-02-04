@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Avatar, Modal, Box, Typography, Grid } from '@mui/material';
+=======
+import { Avatar, Box, Modal } from '@mui/material';
+>>>>>>> 1170fdf (comment in progress)
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
@@ -7,6 +11,7 @@ import {
   MdFavorite,
   MdFavoriteBorder,
   MdOutlineShare,
+  MdSend,
 } from 'react-icons/md';
 import MoreMenu from '../MoreMenu';
 import {
@@ -39,7 +44,17 @@ function Post({
   );
   const [isEnlarged, setEnlarge] = React.useState(false);
   const [city, setCity] = React.useState('');
+<<<<<<< HEAD
   const [share, setShare] = React.useState(false);
+=======
+  const [comment, setComment] = React.useState(false);
+  const [commentValue, setCommentValue] = React.useState('');
+
+  const handleCommentValue = (e) => {
+    console.log(e.target.value);
+    setCommentValue(e.target.value);
+  };
+>>>>>>> 1170fdf (comment in progress)
 
   React.useEffect(() => {
     axios
@@ -51,7 +66,9 @@ function Post({
       });
   }, []);
 
-  const handleComment = () => {};
+  const handleComment = () => {
+    setComment(!comment);
+  };
 
   const handleLike = () => {
     if (!liked) {
@@ -303,8 +320,22 @@ function Post({
                 group={group}
               />
             </div>
+          </div>
+          <MoreMenu postId={postId} getPosts={getPosts} user={user} post={post} />
+          {comment && (
+            <div className='flex items-center justify-center w-full mt-4'>
+              <input
+                className='relative w-full p-1 pl-2 pr-8 text-sm transition-all duration-150 rounded-full outline-none focus:outline-primary dark:bg-gray-900'
+                placeholder='Write a Comment..'
+                onChange={handleCommentValue}
+                onFocus={(e) => (e.target.placeholder = '')}
+                onBlur={(e) => (e.target.placeholder = 'Write a Comment..')}
+              ></input>
+
+              <MdSend className='absolute right-6 text-slate-500' size='15' />
+            </div>
           )}
-        </>
+        </div>
       )}
     </>
   );
