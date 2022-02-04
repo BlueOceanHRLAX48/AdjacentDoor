@@ -63,10 +63,10 @@ function Map(props) {
           }).setHTML(
             `<span style='display:flex;'>
               <img src='${
-                post.profile_img
+                post.user_info.profile_img
               }' style='border-radius:100%; width:40px; height:40px;'/>
               <h1 style='margin-left:10px; font-weight:500;'>${
-                post.username
+                post.user_info.username
               }</h1>
               </span>
               <h1 style='padding-top:5px; word-wrap:break-word;'>${trimBody(post.body)}</h1>`
