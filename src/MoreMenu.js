@@ -79,9 +79,7 @@ function MoreMenu({ postId, getPosts, user, post, group }) {
             }}
           >
             {!reported && <MenuItem onClick={handleReport}>Report</MenuItem>}
-            {(user.admin ||
-              post.user_info.username === user.username ||
-              group?.admin_id === user.network_id) && (
+            {(user.admin || group?.admin_id === user.network_id) && (
               <MenuItem onClick={handleForgive}>Forgive</MenuItem>
             )}
             {(user.admin ||
