@@ -49,8 +49,8 @@ function Map(props) {
   });
 
   useEffect(() => {
-    // setLng(props.group.coordinates.longitude);
-    // setLat(props.group.coordinates.latitude);
+    setLng(props.group.coordinates.longitude);
+    setLat(props.group.coordinates.latitude);
     map.current.setCenter([
       props.group.coordinates.longitude,
       props.group.coordinates.latitude,
