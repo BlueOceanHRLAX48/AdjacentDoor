@@ -151,7 +151,7 @@ module.exports = {
     const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
     queryArr.push(pool.query(query, [privacy, group_id]))
 
-    if (privacy) {
+    if (!privacy) {
       const publicStr = `UPDATE user_group_list set accepted = true WHERE user_group_id = $1`
       queryArr.push(pool.query(publicStr, [group_id]))
     }
