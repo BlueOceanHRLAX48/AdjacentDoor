@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const GroupCard = (props) => {
 
-  return (<Card sx={{maxWidth: 400}}>
+  return (<Card sx={{maxWidth: 500}}>
     <CardActionArea component={Link} to={`/g/${props.group.id}`}>
       <CardMedia
         component="img"
