@@ -146,18 +146,18 @@ module.exports = {
     const { group_id } = req.params;
     const { privacy } = req.body;
 
-    if (privacy) {
-      const publicStr = `UPDATE user_group_list set privacy = true WHERE user_group_id = $2`
-      pool.query(publicStr, [group_id])
-        .then(()=> res.sendStatus(204))
-        .catch((err)=> res.status(500).send(err))
-    }
+    let queryArr = [];
 
+    if (!privacy) {
+      const publicStr = `UPDATE user_group_list set accepted = true WHERE user_group_id = $1`
+      queryArr.push(pool.query(publicStr, [group_id]))
+    }
     const query = `UPDATE user_groups SET privacy = $1 WHERE id = $2;`;
-    pool
-      .query(query, [privacy, group_id])
-      .then(() => res.sendStatus(204))
-      .catch((err) => res.status(500).send(err))
+    queryArr.push(pool.query(query, [privacy, group_id]))
+
+    Promise.all(queryArr)
+      .then(result => res.status(204).send('Group Privacy Setting has changed'))
+      .catch(err  => console.log(err))
   },
   voteForRating: (req, res) => {
     const { group_id, default_group_id, network_id, safety, friendliness} = req.body;

@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS user_groups(
   latitude FLOAT NOT NULL,
   longitude FLOAT NOT NULL,
   privacy boolean DEFAULT false,
-  photo text NOT NULL
+  photo text NOT NULL,
+  "description" text
 );
 
 DROP TABLE IF EXISTS groups_rating CASCADE;
