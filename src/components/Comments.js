@@ -2,7 +2,7 @@ import React from 'react';
 import { MdSend } from 'react-icons/md';
 import axios from 'axios';
 
-function Comments({ setAllComments, allComments, getAllComments, post, user }) {
+function Comments({ getAllComments, post, user }) {
   const [commentValue, setCommentValue] = React.useState('');
 
   const handleCommentValue = (e) => {
@@ -18,11 +18,9 @@ function Comments({ setAllComments, allComments, getAllComments, post, user }) {
         latitude: 1,
         longitude: 1,
       })
-      .then((response) => {
-        console.log('response', response);
-      })
       .then(() => {
         getAllComments();
+        setCommentValue('');
       });
   };
 
