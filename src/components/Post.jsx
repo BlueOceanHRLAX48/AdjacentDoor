@@ -53,16 +53,23 @@ function Post({
       .then(({ data }) => {
         setCity(data.features[0].text);
       });
-    getAllComments();
   }, []);
 
   const getAllComments = () => {
     axios
       .get(`${process.env.REACT_APP_SERVER}/posts/${postId}/replies`)
       .then(({ data }) => {
-        setAllComments(data[0].replies);
+        if (data.length > 0) {
+          setAllComments(data[0].replies);
+        } else {
+          setAllComments([]);
+        }
       });
   };
+
+  React.useEffect(() => {
+    getAllComments();
+  }, [postId]);
 
   const handleToggleComment = () => {
     setToggleComment(!toggleComment);
