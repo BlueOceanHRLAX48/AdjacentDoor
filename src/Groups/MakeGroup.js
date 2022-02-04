@@ -37,17 +37,23 @@ function MakeGroup(props) {
   });
 
   useEffect(() => {
-    axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${props.currentLocation.longitude},${props.currentLocation.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`)
-    .then((results) => {
-      setLocation({
-        place: results.data.features[1].place_name,
-        city: results.data.features[2].text,
-        state: results.data.features[4].text,
-        zip: results.data.features[1].text,
-        coordinates: [props.currentLocation.longitude, props.currentLocation.latitude]
+    axios
+      .get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${props.currentLocation.longitude},${props.currentLocation.latitude}.json?access_token=pk.eyJ1IjoiZGtzOTk0NTUiLCJhIjoiY2t6MGU0eG9iMDk3dzJ3cWZqd2t3eWFoYiJ9.y7P9NQjeplt8JiSmTxDkdQ`
+      )
+      .then((results) => {
+        setLocation({
+          place: results.data.features[1].place_name,
+          city: results.data.features[2].text,
+          state: results.data.features[4].text,
+          zip: results.data.features[1].text,
+          coordinates: [
+            props.currentLocation.longitude,
+            props.currentLocation.latitude,
+          ],
+        });
       });
-    })
-  }, [props.currentLocation.longitude, props.currentLocation.latitude])
+  }, [props.currentLocation.longitude, props.currentLocation.latitude]);
 
   const modalStyle = {
     display: 'flex',
@@ -65,20 +71,22 @@ function MakeGroup(props) {
   const createAGroup = () => {
     let privacybool = privacy === 'public' ? false : true;
 
-    axios.post(`${process.env.REACT_APP_SERVER}/groups/user`, {
-      name: groupName,
-      network_id: props.user.network_id,
-      city: location.city,
-      state: location.state,
-      zip: location.zip,
-      latitude: location.coordinates[1],
-      longitude: location.coordinates[0],
-      privacy: privacybool,
-      photo: photo,
-      description: description
-    })
-    .catch(err => console.log(err))
-  }
+    axios
+      .post(`${process.env.REACT_APP_SERVER}/groups/user`, {
+        name: groupName,
+        network_id: props.user.network_id,
+        city: location.city,
+        state: location.state,
+        zip: location.zip,
+        latitude: location.coordinates[1],
+        longitude: location.coordinates[0],
+        privacy: privacybool,
+        photo: photo,
+        description: description,
+      })
+      .then(() => props.getUserData())
+      .catch((err) => console.log(err));
+  };
 
   const resetInputs = () => {
     setGname('');
@@ -132,13 +140,17 @@ function MakeGroup(props) {
                 setDescription(e.target.value);
               }}
             ></TextField>
-            <Typography>Please give us a brief description of your group</Typography>
+            <Typography>
+              Please give us a brief description of your group
+            </Typography>
             <Button
               onClick={() => {
                 if (validDescriptionInputs.test(description)) {
                   setSlide('p3');
                 } else {
-                  alert('Please remove non-alphanumeric characters from your description');
+                  alert(
+                    'Please remove non-alphanumeric characters from your description'
+                  );
                 }
               }}
             >
@@ -152,7 +164,9 @@ function MakeGroup(props) {
             <Typography variant='h6' component='h2'>
               Group Location
             </Typography>
-            <Typography>Your group will be based in {location.place}.</Typography>
+            <Typography>
+              Your group will be based in {location.place}.
+            </Typography>
             <Button
               onClick={() => {
                 setSlide('p4');
@@ -167,7 +181,11 @@ function MakeGroup(props) {
           <div>
             <FormControl>
               <FormLabel id='local-or-global-radios'>Privacy</FormLabel>
-              <RadioGroup aria-labelledby='privacy-radios' defaultValue='public' name='radio-butt'>
+              <RadioGroup
+                aria-labelledby='privacy-radios'
+                defaultValue='public'
+                name='radio-butt'
+              >
                 <FormControlLabel
                   value='public'
                   control={<Radio />}
@@ -188,7 +206,7 @@ function MakeGroup(props) {
             </FormControl>
             <Button
               onClick={() => {
-                  setSlide('p5');
+                setSlide('p5');
               }}
             >
               NEXT
@@ -198,7 +216,14 @@ function MakeGroup(props) {
       case 'p5':
         return (
           <div>
-            <UploadPhoto createAGroup={createAGroup} setSlide={() => {setSlide('p1')}} handleClose={handleClose} setPhoto={setPhoto}/>
+            <UploadPhoto
+              createAGroup={createAGroup}
+              setSlide={() => {
+                setSlide('p1');
+              }}
+              handleClose={handleClose}
+              setPhoto={setPhoto}
+            />
           </div>
         );
       default:
@@ -208,7 +233,20 @@ function MakeGroup(props) {
 
   return (
     <div className='makeGroupSection'>
-      <Button sx={{width: '100%', borderColor: '#B8B8FF', color: '#B8B8FF', '&:hover':{ color: '#9381FF', borderColor: '#9381FF', backgroundColor: 'ghostWhite'}}} variant='outlined' onClick={handleOpen}>
+      <Button
+        sx={{
+          width: '100%',
+          borderColor: '#B8B8FF',
+          color: '#B8B8FF',
+          '&:hover': {
+            color: '#9381FF',
+            borderColor: '#9381FF',
+            backgroundColor: 'ghostWhite',
+          },
+        }}
+        variant='outlined'
+        onClick={handleOpen}
+      >
         Create New Group
       </Button>
       <Modal

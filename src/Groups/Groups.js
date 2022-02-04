@@ -26,7 +26,7 @@ function Groups(props) {
         setGroups(result.data);
       })
       .catch((err) => console.log(err));
-  }, [props.currentLocation, radius]);
+  }, [props.currentLocation, radius, props.user]);
 
   return (
     <div className='h-screen overflow-hidden sm:flex dark:bg-gray-900 dark:text-white'>
@@ -45,11 +45,15 @@ function Groups(props) {
         <div className='sm:flex'>
           <div className='h-screen overflow-y-scroll hide-scroll-bar'>
             <div>
-              <div id='groupsTop' className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'>
+              <div
+                id='groupsTop'
+                className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'
+              >
                 <MakeGroup
                   currentLocation={props.currentLocation}
                   user={props.user}
-                  />
+                  getUserData={props.getUserData}
+                />
                 <div>
                   <TextField
                     sx={{
@@ -69,7 +73,7 @@ function Groups(props) {
                     type='number'
                     min='0'
                     max='500'
-                    ></TextField>
+                  ></TextField>
                   <Button
                     sx={{
                       width: '49%',
@@ -87,19 +91,22 @@ function Groups(props) {
                     variant='outlined'
                     onClick={() => {
                       let newRadius =
-                      document.getElementById('radiusInput').value;
+                        document.getElementById('radiusInput').value;
                       setRadius(newRadius);
                     }}
-                    >
+                  >
                     FIND
                   </Button>
                 </div>
               </div>
-              <div id='seeGroups' className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'>
-              <div style={{color: '#B8B8FF'}}>GROUPS NEAR YOU</div>
+              <div
+                id='seeGroups'
+                className='w-full sm:w-[600px] px-4 mb-32 sm:mb-20'
+              >
+                <div style={{ color: '#B8B8FF' }}>GROUPS NEAR YOU</div>
                 {groups
                   ?.filter((group) =>
-                  group?.name?.toLowerCase().includes(search.toLowerCase())
+                    group?.name?.toLowerCase().includes(search.toLowerCase())
                   )
                   .map((card, index) => {
                     let joinStatus = '';

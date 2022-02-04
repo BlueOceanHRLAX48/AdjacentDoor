@@ -102,6 +102,7 @@ function App() {
                 user={user}
                 currentLocation={currentLocation}
                 setUser={setUser}
+                getUserData={getUserData}
               />
             ) : (
               <Navigate to='/login' />
