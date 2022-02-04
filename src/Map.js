@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Legend from './components/legend';
+import Legend from './components/Legend';
 import 'mapbox-gl/dist/mapbox-gl.css';
 /* eslint import/no-webpack-loader-syntax: off */
 import mapboxgl from '!mapbox-gl';
@@ -115,10 +115,19 @@ function Map(props) {
     addMarkers(props.posts);
   }, [props.posts]);
 
+  const toggleDark = () => {
+      if (map.current.getStyle().name === 'Mapbox Light'){
+          map.current.setStyle('mapbox://styles/mapbox/dark-v10')
+      }
+      if (map.current.getStyle().name === 'Mapbox Dark'){
+          map.current.setStyle('mapbox://styles/mapbox/light-v10')
+      }
+  }
+
   return (
     <div className='flex grow relative z-0'>
       <div className='flex justify-left absolute z-10 m-2 opacity-95'>
-        <Legend />
+        <Legend toggleDark={toggleDark}/>
       </div>
       <div
         ref={mapContainer}
