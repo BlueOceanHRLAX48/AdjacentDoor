@@ -12,6 +12,7 @@ function Groups(props) {
   const { user_group } = props.user;
   const [radius, setRadius] = useState(50);
   const [search, setSearch] = useState('');
+  const [findRadius, setFindR] = useState(50);
 
   useEffect(() => {
     axios
@@ -54,6 +55,7 @@ function Groups(props) {
                   user={props.user}
                   getUserData={props.getUserData}
                 />
+
                 <div>
                   <TextField
                     sx={{
@@ -73,6 +75,8 @@ function Groups(props) {
                     type='number'
                     min='0'
                     max='500'
+                    value={findRadius}
+                    onChange={(e) => {setFindR(e.target.value)}}
                   ></TextField>
                   <Button
                     sx={{
@@ -90,9 +94,7 @@ function Groups(props) {
                     }}
                     variant='outlined'
                     onClick={() => {
-                      let newRadius =
-                        document.getElementById('radiusInput').value;
-                      setRadius(newRadius);
+                      setRadius(findRadius);
                     }}
                   >
                     FIND
