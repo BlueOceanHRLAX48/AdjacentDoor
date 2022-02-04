@@ -108,11 +108,12 @@ module.exports = {
   },
   getGroupsByLocation: (req, res) => {
     const { longitude, latitude, mi} = req.query;
-    const r = parseFloat(mi/69) || parseFloat(0.07);
-    const lat_min = parseInt(latitude) - r;
-    const lat_max = parseInt(latitude) + r;
-    const long_min = parseInt(longitude) - r;
-    const long_max = parseInt(longitude) + r;
+    const rlat = parseFloat(mi/69) || parseFloat(0.15);
+    const rlon = parseFloat(mi/55) || parseFloat(0.18);
+    const lat_min = parseInt(latitude) - rlat;
+    const lat_max = parseInt(latitude) + rlat;
+    const long_min = parseInt(longitude) - rlon;
+    const long_max = parseInt(longitude) + rlon;
     const values = [lat_min, lat_max, long_min, long_max];
     const query = `SELECT g.id, g.name, g.admin_id, g.privacy, g.photo,
     COALESCE((
