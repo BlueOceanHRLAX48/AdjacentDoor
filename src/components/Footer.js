@@ -40,6 +40,9 @@ function Footer() {
   if (document.getElementById('left-bar') && width > 640) {
     document.getElementById('left-bar').style.display = 'flex';
   }
+  if (document.getElementById('left-bar') && width < 640) {
+    document.getElementById('left-bar').style.display = 'none';
+  }
 
   return (
     <div className='fixed bottom-0 z-10 flex items-center justify-between w-screen px-4 py-2 bg-white border sm:hidden'>
@@ -47,11 +50,7 @@ function Footer() {
         <MdHome className='' size='30' onClick={closeLeftBar} />
       </NavLink>
 
-      <MdOutlineAddCircle
-        className='cursor-pointer'
-        size='30'
-        onClick={toggleCreatePost}
-      />
+      <MdOutlineAddCircle className='cursor-pointer' size='30' onClick={toggleCreatePost} />
 
       <MdMenu className='cursor-pointer' size='30' onClick={openLeftBar} />
     </div>
