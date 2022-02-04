@@ -22,6 +22,7 @@ function Groups(props) {
         },
       })
       .then((result) => {
+        console.log(result.data)
         setGroups(result.data);
       })
       .catch((err) => console.log(err));
