@@ -1,4 +1,4 @@
-import { Avatar, Modal, Box } from '@mui/material';
+import { Avatar, Modal, Box, Typography, Grid } from '@mui/material';
 import axios from 'axios';
 import moment from 'moment';
 import React from 'react';
@@ -9,6 +9,18 @@ import {
   MdOutlineShare,
 } from 'react-icons/md';
 import MoreMenu from '../MoreMenu';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  PinterestShareButton,
+  LineShareButton,
+} from 'react-share';
+import {
+  FacebookIcon,
+  TwitterIcon,
+  PinterestIcon,
+  LineIcon,
+} from 'react-share';
 
 function Post({
   photos,
@@ -27,6 +39,7 @@ function Post({
   );
   const [isEnlarged, setEnlarge] = React.useState(false);
   const [city, setCity] = React.useState('');
+  const [share, setShare] = React.useState(false);
 
   React.useEffect(() => {
     axios
@@ -70,7 +83,9 @@ function Post({
     }
   };
 
-  const handleShare = () => {};
+  const handleShare = () => {
+    setShare(!share);
+  };
 
   function handleTime(timestamp) {
     return moment().isSame(timestamp, 'day')
@@ -193,6 +208,90 @@ function Post({
                         key={i}
                       />
                     ))}
+                    <Modal
+                      open={share}
+                      onClose={handleShare}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                      aria-labelledby='modal-title'
+                      aria-describedby='modal-description'
+                    >
+                      <Box
+                        sx={{
+                          width: 400,
+                          height: 230,
+                          backgroundColor: 'white',
+                          align: 'center',
+                        }}
+                      >
+                        <Typography
+                          variant='h6'
+                          component='h2'
+                          align='center'
+                          sx={{
+                            mt: 2,
+                            mb: 4,
+                          }}
+                        >
+                          Share to...
+                        </Typography>
+                        <Grid
+                          container
+                          align='center'
+                          sx={{
+                            mt: 2,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                          }}
+                        >
+                          <Grid item md={3} xs={5}>
+                            <FacebookShareButton
+                              url='http://facebook.com'
+                              // url={window.location.href}
+                              hashtag={'#hashtag'}
+                              quote={`New post from ${post.user_info.username}: ${post.body}. Please check the latest posts at ${window.location.href}`}
+                            >
+                              <FacebookIcon size={32} round />
+                            </FacebookShareButton>
+                            <div>Facebook</div>
+                          </Grid>
+                          <Grid item md={3} xs={5}>
+                            <TwitterShareButton
+                              url={window.location.href}
+                              hashtag={'#hashtag'}
+                              title={`New post from ${post.user_info.username}: ${post.body}. Please check the latest posts at`}
+                            >
+                              <TwitterIcon size={32} round />
+                            </TwitterShareButton>
+                            <div>Twitter</div>
+                          </Grid>
+                          <Grid item md={3} xs={5}>
+                            <PinterestShareButton
+                              url={window.location.href}
+                              hashtag={'#hashtag'}
+                              media='https://picsum.photos/200/300'
+                              description={`New post from ${post.user_info.username}: ${post.body}.`}
+                            >
+                              <PinterestIcon size={32} round />
+                            </PinterestShareButton>
+                            <div>Pinterest</div>
+                          </Grid>
+                          <Grid item md={3} xs={5}>
+                            <LineShareButton
+                              url={window.location.href}
+                              hashtag={'#hashtag'}
+                              title={`New post from ${post.user_info.username}: ${post.body}.`}
+                            >
+                              <LineIcon size={32} round />
+                            </LineShareButton>
+                            <div>Line</div>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </Modal>
                   </div>
                 </div>
               </div>
