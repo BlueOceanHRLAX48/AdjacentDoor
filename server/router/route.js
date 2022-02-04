@@ -119,6 +119,9 @@ router.route('/reply/:reply_id/report')
 router.route('/reply/:reply_id/delete')
   .delete(controller.replies.deleteReply)
 
+router.route('/posts/:post_id/reset')
+  .put(controller.posts.resetReport)
+
 module.exports= router
 
 

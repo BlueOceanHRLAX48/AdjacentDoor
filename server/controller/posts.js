@@ -77,5 +77,14 @@ module.exports = {
       .query(queries.deletePost,[post_id])
       .then(() => res.sendStatus(204))
       .catch((err) => res.status(500).send(err))
+  },
+
+  resetReport: (req, res) => {
+    const { post_id } = req.params;
+    const resetStr = `update posts set report = 0 where post_id = $1`
+
+    pool.query(resetStr, [ post_id ])
+      .then(()=> res.sendStatus(201))
+      .catch((err)=> res.status(500).send(err))
   }
 }
