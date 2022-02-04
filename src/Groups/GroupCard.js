@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom';
 
 const GroupCard = (props) => {
 
-  return (<Card sx={{maxWidth: 500}}>
-    <CardActionArea component={Link} to={`/g/${props.group.id}`}>
-      <CardMedia
+  return (<Card sx={{maxWidth: 400, border: 2, borderColor: '#F0F0F0', margin: '0.2rem', '&:hover': {backgroundColor: '#FFEEDD', borderColor: '#B8B8FF'}}} variant='outlined'>
+    <CardActionArea component={Link} to={`/g/${props.group.id}`} >
+      <CardMedia sx={{maxHeight: 200}}
         component="img"
         height="140"
         image={props.group.photo}
       />
       <CardContent>
-        <Typography >
+        <Typography sx={{fontSize: '1.3rem'}}>
           {props.group.name}
         </Typography>
-        <Typography >
+        <Typography sx={{fontSize: '0.9rem'}}>
           {props.group.privacy ? 'Private' : 'Public'}
         </Typography>
       </CardContent>
