@@ -49,13 +49,18 @@ const JoinButton = (props) => {
     .catch(err => console.log(err))
   }
 
+  const onHover = {
+    '&:hover': {
+      color: 'ghostWhite'
+    }
+  }
+
   const statusButton = (privacy) => {
-    //send update to server based on button type
     switch(buttonType) {
       case 'joined':
         return (
         <div>
-          <Button size="small" color="primary" onClick={() => {
+          <Button size="small" color='secondary' sx={onHover} onClick={() => {
             handleClickOpen()
           }
             }>Joined</Button>
@@ -74,8 +79,8 @@ const JoinButton = (props) => {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>No</Button>
-              <Button onClick={() => {
+              <Button color='secondary' onClick={handleClose}>No</Button>
+              <Button color='secondary' onClick={() => {
                 handleClose();
                 handleLeave();
               }}>Yes</Button>
@@ -85,7 +90,7 @@ const JoinButton = (props) => {
       case 'pending':
         return (
         <div>
-          <Button size="small" color="primary" onClick={handleClickOpen}>Pending</Button>
+          <Button size="small" color="secondary" sx={onHover} onClick={handleClickOpen}>Pending</Button>
           <Dialog
             open={open}
             onClose={handleClose}
@@ -113,13 +118,13 @@ const JoinButton = (props) => {
         return (
         <div>
           <Button size="small" color="primary" onClick={() => {
-            alert('You are this admin for this group');
+            alert('You are the admin for this group');
           }}>Admin</Button>
         </div>)
       case 'privateNotJoined':
         return(
           <div>
-            <Button size="small" color="primary" onClick={() => {
+            <Button size="small" color="primary" sx={onHover} onClick={() => {
               handleJoin();
             }}>Request to Join</Button>
           </div>
@@ -127,7 +132,7 @@ const JoinButton = (props) => {
       default:
         return (
         <div>
-          <Button size="small" color="primary" onClick={() => {
+          <Button size="small" color="primary" sx={onHover} onClick={() => {
             handleJoin();
           }}>Join</Button>
         </div>)
