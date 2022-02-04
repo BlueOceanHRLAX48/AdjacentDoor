@@ -37,7 +37,7 @@ function TopNav({
   };
 
   return (
-    <div className='flex items-center justify-between w-full mt-4 mb-4 '>
+    <div className='flex items-center justify-between w-full mt-4 mb-2 sm:mt-4 sm:mb-4 '>
       <div>
         <SearchBar
           posts={posts}
@@ -50,7 +50,7 @@ function TopNav({
           setSearch={setSearch}
         />
       </div>
-      <div className='flex justify-end'>
+      <div className='justify-end hidden sm:flex'>
         {/* <button className='text-sm' onClick={() => setTheme(nextTheme)}>
           darkmode
         </button> */}

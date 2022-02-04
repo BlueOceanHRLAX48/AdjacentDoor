@@ -4,7 +4,7 @@ import AdminEditUsers from './AdminEditUsers';
 
 function RightBar(props) {
   return (
-    <div className='flex flex-col min-w-[250px] grow'>
+    <div className='hidden sm:flex flex-col min-w-[250px] grow'>
       {window.location.pathname === '/admin' ? (
         <AdminEditUsers />
       ) : (
