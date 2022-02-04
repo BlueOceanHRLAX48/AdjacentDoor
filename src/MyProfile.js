@@ -122,6 +122,15 @@ function MyProfile({ user, setUser }) {
         </div>
         {edit && (
           <div className='flex flex-col w-[600px] gap-4 items-center justify-center mt-8 p-8 pb-4 border rounded-lg'>
+            <Avatar
+              alt={user.username}
+              src={
+                profileImage ||
+                'https://iptc.org/wp-content/uploads/2018/05/avatar-anonymous-300x300.png'
+              }
+              sx={{ width: 80, height: 80 }}
+              className=''
+            />
             <div className='flex w-[500px]'>
               <input
                 type='file'
