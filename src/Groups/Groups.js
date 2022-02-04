@@ -93,8 +93,8 @@ function Groups(props) {
               <div>Groups near you</div>
               <div id='seeGroups'>
                 {groups
-                  .filter((group) =>
-                    group.name.toLowerCase().includes(search.toLowerCase())
+                  ?.filter((group) =>
+                    group?.name?.toLowerCase().includes(search.toLowerCase())
                   )
                   .map((card, index) => {
                     let joinStatus = '';

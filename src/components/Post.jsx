@@ -100,7 +100,7 @@ function Post({
         <>
           {(!post.privacy ||
             user.admin ||
-            group.userjoined.indexOf(user.network_id) !== -1) && (
+            group?.userjoined?.indexOf(user.network_id) !== -1) && (
             <div
               className='relative p-4 my-3 transition-all duration-150 border border-slate-100 rounded-xl hover:bg-ghostWhite dark:hover:bg-gray-900 dark:hover:border-secondary'
               style={{
