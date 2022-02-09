@@ -5,7 +5,7 @@ AdjacentDoor is a mobile/web application for users to connect to the neighborhoo
 
 ## Installation
 
-1. Get a free API Key/Token at 
+1. Get a free API Key/Token at
 * [REACT_APP_GOOGLE_CLIENT_ID: https://console.developers.google.com/](https://console.developers.google.com/)
 * [REACT_APP_MAPBOX_APP_TOKEN: https://account.mapbox.com/access-tokens/](https://account.mapbox.com/access-tokens/)
 * [REACT_APP_CLOUDINARY/REACT_APP_CLOUDINARY_PRESET: https://cloudinary.com/](https://cloudinary.com/)
@@ -69,7 +69,7 @@ Users can search the posts or groups they are interested in.
 ![Search](https://user-images.githubusercontent.com/91348196/152656002-5083c069-45bd-4fe4-9df3-b55b0d147b1b.gif)
 
 ### Leaderboard
-Users are able to view their contribution scores which are based on the quality and quantity of the posts. 
+Users are able to view their contribution scores which are based on the quality and quantity of the posts.
 ![Leaderboard](https://user-images.githubusercontent.com/91348196/152656004-5c335e62-ddc4-48b6-89d7-7649a16cb9fc.gif)
 
 
@@ -97,6 +97,295 @@ Users are able to view their contribution scores which are based on the quality 
 * [Tailwind CSS](https://tailwindcss.com/)
 * [Moment.js](https://momentjs.com/)
 * [Grafana k6](https://k6.io/)
+
+## Endpoints
+<details>
+  <summary>View Users Endpoints</summary>
+
+`GET: /user/:id` Retrieve single user's information
+| Parameter | Type  | Description                           |
+| ----------| ------| --------------------------------------|
+| id        | text  | Required network ID of user           |
+
+`GET: /:zip/users` Retrieve all users' information in a default group
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| zip       | integer  | Required zip for default group |
+
+`GET: /user_group/users/:user_group_id` Retrieve all users' information in a user group
+| Parameter           | Type     | Description                    |
+| --------------------| ---------| -------------------------------|
+| user_group_id       | integer  | Required ID for user group     |
+
+`POST: /user/signup` New user signup
+| Body Parameter  | Type    | Description            |
+| ----------------| --------| -----------------------|
+| firstName       | text    | first name for user    |
+| lastName        | text    | last name for user     |
+| username        | text    | display name for user  |
+| email           | text    | Email address for user |
+| network_id      | text    | Unique ID for user     |
+| admin           | boolean | Default false          |
+| city            | text    | city                   |
+| state           | text    | state                  |
+| zip             | text    | zipcode                |
+| privacy         | boolean | Default false          |
+| profile_img     | text    | profile photo for user |
+
+`PUT: /user/:id/photo` Update User's Profile Image
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+| Body Parameter  | Type    | Description            |
+| ----------------| --------| -----------------------|
+| photo           | text    | image url              |
+
+`PUT: /user/:id/updateLocation` Update User’s Location
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+| Body Parameter  | Type    | Description            |
+| ----------------| --------| -----------------------|
+| city            | text    | city                   |
+| state           | text    | state                  |
+| zip             | text    | zipcode                |
+
+`PUT: /user/:id/displayName` Update User's Display Name
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+| Body Parameter  | Type    | Description            |
+| ----------------| --------| -----------------------|
+| username        | text    | display name for user  |
+
+`PUT: /user/:id/contribution/add` Add User's Contribution Score
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+`PUT: /user/:id/contribution/subtract` Subtract User's Contribution Score
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+`PUT:  /user/:id/privacy` Toggle User Privacy Setting
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+`DELETE:  /user/:id/deleteUser` Delete User Account
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| id        | text  | Required network_id for user   |
+
+`GET: /leaderboard` For Global Leaderboard
+| Query Parameter | Type     | Description                                         |
+| ----------------| ---------| ----------------------------------------------------|
+| count           | integer  | Specifies how many results want displayed           |
+
+`GET: /leaderboard/:zip` For Local Leaderboard
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| zip       | integer  | Required zip for default group |
+
+| Query Parameter | Type     | Description                                         |
+| ----------------| ---------| ----------------------------------------------------|
+| count           | integer  | Specifies how many results want displayed           |
+
+</details>
+
+<details>
+  <summary>View Groups Endpoints</summary>
+
+`GET /groups/default/:group_id` Retrieve singular default group information
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| group_id  | integer  | Required ID for default group  |
+
+`GET /groups/user` Retrieve singular user group information
+| Query Parameter | Type     | Description                    |
+| ----------------| ---------| -------------------------------|
+| group_id        | integer  | Required ID for user group     |
+
+`GET /groups/lists` Retrieve lists of user groups information by location coordinates
+| Query Parameter | Type     | Description                                                               |
+| ----------------| ---------| --------------------------------------------------------------------------|
+| latitude        | float    | Required latitude of location                                             |
+| longitude       | float    | Required longitude of location                                            |
+| mi              | integer  | Optional specifies how many miles to search from coordinates. Default 10  |
+
+`POST /groups/user` Create a User Group
+| Body Parameter  | Type    | Description                                               |
+| ----------------| --------| ----------------------------------------------------------|
+| name            | text    | Required group name                                       |
+| network_id      | text    | Required Unique ID for user to identify who created group |
+| city            | text    | Required city for group located                           |
+| state           | text    | Required state for group located                          |
+| zip             | text    | Required zipcode for group located                        |
+| latitude        | float   | Required latitude of location                             |
+| longitude       | float   | Required longitude of location                            |
+| privacy         | boolean | Optional Default false                                    |
+| photo           | text    | Required photo for group                                  |
+| description     | text    | Required photo for group                                  |
+
+`POST /groups/user/:group_id/join` User send request to join a user group
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| group_id  | integer  | Required ID for user group     |
+
+| Query Parameter | Type     | Description                                    |
+| ----------------| ---------| -----------------------------------------------|
+| network_id      | text     | Required network ID for user                   |
+| accepted        | boolean  | Specifies true for public group. Default false |
+
+`PUT /groups/user/:group_id/accept` Accept Join request to add user in group (For Admin User)
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| group_id  | integer  | Required ID for user group     |
+
+| Query Parameter | Type     | Description                                    |
+| ----------------| ---------| -----------------------------------------------|
+| network_id      | text     | Required network ID for user                   |
+
+`DELETE /groups/user/:group_id/left` User left a user group
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| group_id  | integer  | Required ID for user group     |
+
+| Query Parameter | Type     | Description                                    |
+| ----------------| ---------| -----------------------------------------------|
+| network_id      | text     | Required network ID for user                   |
+
+`PUT /groups/user/:group_id/photo` Update Group's Profile Image
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| group_id  | text  | Required ID for user group     |
+
+| Body Parameter  | Type    | Description            |
+| ----------------| --------| -----------------------|
+| photo           | text    | image url              |
+
+`PUT /groups/user/:group_id/privacy` Toggle Group Privacy Setting
+| Parameter | Type  | Description                    |
+| ----------| ------| -------------------------------|
+| group_id  | text  | Required ID for user group     |
+
+`POST /groups/rating` User vote for safety and friendliness rating score
+| Body Parameter              | Type    | Description                            |
+| ----------------------------| --------| ---------------------------------------|
+| group_id / default_group_id | integer | Specifies one particular type of group |
+| network_id                  | text    | Required network ID for user           |
+| safety                      | integer | safety score for group                 |
+| friendliness                | integer | friendliness score for group           |
+
+`PUT /groups/rating/safety` User edit voted safety rating score
+| Body Parameter              | Type    | Description                            |
+| ----------------------------| --------| ---------------------------------------|
+| group_id / default_group_id | integer | Specifies one particular type of group |
+| network_id                  | text    | Required network ID for user           |
+| safety                      | integer | safety score for group                 |
+
+`PUT /groups/rating/friendliness` User edit voted safety rating score
+| Body Parameter              | Type    | Description                            |
+| ----------------------------| --------| ---------------------------------------|
+| group_id / default_group_id | integer | Specifies one particular type of group |
+| network_id                  | text    | Required network ID for user           |
+| friendliness                | integer | friendliness score for group           |
+
+</details>
+
+<details>
+  <summary>View Posts Endpoints</summary>
+
+`GET /posts/usergroup` Retrieve all posts for a user group, including users info relative to post
+| Query Parameter | Type     | Description                    |
+| ----------------| ---------| -------------------------------|
+| user_group_id   | integer  | Required ID for user group     |
+
+`GET /posts/defaultgroup` Retrieve all posts for a default group, including users info relative to post
+| Query Parameter | Type     | Description                    |
+| ----------------| ---------| -------------------------------|
+| group_id        | integer  | Required ID for user group     |
+
+`POST /posts/usergroup` Add a post for a particular user group
+| Body Parameter | Type    | Description                                         |
+| ---------------| --------| ----------------------------------------------------|
+| user_group_id  | integer | Required ID for user group                          |
+| user_id        | integer | Required ID for user                                |
+| body           | text    | Text of post                                        |
+| tag            | text    | Support values: General, Safety, Selling            |
+| privacy        | boolean | Specifies if true. Default false                    |
+| latitude       | float   | Required latitude of location                       |
+| longitude      | float   | Required longitude of location                      |
+| photos         | [text]  | An array of urls corresponding to images to display |
+
+`PUT /posts/like/:post_id` Like a Post
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+`PUT /posts/unlike/:post_id` Unlike a Post
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+`PUT /posts/report/:post_id` Report a Post
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+`DELETE /posts/delete/:post_id` Delete a Reported Post (For Admin User)
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+`PUT /posts/:post_id/reset` Reset a reported post (For Admin User)
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+</details>
+
+<details>
+  <summary>View Replies Endpoints</summary>
+
+`GET: /posts/:post_id/replies` Retrieves all replies for a particular post
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+`POST: /posts/:post_id/replies` Post a Reply to a Post
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| post_id   | integer  | Required ID for post           |
+
+| Body Parameter | Type    | Description                       |
+| ---------------| --------| ----------------------------------|
+| user_id        | integer | Required ID for user              |
+| username       | text    | Required display name for user    |
+| latitude       | float   | Required latitude of location     |
+| longitude      | float   | Required longitude of location    |
+| reply          | text    | Text of reply                     |
+
+`PUT: /reply/:reply_id/report` Like a Reply
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| reply_id  | integer  | Required ID for reply          |
+
+`PUT: /reply/:reply_id/report` Report a Reply
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| reply_id  | integer  | Required ID for reply          |
+
+`DELETE: /reply/:reply_id/delete` Delete a Reply
+| Parameter | Type     | Description                    |
+| ----------| ---------| -------------------------------|
+| reply_id  | integer  | Required ID for reply          |
+
+</details>
 
 ## Contributors
 
